@@ -21,15 +21,20 @@ class FoldersList extends Component {
 
   handleSubmit(name, event) {
     event.preventDefault();
-    this.setState(prevState => ({
-      folders: [
-        ...prevState.folders.slice(0, -1),
-        Object.assign({}, prevState.folders[prevState.folders.length - 1], {
-          name,
-          creationMode: false
-        })
-      ]
-    }));
+    if (this.state.folders.some(folder => folder.name === name)) {
+      alert("name already exists");
+    } else {
+      this.setState(prevState => ({
+        folders: [
+          ..._.dropRight(prevState.folders),
+          {
+            name,
+            creationMode: false,
+            id: _.last(prevState.folders).id
+          }
+        ]
+      }));
+    }
   }
 
   render() {
