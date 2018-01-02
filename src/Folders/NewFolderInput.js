@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Folder extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: "New Folder" };
+    this.state = { value: this.props.defaultValue };
   }
 
   handleChange(event) {
@@ -15,8 +15,8 @@ class Folder extends Component {
   }
 
   render() {
-    const { name, handleClick, creationMode, handleSubmit } = this.props;
-    const content = creationMode ? (
+    const { handleSubmit } = this.props;
+    return (
       <form onSubmit={e => handleSubmit(this.state.value, e)}>
         <input
           type="text"
@@ -24,13 +24,10 @@ class Folder extends Component {
           onChange={e => this.handleChange(e)}
           onFocus={this.handleFocus}
           autoFocus
+          onBlur={e => handleSubmit(this.state.value, e)}
         />
-        <button type="submit">Save</button>
       </form>
-    ) : (
-      <li onClick={handleClick}>{name}</li>
     );
-    return content;
   }
 }
 
