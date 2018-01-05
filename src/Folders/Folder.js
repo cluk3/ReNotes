@@ -1,17 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
-class Folder extends Component {
+class Folder extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { value: "New Folder" };
-  }
-
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
-
-  handleFocus(event) {
-    event.target.select();
   }
 
   render() {

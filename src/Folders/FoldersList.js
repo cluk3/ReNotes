@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Folder from "./Folder";
 import NewFolder from "./NewFolder";
 import NewFolderInput from "./NewFolderInput";
@@ -9,41 +9,39 @@ import {
   deleteFolder,
   setActiveFolder
 } from "./FoldersActions";
-import { setSelectedElement } from "../Toolbar/DeleteActions";
+import { setItemToDelete } from "../Toolbar/DeleteActions";
+import { getDefaultValue } from "../helpers";
 
-const getDefaultValue = folders => {
-  const NEW_FOLDER = "New Folder";
-  if (!folders.includes(NEW_FOLDER)) return NEW_FOLDER;
-
-  const newFolders = folders.filter(folderName =>
-    folderName.startsWith(NEW_FOLDER)
-  );
-
-  let i = 1,
-    found = false,
-    newFolderName;
-
-  while (i <= newFolders.length && !found) {
-    newFolderName = `${NEW_FOLDER} ${i}`;
-    found = !folders.includes(newFolderName);
-    i++;
-  }
-  return newFolderName;
-};
-
-export class FoldersList extends Component {
+export class FoldersList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      selected: null,
       creationMode: false
     };
   }
 
+  componentWillUpdate(nextProps) {
+    const { folders, activeFolder } = this.props;
+    if (this.props.folders.length > nextProps.folders.length) {
+      const folderToDeleteIndex = folders.indexOf(activeFolder);
+      let newActiveFolder;
+      if (folders.length === 1) {
+        // it was the last in the array
+        newActiveFolder = "";
+      } else if (folderToDeleteIndex === folders.length - 1) {
+        // it was in the last position
+        newActiveFolder = folders[folderToDeleteIndex - 1];
+      } else {
+        newActiveFolder = folders[folderToDeleteIndex + 1];
+      }
+      this.props.setActiveFolder(newActiveFolder);
+      this.props.setItemToDelete("folder", newActiveFolder);
+    }
+  }
+
   handleFolderClick(name) {
-    this.setState({ selected: name });
-    this.props.setSelectedElement("folder", name);
-    this.props.setActiveFolder(name);
+    this.props.activeFolder !== name && this.props.setActiveFolder(name);
+    this.props.setItemToDelete("folder", name);
   }
 
   handleNewFolderClick() {
@@ -54,26 +52,25 @@ export class FoldersList extends Component {
 
   handleSubmit(name, event) {
     event.preventDefault();
-    if (this.props.folders.allNames.some(folderName => folderName === name)) {
+    if (this.props.folders.some(folderName => folderName === name)) {
       alert("name already exists");
     } else {
       this.setState({
-        selected: name,
         creationMode: false
       });
       this.props.createNewFolder(name);
-      this.props.setSelectedElement("folder", name);
       this.props.setActiveFolder(name);
+      this.props.setItemToDelete("folder", name);
     }
   }
 
   render() {
-    const folders = this.props.folders.allNames.map(name => (
+    const folders = this.props.folders.map(name => (
       <Folder
         name={name}
         key={name}
         handleFolderClick={id => this.handleFolderClick(id)}
-        selected={this.state.selected === name}
+        selected={this.props.activeFolder === name}
       />
     ));
 
@@ -85,7 +82,7 @@ export class FoldersList extends Component {
           <NewFolderInput
             showInput={this.state.creationMode}
             handleSubmit={(name, event) => this.handleSubmit(name, event)}
-            defaultValue={getDefaultValue(this.props.folders.allNames)}
+            defaultValue={getDefaultValue(this.props.folders)}
           />
         )}
         <NewFolder handleClick={() => this.handleNewFolderClick()} />
@@ -96,7 +93,8 @@ export class FoldersList extends Component {
 
 function mapStateToProps({ folders }) {
   return {
-    folders
+    folders: folders.allNames,
+    activeFolder: folders.activeFolder
   };
 }
 
@@ -105,7 +103,7 @@ function mapDispatchToProps(dispatch) {
     {
       createNewFolder: createNewFolder,
       deleteFolder: deleteFolder,
-      setSelectedElement,
+      setItemToDelete,
       setActiveFolder
     },
     dispatch

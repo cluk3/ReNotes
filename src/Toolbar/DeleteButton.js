@@ -1,20 +1,24 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { deleteFolder } from "../Folders/FoldersActions";
 import { deleteNote } from "../Notes/NotesActions";
 
-class DeleteButton extends Component {
+class DeleteButton extends PureComponent {
   deleteSelectedItem() {
-    const { entity, id } = this.props.selectedItem;
+    const { entity, id } = this.props.itemToDelete;
 
     if (entity === "folder") {
-      const confirmDelete = window.confirm(
-        "Deleting the folder will delete also all the note into it, are you sure?"
-      );
-      confirmDelete && this.props.deleteFolder(id);
+      if (this.props.folders.byName[id].notes.length) {
+        const confirmDelete = window.confirm(
+          "Deleting the folder will delete also all the note into it, are you sure?"
+        );
+        confirmDelete && this.props.deleteFolder(id);
+      } else {
+        this.props.deleteFolder(id);
+      }
     } else {
-      this.props.deleteNote(id);
+      this.props.deleteNote(id, this.props.folders.activeFolder);
     }
   }
   render() {
@@ -22,9 +26,10 @@ class DeleteButton extends Component {
   }
 }
 
-function mapStateToProps({ selectedItem }) {
+function mapStateToProps({ itemToDelete, folders }) {
   return {
-    selectedItem
+    folders,
+    itemToDelete
   };
 }
 

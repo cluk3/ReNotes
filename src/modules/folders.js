@@ -37,10 +37,10 @@ const redux = {
 // Undo delete
 // Navigate Editor History (save on space, return, delete, tab)
 
-// new note button
+// select note on creation and sync the selected for delete and the highlight/selection (need redux saga)
 
-// submit when focus lost new folder
+// put new note on toolbar
 
-// select on creation
+// add editor
 
-// add created note to relative folder maybe Redux Thunk
+// a candidate for delete should be elected when: - I create a new note/folder, I delete a note/folder, I click on note/folder

@@ -1,8 +1,8 @@
-export const SET_SELECTED = "SET_SELECTED";
+export const SET_ITEM_TO_DELETE = "SET_ITEM_TO_DELETE";
 
-export function setSelectedElement(entity, id) {
+export function setItemToDelete(entity, id) {
   return {
-    type: SET_SELECTED,
+    type: SET_ITEM_TO_DELETE,
     payload: {
       entity,
       id
@@ -12,7 +12,7 @@ export function setSelectedElement(entity, id) {
 
 export function deleteReducer(state = {}, { type, payload = {} }) {
   switch (type) {
-    case SET_SELECTED:
+    case SET_ITEM_TO_DELETE:
       const { entity, id } = payload;
       return {
         entity,

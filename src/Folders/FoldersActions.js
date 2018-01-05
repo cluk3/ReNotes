@@ -1,5 +1,5 @@
-import { combineReducers } from "redux";
 import _ from "lodash";
+import { CREATE_NEW_NOTE, DELETE_NOTE } from "../Notes/NotesActions";
 
 export const CREATE_NEW_FOLDER = "CREATE_NEW_FOLDER";
 export const DELETE_FOLDER = "DELETE_FOLDER";
@@ -33,51 +33,64 @@ export function setActiveFolder(folderName) {
 }
 
 const TEST_FOLDER = "Test Folder";
+const initialState = {
+  byName: { [TEST_FOLDER]: { notes: ["0", "1"] } },
+  allNames: [TEST_FOLDER],
+  activeFolder: TEST_FOLDER
+};
 
-function foldersByName(
-  state = { [TEST_FOLDER]: { notes: ["0", "1"] } },
-  { type, payload = {} }
-) {
+export function foldersReducer(state = initialState, { type, payload = {} }) {
   const { folderName } = payload;
   switch (type) {
     case CREATE_NEW_FOLDER:
       return {
         ...state,
-        [folderName]: {
-          notes: []
-        }
+        byName: {
+          ...state.byName,
+          [folderName]: {
+            notes: []
+          }
+        },
+        allNames: state.allNames.concat(folderName)
       };
     case DELETE_FOLDER:
-      return _.omit(state, folderName);
-    default:
-      return state;
-  }
-}
-
-function allFolders(state = [TEST_FOLDER], { type, payload = {} }) {
-  const { folderName } = payload;
-  switch (type) {
-    case CREATE_NEW_FOLDER:
-      return state.concat(folderName);
-    case DELETE_FOLDER:
-      return state.filter(_folderName => folderName !== _folderName);
-    default:
-      return state;
-  }
-}
-
-function activeFolder(state = "", { type, payload = {} }) {
-  const { folderName } = payload;
-  switch (type) {
+      return {
+        ...state,
+        byName: _.omit(state.byName, folderName),
+        allNames: state.allNames.filter(
+          _folderName => folderName !== _folderName
+        )
+      };
+    case CREATE_NEW_NOTE:
+      return {
+        ...state,
+        byName: {
+          ...state.byName,
+          [payload.parentFolderName]: {
+            notes: state.byName[payload.parentFolderName].notes.concat(
+              payload.noteId
+            )
+          }
+        }
+      };
+    case DELETE_NOTE:
+      return {
+        ...state,
+        byName: {
+          ...state.byName,
+          [payload.parentFolderName]: {
+            notes: state.byName[payload.parentFolderName].notes.filter(
+              note => payload.noteId !== note
+            )
+          }
+        }
+      };
     case SET_ACTIVE_FOLDER:
-      return folderName;
+      return {
+        ...state,
+        activeFolder: payload.folderName
+      };
     default:
       return state;
   }
 }
-
-export const foldersReducer = combineReducers({
-  byName: foldersByName,
-  allNames: allFolders,
-  activeFolder
-});

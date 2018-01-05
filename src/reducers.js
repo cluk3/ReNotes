@@ -6,5 +6,5 @@ import { deleteReducer } from "./Toolbar/DeleteActions";
 export default combineReducers({
   folders: foldersReducer,
   notes: notesReducer,
-  selectedItem: deleteReducer
+  itemToDelete: deleteReducer
 });

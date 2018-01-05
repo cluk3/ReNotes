@@ -2,18 +2,31 @@ import _ from "lodash";
 
 export const CREATE_NEW_NOTE = "CREATE_NEW_NOTE";
 export const DELETE_NOTE = "DELETE_NOTE";
+export const SET_ACTIVE_NOTE = "SET_ACTIVE_NOTE";
 
-const getNewId = allIds => (parseInt(_.last(allIds), 10) + 1).toString();
-
-export function createNewNote() {
+export function createNewNote(parentFolderName, noteId) {
   return {
-    type: CREATE_NEW_NOTE
+    type: CREATE_NEW_NOTE,
+    payload: {
+      noteId,
+      parentFolderName
+    }
   };
 }
 
-export function deleteNote(noteId) {
+export function deleteNote(noteId, parentFolderName) {
   return {
     type: DELETE_NOTE,
+    payload: {
+      noteId,
+      parentFolderName
+    }
+  };
+}
+
+export function setActiveNote(noteId) {
+  return {
+    type: SET_ACTIVE_NOTE,
     payload: {
       noteId
     }
@@ -45,21 +58,29 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
   const { byId, allIds } = state;
   switch (type) {
     case CREATE_NEW_NOTE:
-      const noteId = state.allIds.length > 0 ? getNewId(allIds) : "0";
+      const { noteId } = payload;
       return {
         allIds: allIds.concat(noteId),
         byId: {
           ...byId,
           [noteId]: {
             text: "",
-            creationDate: Date.now()
+            creationDate: Date.now(),
+            parentFolderName: payload.parentFolderName
           }
-        }
+        },
+        activeNote: noteId
       };
     case DELETE_NOTE:
       return {
-        allIds: allIds.filter(noteId => payload.noteId !== noteId),
+        ...state,
+        allIds: allIds.filter(noteId => noteId !== payload.noteId),
         byId: _.omit(byId, payload.noteId)
+      };
+    case SET_ACTIVE_NOTE:
+      return {
+        ...state,
+        activeNote: payload.noteId
       };
     default:
       return state;

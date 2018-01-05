@@ -1,22 +1,51 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Note from "./Note";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import * as NotesActions from "./NotesActions";
-import { setSelectedElement } from "../Toolbar/DeleteActions";
+import { createNewNote, setActiveNote } from "./NotesActions";
+import { setItemToDelete } from "../Toolbar/DeleteActions";
+import _ from "lodash";
 
-export class NotesList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: null,
-      highlighted: null
-    };
+export class NotesList extends PureComponent {
+  handleNoteClick(noteId) {
+    noteId !== this.props.activeNote && this.props.setActiveNote(noteId);
+    this.props.setItemToDelete("note", noteId);
   }
 
-  handleNoteClick(id) {
-    this.setState({ selected: id });
-    this.props.setSelectedElement("note", id);
+  handleNewNoteClick() {
+    const noteId = `note-${Date.now()}`;
+    this.props.createNewNote(this.props.activeFolderName, noteId);
+    this.props.setActiveNote(noteId);
+    this.props.setItemToDelete("notes", noteId);
+  }
+
+  componentWillUpdate(nextProps) {
+    const { notes, activeFolderName, activeNote: noteToDeleteId } = this.props;
+    if (
+      activeFolderName === nextProps.activeFolderName &&
+      this.props.notes.length > nextProps.notes.length
+    ) {
+      const notesInCurrentFolder = notes;
+      const noteToDeleteIndex = _.findIndex(
+        notesInCurrentFolder,
+        ({ noteId }) => noteId === noteToDeleteId
+      );
+      let newActiveNote;
+      if (notesInCurrentFolder.length === 1) {
+        // it was the last in the array
+        newActiveNote = "";
+      } else if (noteToDeleteIndex === notesInCurrentFolder.length - 1) {
+        // it was in the last position
+        newActiveNote = notesInCurrentFolder[noteToDeleteIndex - 1];
+      } else {
+        newActiveNote = notesInCurrentFolder[noteToDeleteIndex + 1];
+      }
+      this.props.setActiveNote(newActiveNote.noteId);
+      this.props.setItemToDelete("notes", newActiveNote.noteId);
+    } else if (activeFolderName !== nextProps.activeFolderName) {
+      nextProps.notes.length &&
+        this.props.setActiveNote(nextProps.notes[0].noteId);
+    }
   }
 
   render() {
@@ -28,7 +57,7 @@ export class NotesList extends Component {
           text={text}
           key={noteId}
           handleNoteClick={() => this.handleNoteClick(noteId)}
-          selected={this.state.selected === noteId}
+          selected={this.props.activeNote === noteId}
         />
       );
     });
@@ -38,7 +67,7 @@ export class NotesList extends Component {
         {notesList}
         <button
           style={{ position: "absolute", bottom: "8px" }}
-          onClick={() => this.props.createNewNote()}
+          onClick={() => this.handleNewNoteClick()}
         >
           + New Note
         </button>
@@ -48,23 +77,26 @@ export class NotesList extends Component {
 }
 
 function mapStateToProps({ notes, folders }) {
-  const activeFolder =
-    folders.byName[folders.activeFolder || folders.allNames[0]];
-
+  const activeFolder = folders.byName[folders.activeFolder];
+  // right now since we recreate the notes everytime the component is re-rendered.
+  // Can be solved by reselect memoization
   return {
     notes: activeFolder
       ? activeFolder.notes.map(noteId =>
           Object.assign({ noteId }, notes.byId[noteId])
         )
-      : []
+      : [],
+    activeFolderName: folders.activeFolder,
+    activeNote: notes.activeNote
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      createNewNote: NotesActions.createNewNote,
-      setSelectedElement
+      createNewNote,
+      setItemToDelete,
+      setActiveNote
     },
     dispatch
   );
