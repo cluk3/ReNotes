@@ -66,7 +66,7 @@ export class NotesList extends PureComponent {
         Notes List
         {notesList}
         <button
-          style={{ position: "absolute", bottom: "8px" }}
+          style={{ position: "absolute", bottom: "8px", left: "8px" }}
           onClick={() => this.handleNewNoteClick()}
         >
           + New Note
