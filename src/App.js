@@ -11,7 +11,8 @@ class App extends Component {
       display: " block",
       margin: "8px 4px",
       padding: "8px",
-      position: "relative"
+      position: "relative",
+      overflow: "hidden"
     };
     return (
       <div className="App" style={{ height: "100vh" }}>

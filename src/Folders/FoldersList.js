@@ -75,7 +75,7 @@ export class FoldersList extends PureComponent {
     ));
 
     return (
-      <div>
+      <div style={{ maxHeight: "100%", overflowY: "auto" }}>
         Folders List
         <ul>{folders}</ul>
         {this.state.creationMode && (

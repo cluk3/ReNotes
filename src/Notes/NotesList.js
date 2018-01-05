@@ -62,7 +62,7 @@ export class NotesList extends PureComponent {
       );
     });
     return (
-      <div>
+      <div style={{ maxHeight: "100%", overflowY: "auto" }}>
         Notes List
         {notesList}
         <button
