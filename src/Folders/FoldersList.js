@@ -51,10 +51,10 @@ export class FoldersList extends PureComponent {
     });
   }
 
-  handleSubmit(name, event) {
-    event.preventDefault();
+  handleSubmit(name) {
+    const success = true;
     if (this.props.folders.some(folderName => folderName === name)) {
-      alert("name already exists");
+      return !success;
     } else {
       this.setState({
         creationMode: false
@@ -62,6 +62,7 @@ export class FoldersList extends PureComponent {
       this.props.createNewFolder(name);
       this.props.setActiveFolder(name);
       this.props.setItemToDelete(ENTITIES.FOLDERS, name);
+      return success;
     }
   }
 
@@ -81,7 +82,6 @@ export class FoldersList extends PureComponent {
         <ul>{folders}</ul>
         {this.state.creationMode && (
           <NewFolderInput
-            showInput={this.state.creationMode}
             handleSubmit={(name, event) => this.handleSubmit(name, event)}
             defaultValue={getDefaultValue(this.props.folders)}
           />
