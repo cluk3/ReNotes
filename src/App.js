@@ -3,6 +3,7 @@ import "./App.css";
 import FoldersList from "./Folders/FoldersList";
 import NotesList from "./Notes/NotesList";
 import Toolbar from "./Toolbar/Toolbar";
+import NoteEditor from "./Editor/NoteEditor";
 
 class App extends Component {
   render() {
@@ -34,7 +35,7 @@ class App extends Component {
             <NotesList />
           </div>
           <div key={2} style={paneStyle}>
-            Editor
+            <NoteEditor />
           </div>
         </div>
       </div>

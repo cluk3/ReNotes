@@ -11,6 +11,7 @@ import {
 } from "./FoldersActions";
 import { setItemToDelete } from "../Toolbar/DeleteActions";
 import { getDefaultValue } from "../helpers";
+import { ENTITIES } from "../constants";
 
 export class FoldersList extends PureComponent {
   constructor(props) {
@@ -35,13 +36,13 @@ export class FoldersList extends PureComponent {
         newActiveFolder = folders[folderToDeleteIndex + 1];
       }
       this.props.setActiveFolder(newActiveFolder);
-      this.props.setItemToDelete("folder", newActiveFolder);
+      this.props.setItemToDelete(ENTITIES.FOLDERS, newActiveFolder);
     }
   }
 
   handleFolderClick(name) {
     this.props.activeFolder !== name && this.props.setActiveFolder(name);
-    this.props.setItemToDelete("folder", name);
+    this.props.setItemToDelete(ENTITIES.FOLDERS, name);
   }
 
   handleNewFolderClick() {
@@ -60,7 +61,7 @@ export class FoldersList extends PureComponent {
       });
       this.props.createNewFolder(name);
       this.props.setActiveFolder(name);
-      this.props.setItemToDelete("folder", name);
+      this.props.setItemToDelete(ENTITIES.FOLDERS, name);
     }
   }
 

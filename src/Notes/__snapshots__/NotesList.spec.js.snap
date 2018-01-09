@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotesList should render correctly 1`] = `
+<div
+  style={
+    Object {
+      "maxHeight": "100%",
+      "overflowY": "auto",
+    }
+  }
+>
+  Notes List
+  <Note
+    creationDate={1235353245432}
+    handleNoteClick={[Function]}
+    key="note-4234"
+    selected={false}
+    text="foo
+  bar"
+  />
+  <button
+    onClick={[Function]}
+    style={
+      Object {
+        "bottom": "8px",
+        "left": "8px",
+        "position": "absolute",
+      }
+    }
+  >
+    + New Note
+  </button>
+</div>
+`;

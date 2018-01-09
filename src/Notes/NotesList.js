@@ -5,18 +5,31 @@ import { connect } from "react-redux";
 import { createNewNote, setActiveNote } from "./NotesActions";
 import { setItemToDelete } from "../Toolbar/DeleteActions";
 import _ from "lodash";
+import PropTypes from "prop-types";
+import { ENTITIES } from "../constants";
+import { setFocusEditor } from "../Editor/NoteEditorActions";
 
 export class NotesList extends PureComponent {
   handleNoteClick(noteId) {
     noteId !== this.props.activeNote && this.props.setActiveNote(noteId);
-    this.props.setItemToDelete("note", noteId);
+    this.props.setItemToDelete(ENTITIES.NOTES, noteId);
   }
+
+  static propTypes = {
+    notes: PropTypes.array.isRequired,
+    activeFolderName: PropTypes.string.isRequired,
+    activeNote: PropTypes.string,
+    createNewNote: PropTypes.func.isRequired,
+    setItemToDelete: PropTypes.func.isRequired,
+    setActiveNote: PropTypes.func.isRequired
+  };
 
   handleNewNoteClick() {
     const noteId = `note-${Date.now()}`;
     this.props.createNewNote(this.props.activeFolderName, noteId);
     this.props.setActiveNote(noteId);
-    this.props.setItemToDelete("notes", noteId);
+    this.props.setItemToDelete(ENTITIES.NOTES, noteId);
+    this.props.setFocusEditor(true);
   }
 
   componentWillUpdate(nextProps) {
@@ -41,20 +54,22 @@ export class NotesList extends PureComponent {
         newActiveNote = notesInCurrentFolder[noteToDeleteIndex + 1];
       }
       this.props.setActiveNote(newActiveNote.noteId);
-      this.props.setItemToDelete("notes", newActiveNote.noteId);
+      this.props.setItemToDelete(ENTITIES.NOTES, newActiveNote.noteId);
     } else if (activeFolderName !== nextProps.activeFolderName) {
-      nextProps.notes.length &&
-        this.props.setActiveNote(nextProps.notes[0].noteId);
+      const newActiveNote = nextProps.notes.length
+        ? nextProps.notes[0].noteId
+        : "";
+      this.props.setActiveNote(newActiveNote);
     }
   }
 
   render() {
     const { notes } = this.props;
-    const notesList = notes.map(({ creationDate, text, noteId }) => {
+    const notesList = notes.map(({ creationDate, editorState, noteId }) => {
       return (
         <Note
           creationDate={creationDate}
-          text={text}
+          text={editorState.getCurrentContent().getPlainText()}
           key={noteId}
           handleNoteClick={() => this.handleNoteClick(noteId)}
           selected={this.props.activeNote === noteId}
@@ -96,7 +111,8 @@ function mapDispatchToProps(dispatch) {
     {
       createNewNote,
       setItemToDelete,
-      setActiveNote
+      setActiveNote,
+      setFocusEditor
     },
     dispatch
   );

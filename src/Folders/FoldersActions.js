@@ -33,9 +33,13 @@ export function setActiveFolder(folderName) {
 }
 
 const TEST_FOLDER = "Test Folder";
+const TEST_FOLDER_2 = "Test Folder 2";
 const initialState = {
-  byName: { [TEST_FOLDER]: { notes: ["0", "1"] } },
-  allNames: [TEST_FOLDER],
+  byName: {
+    [TEST_FOLDER]: { notes: ["0", "1"] },
+    [TEST_FOLDER_2]: { notes: ["2"] }
+  },
+  allNames: [TEST_FOLDER, TEST_FOLDER_2],
   activeFolder: TEST_FOLDER
 };
 

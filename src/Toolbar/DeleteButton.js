@@ -3,12 +3,13 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { deleteFolder } from "../Folders/FoldersActions";
 import { deleteNote } from "../Notes/NotesActions";
+import { ENTITIES } from "../constants";
 
 class DeleteButton extends PureComponent {
   deleteSelectedItem() {
     const { entity, id } = this.props.itemToDelete;
 
-    if (entity === "folder") {
+    if (entity === ENTITIES.FOLDERS) {
       if (this.props.folders.byName[id].notes.length) {
         const confirmDelete = window.confirm(
           "Deleting the folder will delete also all the note into it, are you sure?"
