@@ -19,7 +19,7 @@ class Folder extends PureComponent {
 
   onHandleSubmit(event) {
     event.preventDefault();
-    const succeded = this.props.handleSubmit(this.state.value);
+    const succeded = this.props.handleSubmit(this.state.value.trim());
     if (!succeded) {
       this.setState({
         showErrorModal: true

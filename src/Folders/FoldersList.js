@@ -82,7 +82,7 @@ export class FoldersList extends PureComponent {
         <ul>{folders}</ul>
         {this.state.creationMode && (
           <NewFolderInput
-            handleSubmit={(name, event) => this.handleSubmit(name, event)}
+            handleSubmit={name => this.handleSubmit(name)}
             defaultValue={getDefaultValue(this.props.folders)}
           />
         )}
