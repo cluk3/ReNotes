@@ -1,5 +1,11 @@
 import React, { PureComponent } from "react";
+import styled from "styled-components";
 
+const FolderLi = styled.li`
+  list-style: none;
+  padding: 0.4em 0 0.4em 1em;
+  background-color: ${props => (props.selected ? "#dedede" : "#fafafa")};
+`;
 class Folder extends PureComponent {
   constructor(props) {
     super(props);
@@ -7,17 +13,12 @@ class Folder extends PureComponent {
   }
 
   render() {
-    const { name, handleFolderClick } = this.props;
+    const { name, handleFolderClick, selected } = this.props;
 
     return (
-      <li
-        onClick={e => handleFolderClick(name)}
-        style={{
-          backgroundColor: this.props.selected ? "grey" : "white"
-        }}
-      >
+      <FolderLi onClick={e => handleFolderClick(name)} selected={selected}>
         {name}
-      </li>
+      </FolderLi>
     );
   }
 }

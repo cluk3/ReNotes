@@ -2,12 +2,18 @@ import React, { PureComponent } from "react";
 import Note from "./Note";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { createNewNote, setActiveNote } from "./NotesActions";
+import { setActiveNote } from "./NotesActions";
 import { setItemToDelete } from "../Toolbar/DeleteActions";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import { ENTITIES } from "../constants";
 import { setFocusEditor } from "../Editor/NoteEditorActions";
+import styled from "styled-components";
+
+const NotesListContainer = styled.div`
+  max-height: 100%;
+  overflow-y: auto;
+`;
 
 export class NotesList extends PureComponent {
   handleNoteClick(noteId) {
@@ -19,18 +25,9 @@ export class NotesList extends PureComponent {
     notes: PropTypes.array.isRequired,
     activeFolderName: PropTypes.string.isRequired,
     activeNote: PropTypes.string,
-    createNewNote: PropTypes.func.isRequired,
     setItemToDelete: PropTypes.func.isRequired,
     setActiveNote: PropTypes.func.isRequired
   };
-
-  handleNewNoteClick() {
-    const noteId = `note-${Date.now()}`;
-    this.props.createNewNote(this.props.activeFolderName, noteId);
-    this.props.setActiveNote(noteId);
-    this.props.setItemToDelete(ENTITIES.NOTES, noteId);
-    this.props.setFocusEditor(true);
-  }
 
   componentWillUpdate(nextProps) {
     const { notes, activeFolderName, activeNote: noteToDeleteId } = this.props;
@@ -76,18 +73,7 @@ export class NotesList extends PureComponent {
         />
       );
     });
-    return (
-      <div style={{ maxHeight: "100%", overflowY: "auto" }}>
-        Notes List
-        {notesList}
-        <button
-          style={{ position: "absolute", bottom: "8px", left: "8px" }}
-          onClick={() => this.handleNewNoteClick()}
-        >
-          + New Note
-        </button>
-      </div>
-    );
+    return <NotesListContainer>{notesList}</NotesListContainer>;
   }
 }
 
@@ -109,7 +95,6 @@ function mapStateToProps({ notes, folders }) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      createNewNote,
       setItemToDelete,
       setActiveNote,
       setFocusEditor

@@ -12,6 +12,18 @@ import {
 import { setItemToDelete } from "../Toolbar/DeleteActions";
 import { getDefaultValue } from "../helpers";
 import { ENTITIES } from "../constants";
+import styled from "styled-components";
+
+const FoldersUl = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
+
+const FolderListContainer = styled.div`
+  height: 100%;
+  overflow-y: auto;
+  border-right: #dedede solid 1px;
+`;
 
 export class FoldersList extends PureComponent {
   constructor(props) {
@@ -77,9 +89,8 @@ export class FoldersList extends PureComponent {
     ));
 
     return (
-      <div style={{ maxHeight: "100%", overflowY: "auto" }}>
-        Folders List
-        <ul>{folders}</ul>
+      <FolderListContainer>
+        <FoldersUl>{folders}</FoldersUl>
         {this.state.creationMode && (
           <NewFolderInput
             handleSubmit={name => this.handleSubmit(name)}
@@ -87,7 +98,7 @@ export class FoldersList extends PureComponent {
           />
         )}
         <NewFolder handleClick={() => this.handleNewFolderClick()} />
-      </div>
+      </FolderListContainer>
     );
   }
 }

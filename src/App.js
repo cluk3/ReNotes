@@ -2,42 +2,57 @@ import React, { Component } from "react";
 import "./App.css";
 import FoldersList from "./Folders/FoldersList";
 import NotesList from "./Notes/NotesList";
-import Toolbar from "./Toolbar/Toolbar";
 import NoteEditor from "./Editor/NoteEditor";
+import styled from "styled-components";
+import Toolbar from "./Toolbar/Toolbar";
+import NotesToolbar from "./Notes/NotesToolbar";
+
+const commonColumnStyles = `
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background-color: #fafafa;
+`;
+
+const FoldersColumn = styled.div`
+  ${commonColumnStyles};
+`;
+
+const NotesColumn = styled.div`
+  ${commonColumnStyles};
+`;
+
+const EditorColumn = styled.div`
+  ${commonColumnStyles};
+`;
+
+const ColumnsContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+`;
 
 class App extends Component {
   render() {
-    const paneStyle = {
-      border: "2px solid blue",
-      display: " block",
-      margin: "8px 4px",
-      padding: "8px",
-      position: "relative",
-      overflow: "hidden"
-    };
     return (
       <div className="App" style={{ height: "100vh" }}>
-        <Toolbar />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            position: "absolute",
-            top: "36px",
-            bottom: 0,
-            width: "100%"
-          }}
-        >
-          <div id={0} key={0} style={paneStyle}>
+        <ColumnsContainer>
+          <FoldersColumn key={0}>
+            <Toolbar />
             <FoldersList />
-          </div>
-          <div id={1} key={1} style={paneStyle}>
+          </FoldersColumn>
+          <NotesColumn key={1}>
+            <NotesToolbar />
             <NotesList />
-          </div>
-          <div key={2} style={paneStyle}>
+          </NotesColumn>
+          <EditorColumn key={2}>
+            <Toolbar />
             <NoteEditor />
-          </div>
-        </div>
+          </EditorColumn>
+        </ColumnsContainer>
       </div>
     );
   }

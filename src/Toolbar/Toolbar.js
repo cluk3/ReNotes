@@ -1,22 +1,16 @@
 import React, { Component } from "react";
-import DeleteButton from "./DeleteButton";
+import styled from "styled-components";
 
+const ToolbarDiv = styled.div`
+  height: 16px;
+  background-color: grey;
+  color: white;
+  padding: 8px 2px;
+  border-bottom: black solid 1px;
+`;
 class Toolbar extends Component {
   render() {
-    return (
-      <div
-        style={{
-          height: "16px",
-          backgroundColor: "green",
-          color: "white",
-          padding: "8px",
-          margin: "4px"
-        }}
-      >
-        Toolbar
-        <DeleteButton />
-      </div>
-    );
+    return <ToolbarDiv>{this.props.children}</ToolbarDiv>;
   }
 }
 

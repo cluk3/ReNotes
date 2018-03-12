@@ -11,6 +11,15 @@ import {
 import { ENTITIES } from "../constants";
 import { setItemToDelete } from "../Toolbar/DeleteActions";
 import { setFocusEditor } from "./NoteEditorActions";
+import styled from "styled-components";
+
+const NoteEditorContainer = styled.div`
+  height: 100%;
+  max-height; 100%;
+  overflow: auto;
+  padding: 1em 1em 0 1em;
+  border-left: #dedede solid 1px;
+`;
 
 export class NoteEditor extends Component {
   constructor(props) {
@@ -40,10 +49,7 @@ export class NoteEditor extends Component {
 
   render() {
     return (
-      <div
-        style={{ height: "100%", maxHeight: "100%", overflowY: "auto" }}
-        onClick={this.onClick}
-      >
+      <NoteEditorContainer onClick={this.onClick}>
         {this.props.editorState && (
           <Editor
             editorState={this.props.editorState}
@@ -51,7 +57,7 @@ export class NoteEditor extends Component {
             ref={this.setDomEditorRef}
           />
         )}
-      </div>
+      </NoteEditorContainer>
     );
   }
 }
