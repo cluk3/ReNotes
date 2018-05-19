@@ -16,11 +16,6 @@ const NotesListContainer = styled.div`
 `;
 
 export class NotesList extends PureComponent {
-  handleNoteClick(noteId) {
-    noteId !== this.props.activeNote && this.props.setActiveNote(noteId);
-    this.props.setItemToDelete(ENTITIES.NOTES, noteId);
-  }
-
   static propTypes = {
     notes: PropTypes.array.isRequired,
     activeFolderName: PropTypes.string.isRequired,
@@ -28,6 +23,11 @@ export class NotesList extends PureComponent {
     setItemToDelete: PropTypes.func.isRequired,
     setActiveNote: PropTypes.func.isRequired
   };
+
+  handleNoteClick(noteId) {
+    noteId !== this.props.activeNote && this.props.setActiveNote(noteId);
+    this.props.setItemToDelete(ENTITIES.NOTES, noteId);
+  }
 
   componentWillUpdate(nextProps) {
     const { notes, activeFolderName, activeNote: noteToDeleteId } = this.props;

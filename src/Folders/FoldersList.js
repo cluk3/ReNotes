@@ -35,7 +35,7 @@ export class FoldersList extends PureComponent {
 
   componentWillUpdate(nextProps) {
     const { folders, activeFolder } = this.props;
-    if (this.props.folders.length > nextProps.folders.length) {
+    if (folders.length > nextProps.folders.length) {
       const folderToDeleteIndex = folders.indexOf(activeFolder);
       let newActiveFolder;
       if (folders.length === 1) {

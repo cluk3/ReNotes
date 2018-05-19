@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Editor, EditorState } from "draft-js";
+import { Editor } from "draft-js";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {
@@ -22,6 +22,18 @@ const NoteEditorContainer = styled.div`
 `;
 
 export class NoteEditor extends Component {
+  static propTypes = {
+    editorState: PropTypes.any,
+    activeNote: PropTypes.array.isRequired,
+    parentFolderName: PropTypes.string.isRequired,
+    focusEditor: PropTypes.any.isRequired,
+    setItemToDelete: PropTypes.func.isRequired,
+    setActiveNote: PropTypes.func.isRequired,
+    createNewNote: PropTypes.func.isRequired,
+    setFocusEditor: PropTypes.func.isRequired,
+    updateEditorState: PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.setDomEditorRef = ref => (this.domEditor = ref);
