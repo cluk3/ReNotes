@@ -55,7 +55,8 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
             notes: []
           }
         },
-        allNames: state.allNames.concat(folderName)
+        allNames: state.allNames.concat(folderName),
+        activeFolder: folderName
       };
     case DELETE_FOLDER:
       return {
