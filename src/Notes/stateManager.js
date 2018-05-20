@@ -12,7 +12,9 @@ export function createNewNote(parentFolderName, noteId, editorState) {
     payload: {
       noteId,
       parentFolderName,
-      editorState: editorState || EditorState.createEmpty()
+      editorState: EditorState.moveFocusToEnd(
+        editorState || EditorState.createEmpty()
+      )
     }
   };
 }

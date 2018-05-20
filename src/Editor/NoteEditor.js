@@ -10,6 +10,7 @@ import {
 } from "../Notes/stateManager";
 import styled from "styled-components";
 import { ENTITIES } from "../constants";
+import { EditorState } from "draft-js";
 
 const NoteEditorContainer = styled.div`
   height: 100%;
@@ -22,7 +23,7 @@ const NoteEditorContainer = styled.div`
 export class NoteEditor extends Component {
   static propTypes = {
     editorState: PropTypes.any,
-    activeNote: PropTypes.array.isRequired,
+    activeNote: PropTypes.string,
     parentFolderName: PropTypes.string.isRequired,
     setActiveNote: PropTypes.func.isRequired,
     createNewNote: PropTypes.func.isRequired,
@@ -35,6 +36,14 @@ export class NoteEditor extends Component {
     this.onChange = editorState => {
       this.props.updateEditorState(editorState, this.props.activeNote);
     };
+    this.handleClick = ev => {
+      if (!this.domEditor.refs.editorContainer.contains(ev.target)) {
+        this.props.updateEditorState(
+          EditorState.moveFocusToEnd(this.props.editorState),
+          this.props.activeNote
+        );
+      }
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -42,24 +51,19 @@ export class NoteEditor extends Component {
       isEditorFocused,
       createNewNote,
       parentFolderName,
-      activeNote,
       editorState
     } = this.props;
-    if (!editorState) return;
-    if (isEditorFocused) {
-      this.domEditor.focus();
-      if (!activeNote) {
-        const noteId = `note-${Date.now()}`;
-        createNewNote(parentFolderName, noteId);
-      }
-    } else {
-      this.domEditor.blur();
+    const editorGainedFocus = !prevProps.isEditorFocused && isEditorFocused;
+
+    if (!editorState && editorGainedFocus) {
+      const noteId = `note-${Date.now()}`;
+      return createNewNote(parentFolderName, noteId);
     }
   }
 
   render() {
     return (
-      <NoteEditorContainer>
+      <NoteEditorContainer onClick={this.handleClick}>
         {this.props.editorState && (
           <Editor
             editorState={this.props.editorState}
@@ -71,8 +75,6 @@ export class NoteEditor extends Component {
     );
   }
 }
-
-NoteEditor.propTypes = {};
 
 function mapStateToProps({ notes, folders, focusedElement }) {
   const { activeNote } = notes;

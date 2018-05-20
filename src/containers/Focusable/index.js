@@ -4,34 +4,27 @@ import { connect } from "react-redux";
 import { setFocusedElement } from "./stateManager";
 import styled from "styled-components";
 
-const FocusableContainer = styled.div`
+const FocusableContainer = styled.div.attrs({
+  tabIndex: "-1"
+})`
   height: 100%;
+  &:focus {
+    outline: none;
+  }
 `;
 
-/*
-On click/focus it should highlight the selected list element.
-*/
-
 export class Focusable extends PureComponent {
-  handleClick() {
-    const { focusedElementType, elementType, setFocusedElement } = this.props;
-    if (focusedElementType !== elementType) {
-      setFocusedElement(elementType);
-    }
+  handleFocus() {
+    const { elementType, setFocusedElement } = this.props;
+    setFocusedElement(elementType);
   }
   render() {
     return (
-      <FocusableContainer onClick={() => this.handleClick()}>
+      <FocusableContainer onFocus={() => this.handleFocus()}>
         {this.props.children}
       </FocusableContainer>
     );
   }
-}
-
-function mapStateToProps({ focusedElement }) {
-  return {
-    focusedElementType: focusedElement.elementType
-  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -43,4 +36,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Focusable);
+export default connect(null, mapDispatchToProps)(Focusable);
