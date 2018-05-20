@@ -9,7 +9,7 @@ import {
 
 const getbackgroundColor = props => {
   if (props.highlighted) {
-    return "#4286f4";
+    return "#efc853";
   } else if (props.selected) {
     return "#dedede";
   }
