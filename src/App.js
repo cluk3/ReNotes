@@ -43,20 +43,20 @@ class App extends Component {
       <div className="App" style={{ height: "100vh" }}>
         <ColumnsContainer>
           <FoldersColumn key={0}>
+            <Toolbar />
             <Focusable elementType={ENTITIES.FOLDERS}>
-              <Toolbar />
               <FoldersList />
             </Focusable>
           </FoldersColumn>
           <NotesColumn key={1}>
+            <NotesToolbar />
             <Focusable elementType={ENTITIES.NOTES}>
-              <NotesToolbar />
               <NotesList />
             </Focusable>
           </NotesColumn>
           <EditorColumn key={2}>
+            <Toolbar />
             <Focusable elementType={ENTITIES.EDITOR}>
-              <Toolbar />
               <NoteEditor />
             </Focusable>
           </EditorColumn>
