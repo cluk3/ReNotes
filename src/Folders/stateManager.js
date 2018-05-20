@@ -64,7 +64,8 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
         byName: _.omit(state.byName, folderName),
         allNames: state.allNames.filter(
           _folderName => folderName !== _folderName
-        )
+        ),
+        activeFolder: null
       };
     case CREATE_NEW_NOTE:
       return {

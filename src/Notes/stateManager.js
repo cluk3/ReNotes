@@ -96,7 +96,8 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
       return {
         ...state,
         allIds: allIds.filter(noteId => noteId !== payload.noteId),
-        byId: _.omit(byId, payload.noteId)
+        byId: _.omit(byId, payload.noteId),
+        activeNote: null
       };
     case SET_ACTIVE_NOTE:
       return {

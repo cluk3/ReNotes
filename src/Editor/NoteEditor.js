@@ -24,7 +24,7 @@ export class NoteEditor extends Component {
   static propTypes = {
     editorState: PropTypes.any,
     activeNote: PropTypes.string,
-    parentFolderName: PropTypes.string.isRequired,
+    parentFolderName: PropTypes.string,
     setActiveNote: PropTypes.func.isRequired,
     createNewNote: PropTypes.func.isRequired,
     updateEditorState: PropTypes.func.isRequired

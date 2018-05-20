@@ -31,15 +31,15 @@ export class FoldersList extends PureComponent {
 
   static propTypes = {
     folders: PropTypes.array.isRequired,
-    activeFolder: PropTypes.string.isRequired,
+    activeFolder: PropTypes.string,
     isFolderFocused: PropTypes.bool.isRequired,
     createNewFolder: PropTypes.func.isRequired,
     setActiveFolder: PropTypes.func.isRequired
   };
 
-  componentWillUpdate(nextProps) {
-    const { folders, activeFolder } = this.props;
-    if (folders.length > nextProps.folders.length) {
+  componentDidUpdate(prevProps) {
+    const { folders, activeFolder } = prevProps;
+    if (folders.length > this.props.folders.length) {
       const folderToDeleteIndex = folders.indexOf(activeFolder);
       let newActiveFolder;
       if (folders.length === 1) {

@@ -8,7 +8,7 @@ import { ENTITIES } from "../constants";
 
 class NewNoteButton extends PureComponent {
   static propTypes = {
-    activeFolderName: PropTypes.string.isRequired,
+    activeFolderName: PropTypes.string,
     activeNote: PropTypes.string,
     createNewNote: PropTypes.func.isRequired
   };

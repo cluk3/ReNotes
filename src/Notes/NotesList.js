@@ -16,7 +16,7 @@ const NotesListContainer = styled.div`
 export class NotesList extends PureComponent {
   static propTypes = {
     notes: PropTypes.array.isRequired,
-    activeFolderName: PropTypes.string.isRequired,
+    activeFolderName: PropTypes.string,
     activeNote: PropTypes.string,
     setActiveNote: PropTypes.func.isRequired
   };
@@ -25,15 +25,15 @@ export class NotesList extends PureComponent {
     noteId !== this.props.activeNote && this.props.setActiveNote(noteId);
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     const {
       notes: notesBeforeUpdate,
       activeFolderName,
       activeNote: deletedNoteId
-    } = this.props;
+    } = prevProps;
     if (
-      activeFolderName === nextProps.activeFolderName &&
-      notesBeforeUpdate.length > nextProps.notes.length
+      activeFolderName === this.props.activeFolderName &&
+      notesBeforeUpdate.length > this.props.notes.length
     ) {
       const deletedNoteIndex = _.findIndex(
         notesBeforeUpdate,
@@ -50,9 +50,9 @@ export class NotesList extends PureComponent {
         newActiveNote = notesBeforeUpdate[deletedNoteIndex + 1];
       }
       this.props.setActiveNote(newActiveNote.noteId);
-    } else if (activeFolderName !== nextProps.activeFolderName) {
-      const newActiveNoteId = nextProps.notes.length
-        ? nextProps.notes[0].noteId
+    } else if (activeFolderName !== this.props.activeFolderName) {
+      const newActiveNoteId = this.props.notes.length
+        ? this.props.notes[0].noteId
         : "";
       this.props.setActiveNote(newActiveNoteId);
     }
