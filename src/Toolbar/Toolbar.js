@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 
 const ToolbarDiv = styled.div`
@@ -8,7 +8,7 @@ const ToolbarDiv = styled.div`
   padding: 8px 2px;
   border-bottom: black solid 1px;
 `;
-class Toolbar extends Component {
+class Toolbar extends PureComponent {
   render() {
     return <ToolbarDiv>{this.props.children}</ToolbarDiv>;
   }

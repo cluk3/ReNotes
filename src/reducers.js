@@ -1,12 +1,10 @@
 import { combineReducers } from "redux";
-import { foldersReducer } from "./Folders/FoldersActions";
-import { notesReducer } from "./Notes/NotesActions";
-import { deleteReducer } from "./Toolbar/DeleteActions";
-import { editorReducer } from "./Editor/NoteEditorActions";
+import { foldersReducer } from "./Folders/stateManager";
+import { notesReducer } from "./Notes/stateManager";
+import { focusableReducer } from "./containers/Focusable/stateManager";
 
 export default combineReducers({
   folders: foldersReducer,
   notes: notesReducer,
-  itemToDelete: deleteReducer,
-  editor: editorReducer
+  focusedElement: focusableReducer
 });

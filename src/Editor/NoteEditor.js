@@ -7,11 +7,9 @@ import {
   updateEditorState,
   createNewNote,
   setActiveNote
-} from "../Notes/NotesActions";
-import { ENTITIES } from "../constants";
-import { setItemToDelete } from "../Toolbar/DeleteActions";
-import { setFocusEditor } from "./NoteEditorActions";
+} from "../Notes/stateManager";
 import styled from "styled-components";
+import { ENTITIES } from "../constants";
 
 const NoteEditorContainer = styled.div`
   height: 100%;
@@ -26,42 +24,42 @@ export class NoteEditor extends Component {
     editorState: PropTypes.any,
     activeNote: PropTypes.array.isRequired,
     parentFolderName: PropTypes.string.isRequired,
-    focusEditor: PropTypes.any.isRequired,
-    setItemToDelete: PropTypes.func.isRequired,
     setActiveNote: PropTypes.func.isRequired,
     createNewNote: PropTypes.func.isRequired,
-    setFocusEditor: PropTypes.func.isRequired,
     updateEditorState: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
     this.setDomEditorRef = ref => (this.domEditor = ref);
-    this.onChange = editorState =>
+    this.onChange = editorState => {
       this.props.updateEditorState(editorState, this.props.activeNote);
-    this.onClick = () => {
-      if (this.props.activeNote) {
-        this.domEditor.focus();
-      } else {
-        const noteId = `note-${Date.now()}`;
-        this.props.createNewNote(this.props.parentFolderName, noteId);
-        this.props.setActiveNote(noteId);
-        this.props.setItemToDelete(ENTITIES.NOTES, noteId);
-        this.props.setFocusEditor(true);
-      }
     };
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.focusEditor) {
+    const {
+      isEditorFocused,
+      createNewNote,
+      parentFolderName,
+      activeNote,
+      editorState
+    } = this.props;
+    if (!editorState) return;
+    if (isEditorFocused) {
       this.domEditor.focus();
-      this.props.setFocusEditor(false);
+      if (!activeNote) {
+        const noteId = `note-${Date.now()}`;
+        createNewNote(parentFolderName, noteId);
+      }
+    } else {
+      this.domEditor.blur();
     }
   }
 
   render() {
     return (
-      <NoteEditorContainer onClick={this.onClick}>
+      <NoteEditorContainer>
         {this.props.editorState && (
           <Editor
             editorState={this.props.editorState}
@@ -76,13 +74,13 @@ export class NoteEditor extends Component {
 
 NoteEditor.propTypes = {};
 
-function mapStateToProps({ notes, folders, editor }) {
+function mapStateToProps({ notes, folders, focusedElement }) {
   const { activeNote } = notes;
   return {
     editorState: activeNote ? notes.byId[notes.activeNote].editorState : null,
     activeNote,
     parentFolderName: folders.activeFolder,
-    focusEditor: editor.focusEditor
+    isEditorFocused: focusedElement.elementType === ENTITIES.EDITOR
   };
 }
 
@@ -91,9 +89,7 @@ function mapDispatchToProps(dispatch) {
     {
       createNewNote,
       updateEditorState,
-      setActiveNote,
-      setItemToDelete,
-      setFocusEditor
+      setActiveNote
     },
     dispatch
   );

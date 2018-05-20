@@ -1,25 +1,33 @@
 import React, { PureComponent } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { deleteFolder } from "../Folders/FoldersActions";
-import { deleteNote } from "../Notes/NotesActions";
+import { deleteFolder } from "../Folders/stateManager";
+import { deleteNote } from "../Notes/stateManager";
 import { ENTITIES } from "../constants";
+
+const confirmFolderDeleteMessage =
+  "Deleting the folder will delete also all the note into it, are you sure?";
 
 class DeleteButton extends PureComponent {
   deleteSelectedItem() {
-    const { entity, id } = this.props.itemToDelete;
+    const {
+      folders,
+      notes,
+      focusedElement,
+      deleteFolder,
+      deleteNote
+    } = this.props;
 
-    if (entity === ENTITIES.FOLDERS) {
-      if (this.props.folders.byName[id].notes.length) {
-        const confirmDelete = window.confirm(
-          "Deleting the folder will delete also all the note into it, are you sure?"
-        );
-        confirmDelete && this.props.deleteFolder(id);
-      } else {
-        this.props.deleteFolder(id);
-      }
+    if (focusedElement.elementType === ENTITIES.FOLDERS) {
+      const isFolderEmpty =
+        folders.byName[folders.activeFolder].notes.length === 0;
+      const confirmDelete = !isFolderEmpty
+        ? window.confirm(confirmFolderDeleteMessage)
+        : true;
+
+      confirmDelete && deleteFolder(folders.activeFolder);
     } else {
-      this.props.deleteNote(id, this.props.folders.activeFolder);
+      deleteNote(notes.activeNote, folders.activeFolder);
     }
   }
   render() {
@@ -27,10 +35,11 @@ class DeleteButton extends PureComponent {
   }
 }
 
-function mapStateToProps({ itemToDelete, folders }) {
+function mapStateToProps({ folders, notes, focusedElement }) {
   return {
     folders,
-    itemToDelete
+    notes,
+    focusedElement
   };
 }
 

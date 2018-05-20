@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { CREATE_NEW_NOTE, DELETE_NOTE } from "../Notes/NotesActions";
+import { CREATE_NEW_NOTE, DELETE_NOTE } from "../Notes/stateManager";
 
 export const CREATE_NEW_FOLDER = "CREATE_NEW_FOLDER";
 export const DELETE_FOLDER = "DELETE_FOLDER";

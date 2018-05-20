@@ -1,10 +1,19 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
 
+const getbackgroundColor = props => {
+  if (props.highlighted) {
+    return "#4286f4";
+  } else if (props.selected) {
+    return "#dedede";
+  }
+  return "#fafafa";
+};
+
 const FolderLi = styled.li`
   list-style: none;
   padding: 0.4em 0 0.4em 1em;
-  background-color: ${props => (props.selected ? "#dedede" : "#fafafa")};
+  background-color: ${getbackgroundColor};
 `;
 class Folder extends PureComponent {
   constructor(props) {
@@ -13,10 +22,14 @@ class Folder extends PureComponent {
   }
 
   render() {
-    const { name, handleFolderClick, selected } = this.props;
+    const { name, handleFolderClick, selected, highlighted } = this.props;
 
     return (
-      <FolderLi onClick={e => handleFolderClick(name)} selected={selected}>
+      <FolderLi
+        onClick={e => handleFolderClick(name)}
+        selected={selected}
+        highlighted={highlighted}
+      >
         {name}
       </FolderLi>
     );

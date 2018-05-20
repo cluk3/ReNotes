@@ -1,14 +1,12 @@
 import React, { PureComponent } from "react";
-import Note from "./Note";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { setActiveNote } from "./NotesActions";
-import { setItemToDelete } from "../Toolbar/DeleteActions";
+import styled from "styled-components";
 import _ from "lodash";
 import PropTypes from "prop-types";
+import { setActiveNote } from "./stateManager";
+import Note from "./Note";
 import { ENTITIES } from "../constants";
-import { setFocusEditor } from "../Editor/NoteEditorActions";
-import styled from "styled-components";
 
 const NotesListContainer = styled.div`
   max-height: 100%;
@@ -20,56 +18,58 @@ export class NotesList extends PureComponent {
     notes: PropTypes.array.isRequired,
     activeFolderName: PropTypes.string.isRequired,
     activeNote: PropTypes.string,
-    setItemToDelete: PropTypes.func.isRequired,
     setActiveNote: PropTypes.func.isRequired
   };
 
   handleNoteClick(noteId) {
     noteId !== this.props.activeNote && this.props.setActiveNote(noteId);
-    this.props.setItemToDelete(ENTITIES.NOTES, noteId);
   }
 
   componentWillUpdate(nextProps) {
-    const { notes, activeFolderName, activeNote: noteToDeleteId } = this.props;
+    const {
+      notes: notesBeforeUpdate,
+      activeFolderName,
+      activeNote: deletedNoteId
+    } = this.props;
     if (
       activeFolderName === nextProps.activeFolderName &&
-      this.props.notes.length > nextProps.notes.length
+      notesBeforeUpdate.length > nextProps.notes.length
     ) {
-      const notesInCurrentFolder = notes;
-      const noteToDeleteIndex = _.findIndex(
-        notesInCurrentFolder,
-        ({ noteId }) => noteId === noteToDeleteId
+      const deletedNoteIndex = _.findIndex(
+        notesBeforeUpdate,
+        ({ noteId }) => noteId === deletedNoteId
       );
       let newActiveNote;
-      if (notesInCurrentFolder.length === 1) {
+      if (notesBeforeUpdate.length === 1) {
         // it was the last in the array
         newActiveNote = "";
-      } else if (noteToDeleteIndex === notesInCurrentFolder.length - 1) {
+      } else if (deletedNoteIndex === notesBeforeUpdate.length - 1) {
         // it was in the last position
-        newActiveNote = notesInCurrentFolder[noteToDeleteIndex - 1];
+        newActiveNote = notesBeforeUpdate[deletedNoteIndex - 1];
       } else {
-        newActiveNote = notesInCurrentFolder[noteToDeleteIndex + 1];
+        newActiveNote = notesBeforeUpdate[deletedNoteIndex + 1];
       }
       this.props.setActiveNote(newActiveNote.noteId);
-      this.props.setItemToDelete(ENTITIES.NOTES, newActiveNote.noteId);
     } else if (activeFolderName !== nextProps.activeFolderName) {
-      const newActiveNote = nextProps.notes.length
+      const newActiveNoteId = nextProps.notes.length
         ? nextProps.notes[0].noteId
         : "";
-      this.props.setActiveNote(newActiveNote);
+      this.props.setActiveNote(newActiveNoteId);
     }
   }
 
   render() {
-    const { notes } = this.props;
+    const { notes, activeNote, isNoteFocused } = this.props;
     const notesList = notes.map(({ creationDate, editorState, noteId }) => {
+      const isSelected = activeNote === noteId;
       return (
         <Note
           creationDate={creationDate}
           text={editorState.getCurrentContent().getPlainText()}
           key={noteId}
           handleNoteClick={() => this.handleNoteClick(noteId)}
-          selected={this.props.activeNote === noteId}
+          selected={isSelected}
+          highlighted={isNoteFocused && isSelected}
         />
       );
     });
@@ -77,7 +77,7 @@ export class NotesList extends PureComponent {
   }
 }
 
-function mapStateToProps({ notes, folders }) {
+function mapStateToProps({ notes, folders, focusedElement }) {
   const activeFolder = folders.byName[folders.activeFolder];
   // right now since we recreate the notes everytime the component is re-rendered.
   // Can be solved by reselect memoization
@@ -88,16 +88,15 @@ function mapStateToProps({ notes, folders }) {
         )
       : [],
     activeFolderName: folders.activeFolder,
-    activeNote: notes.activeNote
+    activeNote: notes.activeNote,
+    isNoteFocused: focusedElement.elementType === ENTITIES.NOTES
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      setItemToDelete,
-      setActiveNote,
-      setFocusEditor
+      setActiveNote
     },
     dispatch
   );

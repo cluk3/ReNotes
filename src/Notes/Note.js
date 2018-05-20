@@ -7,10 +7,20 @@ import {
   humanFriendlyDate
 } from "../helpers";
 
+const getbackgroundColor = props => {
+  if (props.highlighted) {
+    return "#4286f4";
+  } else if (props.selected) {
+    return "#dedede";
+  }
+  return "#fafafa";
+};
+
 const NoteBody = styled.div`
   font-size: 14px;
   padding: 1em 1em 1em 0;
-  border-bottom: #dedede solid 1px;
+  ${({ selected, highlighted }) =>
+    !selected && !highlighted ? "border-bottom: #dedede solid 1px" : ""};
 `;
 
 const Title = styled.h2`
@@ -40,16 +50,22 @@ const Excerpt = styled.span`
 `;
 
 const NoteContainer = styled.div`
-  background-color: ${props => (props.selected ? "#dedede" : "#fafafa")};
+  background-color: ${getbackgroundColor};
   padding-left: 1em;
 `;
 
-const Note = ({ text, creationDate, handleNoteClick, selected }) => {
+const Note = ({
+  text,
+  creationDate,
+  handleNoteClick,
+  selected,
+  highlighted
+}) => {
   const title = createTitleFromText(text);
   const excerpt = createExcerptFromText(text);
   const creationTime = humanFriendlyDate(creationDate);
   return (
-    <NoteContainer selected={selected}>
+    <NoteContainer selected={selected} highlighted={highlighted}>
       <NoteBody onClick={handleNoteClick}>
         <Title>{title}</Title>
         <SecondRaw>
@@ -65,7 +81,8 @@ Note.propTypes = {
   text: PropTypes.string.isRequired,
   creationDate: PropTypes.number.isRequired,
   handleNoteClick: PropTypes.func.isRequired,
-  selected: PropTypes.bool.isRequired
+  selected: PropTypes.bool.isRequired,
+  highlighted: PropTypes.bool.isRequired
 };
 
 export default Note;

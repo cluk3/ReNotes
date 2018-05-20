@@ -10,7 +10,8 @@ const redux = {
           /* notes ids */
         ]
       }
-    }
+    },
+    allNames: []
   },
   notes: {
     byId: {},

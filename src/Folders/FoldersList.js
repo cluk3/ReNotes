@@ -4,15 +4,11 @@ import NewFolder from "./NewFolder";
 import NewFolderInput from "./NewFolderInput";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import {
-  createNewFolder,
-  deleteFolder,
-  setActiveFolder
-} from "./FoldersActions";
-import { setItemToDelete } from "../Toolbar/DeleteActions";
+import { createNewFolder, setActiveFolder } from "./stateManager";
 import { getDefaultValue } from "../helpers";
-import { ENTITIES } from "../constants";
 import styled from "styled-components";
+import { ENTITIES } from "../constants";
+import PropTypes from "prop-types";
 
 const FoldersUl = styled.ul`
   margin: 0;
@@ -33,6 +29,14 @@ export class FoldersList extends PureComponent {
     };
   }
 
+  static propTypes = {
+    folders: PropTypes.array.isRequired,
+    activeFolder: PropTypes.string.isRequired,
+    isFolderFocused: PropTypes.bool.isRequired,
+    createNewFolder: PropTypes.func.isRequired,
+    setActiveFolder: PropTypes.func.isRequired
+  };
+
   componentWillUpdate(nextProps) {
     const { folders, activeFolder } = this.props;
     if (folders.length > nextProps.folders.length) {
@@ -48,13 +52,12 @@ export class FoldersList extends PureComponent {
         newActiveFolder = folders[folderToDeleteIndex + 1];
       }
       this.props.setActiveFolder(newActiveFolder);
-      this.props.setItemToDelete(ENTITIES.FOLDERS, newActiveFolder);
     }
   }
 
-  handleFolderClick(name) {
-    this.props.activeFolder !== name && this.props.setActiveFolder(name);
-    this.props.setItemToDelete(ENTITIES.FOLDERS, name);
+  handleFolderClick(activeFolderName) {
+    this.props.activeFolder !== activeFolderName &&
+      this.props.setActiveFolder(activeFolderName);
   }
 
   handleNewFolderClick() {
@@ -63,38 +66,38 @@ export class FoldersList extends PureComponent {
     });
   }
 
-  handleSubmit(name) {
+  handleSubmit(newFolderName) {
     const success = true;
-    if (this.props.folders.some(folderName => folderName === name)) {
+    if (this.props.folders.some(folderName => folderName === newFolderName)) {
       return !success;
     } else {
       this.setState({
         creationMode: false
       });
-      this.props.createNewFolder(name);
-      this.props.setActiveFolder(name);
-      this.props.setItemToDelete(ENTITIES.FOLDERS, name);
+      this.props.createNewFolder(newFolderName);
       return success;
     }
   }
 
   render() {
-    const folders = this.props.folders.map(name => (
+    const { isFolderFocused, activeFolder, folders } = this.props;
+    const foldersList = this.props.folders.map(folderName => (
       <Folder
-        name={name}
-        key={name}
+        name={folderName}
+        key={folderName}
         handleFolderClick={id => this.handleFolderClick(id)}
-        selected={this.props.activeFolder === name}
+        selected={activeFolder === folderName}
+        highlighted={activeFolder === folderName && isFolderFocused}
       />
     ));
 
     return (
       <FolderListContainer>
-        <FoldersUl>{folders}</FoldersUl>
+        <FoldersUl>{foldersList}</FoldersUl>
         {this.state.creationMode && (
           <NewFolderInput
-            handleSubmit={name => this.handleSubmit(name)}
-            defaultValue={getDefaultValue(this.props.folders)}
+            handleSubmit={newFolderName => this.handleSubmit(newFolderName)}
+            defaultValue={getDefaultValue(folders)}
           />
         )}
         <NewFolder handleClick={() => this.handleNewFolderClick()} />
@@ -103,19 +106,18 @@ export class FoldersList extends PureComponent {
   }
 }
 
-function mapStateToProps({ folders }) {
+function mapStateToProps({ folders, focusedElement }) {
   return {
     folders: folders.allNames,
-    activeFolder: folders.activeFolder
+    activeFolder: folders.activeFolder,
+    isFolderFocused: focusedElement.elementType === ENTITIES.FOLDERS
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      createNewFolder: createNewFolder,
-      deleteFolder: deleteFolder,
-      setItemToDelete,
+      createNewFolder,
       setActiveFolder
     },
     dispatch

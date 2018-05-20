@@ -6,6 +6,8 @@ import NoteEditor from "./Editor/NoteEditor";
 import styled from "styled-components";
 import Toolbar from "./Toolbar/Toolbar";
 import NotesToolbar from "./Notes/NotesToolbar";
+import Focusable from "./containers/Focusable";
+import { ENTITIES } from "./constants";
 
 const commonColumnStyles = `
   display: block;
@@ -41,16 +43,22 @@ class App extends Component {
       <div className="App" style={{ height: "100vh" }}>
         <ColumnsContainer>
           <FoldersColumn key={0}>
-            <Toolbar />
-            <FoldersList />
+            <Focusable elementType={ENTITIES.FOLDERS}>
+              <Toolbar />
+              <FoldersList />
+            </Focusable>
           </FoldersColumn>
           <NotesColumn key={1}>
-            <NotesToolbar />
-            <NotesList />
+            <Focusable elementType={ENTITIES.NOTES}>
+              <NotesToolbar />
+              <NotesList />
+            </Focusable>
           </NotesColumn>
           <EditorColumn key={2}>
-            <Toolbar />
-            <NoteEditor />
+            <Focusable elementType={ENTITIES.EDITOR}>
+              <Toolbar />
+              <NoteEditor />
+            </Focusable>
           </EditorColumn>
         </ColumnsContainer>
       </div>
