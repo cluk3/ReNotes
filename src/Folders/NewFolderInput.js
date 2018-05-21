@@ -46,34 +46,32 @@ class Folder extends PureComponent {
     event.target.select();
   }
 
-  onHandleSubmit(event) {
+  showConfirmPrompt(message) {
+    if (window.confirm(message)) {
+      this.setState({
+        value: this.props.defaultValue
+      });
+    }
+  }
+
+  handleSubmit(event) {
     event.preventDefault();
-    if (this.state.value.trim() === "") {
-      const ok = window.confirm(
+    const trimmedValue = this.state.value.trim();
+    if (trimmedValue === "") {
+      return this.showConfirmPrompt(
         "Please choose a different name. Folder name can't be blank."
       );
-      return (
-        !ok &&
-        this.setState({
-          value: this.props.defaultValue
-        })
-      );
     }
-
-    const succeded = this.props.handleSubmit(this.state.value.trim());
+    const succeded = this.props.handleSubmit(trimmedValue);
     if (!succeded) {
-      const ok = window.confirm("Name Taken. Please choose a different name.");
-      !ok &&
-        this.setState({
-          value: this.props.defaultValue
-        });
+      this.showConfirmPrompt("Name Taken. Please choose a different name.");
     }
   }
 
   render() {
     return (
       <div>
-        <NewFolderForm onSubmit={e => this.onHandleSubmit(e)}>
+        <NewFolderForm onSubmit={e => this.handleSubmit(e)}>
           <NewFolderInput
             type="text"
             value={this.state.value}
@@ -85,7 +83,7 @@ class Folder extends PureComponent {
             }}
           />
         </NewFolderForm>
-        <Overlay onClick={e => this.onHandleSubmit(e)} />
+        <Overlay onClick={e => this.handleSubmit(e)} />
       </div>
     );
   }
