@@ -1,5 +1,9 @@
 import _ from "lodash";
-import { CREATE_NEW_NOTE, DELETE_NOTE } from "../Notes/stateManager";
+import {
+  CREATE_NEW_NOTE,
+  DELETE_NOTE,
+  setActiveNote
+} from "../Notes/stateManager";
 
 export const CREATE_NEW_FOLDER = "CREATE_NEW_FOLDER";
 export const DELETE_FOLDER = "DELETE_FOLDER";
@@ -23,12 +27,15 @@ export function deleteFolder(folderName) {
   };
 }
 
-export function setActiveFolder(folderName) {
-  return {
-    type: SET_ACTIVE_FOLDER,
-    payload: {
-      folderName
-    }
+export function setActiveFolder(folderName, firstNoteId) {
+  return dispatch => {
+    dispatch({
+      type: SET_ACTIVE_FOLDER,
+      payload: {
+        folderName
+      }
+    });
+    dispatch(setActiveNote(firstNoteId));
   };
 }
 

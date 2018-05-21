@@ -30,7 +30,7 @@ export class FoldersList extends PureComponent {
   }
 
   static propTypes = {
-    folders: PropTypes.array.isRequired,
+    folders: PropTypes.object.isRequired,
     activeFolder: PropTypes.string,
     isFolderFocused: PropTypes.bool.isRequired,
     createNewFolder: PropTypes.func.isRequired,
@@ -38,26 +38,35 @@ export class FoldersList extends PureComponent {
   };
 
   componentDidUpdate(prevProps) {
-    const { folders, activeFolder } = prevProps;
-    if (folders.length > this.props.folders.length) {
-      const folderToDeleteIndex = folders.indexOf(activeFolder);
+    const prevActiveFolder = prevProps.activeFolder;
+    const prevFoldersNames = prevProps.folders.allNames;
+    if (prevFoldersNames.length > this.props.folders.allNames.length) {
+      const folderToDeleteIndex = prevFoldersNames.indexOf(prevActiveFolder);
       let newActiveFolder;
-      if (folders.length === 1) {
+      if (prevFoldersNames.length === 1) {
         // it was the last in the array
         newActiveFolder = "";
-      } else if (folderToDeleteIndex === folders.length - 1) {
+      } else if (folderToDeleteIndex === prevFoldersNames.length - 1) {
         // it was in the last position
-        newActiveFolder = folders[folderToDeleteIndex - 1];
+        newActiveFolder = prevFoldersNames[folderToDeleteIndex - 1];
       } else {
-        newActiveFolder = folders[folderToDeleteIndex + 1];
+        newActiveFolder = prevFoldersNames[folderToDeleteIndex + 1];
       }
-      this.props.setActiveFolder(newActiveFolder);
+      this.props.setActiveFolder(
+        newActiveFolder,
+        this.props.folders.byName[newActiveFolder].notes[0]
+      );
     }
   }
 
-  handleFolderClick(activeFolderName) {
-    this.props.activeFolder !== activeFolderName &&
-      this.props.setActiveFolder(activeFolderName);
+  handleFolderClick(clickedFolderName) {
+    const { activeFolder, setActiveFolder, folders } = this.props;
+
+    activeFolder !== clickedFolderName &&
+      setActiveFolder(
+        clickedFolderName,
+        folders.byName[clickedFolderName].notes[0]
+      );
   }
 
   handleNewFolderClick() {
@@ -68,7 +77,11 @@ export class FoldersList extends PureComponent {
 
   handleSubmit(newFolderName) {
     const success = true;
-    if (this.props.folders.some(folderName => folderName === newFolderName)) {
+    if (
+      this.props.folders.allNames.some(
+        folderName => folderName === newFolderName
+      )
+    ) {
       return !success;
     } else {
       this.setState({
@@ -84,8 +97,8 @@ export class FoldersList extends PureComponent {
     let foldersList;
 
     if (this.state.creationMode) {
-      const defaultNewFolderName = getDefaultValue(folders);
-      foldersList = this.props.folders
+      const defaultNewFolderName = getDefaultValue(folders.allNames);
+      foldersList = folders.allNames
         .concat(defaultNewFolderName)
         .sort((a, b) => a.localeCompare(b))
         .map(
@@ -107,7 +120,7 @@ export class FoldersList extends PureComponent {
             )
         );
     } else {
-      foldersList = this.props.folders
+      foldersList = folders.allNames
         .sort((a, b) => a.localeCompare(b))
         .map(folderName => (
           <Folder
@@ -131,7 +144,7 @@ export class FoldersList extends PureComponent {
 
 function mapStateToProps({ folders, focusedElement }) {
   return {
-    folders: folders.allNames,
+    folders,
     activeFolder: folders.activeFolder,
     isFolderFocused: focusedElement.elementType === ENTITIES.FOLDERS
   };

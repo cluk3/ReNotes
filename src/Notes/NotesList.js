@@ -50,29 +50,25 @@ export class NotesList extends PureComponent {
         newActiveNote = notesBeforeUpdate[deletedNoteIndex + 1];
       }
       this.props.setActiveNote(newActiveNote.noteId);
-    } else if (activeFolderName !== this.props.activeFolderName) {
-      const newActiveNoteId = this.props.notes.length
-        ? this.props.notes[0].noteId
-        : "";
-      this.props.setActiveNote(newActiveNoteId);
     }
   }
 
   render() {
-    const { notes, activeNote, isNoteFocused } = this.props;
+    const { notes, activeNote, isNoteListFocused } = this.props;
     const notesList = notes.map(({ creationDate, editorState, noteId }) => {
-      const isSelected = activeNote === noteId;
+      const isNoteSelected = activeNote === noteId;
       return (
         <Note
           creationDate={creationDate}
           text={editorState.getCurrentContent().getPlainText()}
           key={noteId}
           handleNoteClick={() => this.handleNoteClick(noteId)}
-          selected={isSelected}
-          highlighted={isNoteFocused && isSelected}
+          selected={isNoteSelected}
+          highlighted={isNoteListFocused && isNoteSelected}
         />
       );
     });
+
     return <NotesListContainer>{notesList}</NotesListContainer>;
   }
 }
@@ -89,7 +85,7 @@ function mapStateToProps({ notes, folders, focusedElement }) {
       : [],
     activeFolderName: folders.activeFolder,
     activeNote: notes.activeNote,
-    isNoteFocused: focusedElement.elementType === ENTITIES.NOTES
+    isNoteListFocused: focusedElement.elementType === ENTITIES.NOTES
   };
 }
 
