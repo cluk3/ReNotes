@@ -1,11 +1,40 @@
 import React, { PureComponent } from "react";
+import styled from "styled-components";
+
+const NewFolderInput = styled.input.attrs({
+  autoFocus: true,
+  type: "text"
+})`
+  outline: none;
+  width: 99%;
+  appearance: none;
+  font: 500 16px sans-serif;
+  border: none;
+  padding: 0;
+`;
+
+const NewFolderForm = styled.form`
+  position: relative;
+  z-index: 110;
+  background-color: #4286f4;
+  padding: 0.4em 0 0.4em 1em;
+`;
+
+const Overlay = styled.div`
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+`;
 
 class Folder extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: this.props.defaultValue,
-      showErrorModal: false
+      value: this.props.defaultValue
     };
   }
 
@@ -19,67 +48,44 @@ class Folder extends PureComponent {
 
   onHandleSubmit(event) {
     event.preventDefault();
+    if (this.state.value.trim() === "") {
+      const ok = window.confirm(
+        "Please choose a different name. Folder name can't be blank."
+      );
+      return (
+        !ok &&
+        this.setState({
+          value: this.props.defaultValue
+        })
+      );
+    }
+
     const succeded = this.props.handleSubmit(this.state.value.trim());
     if (!succeded) {
-      this.setState({
-        showErrorModal: true
-      });
+      const ok = window.confirm("Name Taken. Please choose a different name.");
+      !ok &&
+        this.setState({
+          value: this.props.defaultValue
+        });
     }
   }
 
   render() {
     return (
       <div>
-        <form
-          onSubmit={e => this.onHandleSubmit(e)}
-          style={{ position: "relative", zIndex: 110 }}
-        >
-          <input
+        <NewFolderForm onSubmit={e => this.onHandleSubmit(e)}>
+          <NewFolderInput
             type="text"
             value={this.state.value}
             onChange={e => this.handleChange(e)}
             onFocus={e => this.handleFocus(e)}
             autoFocus
-            onBlur={e => this.onHandleSubmit(e)}
-            ref={input => {
+            innerRef={input => {
               this.textInput = input;
             }}
           />
-        </form>
-        {this.state.showErrorModal && (
-          <div
-            style={{
-              position: "fixed",
-              zIndex: 105,
-              color: "white",
-              backgroundColor: "grey",
-              top: "40%",
-              left: "40%",
-              display: "block"
-            }}
-          >
-            <span>Name Taken</span>
-            <button
-              onClick={() => {
-                this.setState({ showErrorModal: false });
-                this.textInput.focus();
-              }}
-            >
-              Ok
-            </button>
-          </div>
-        )}
-        <div
-          style={{
-            display: "block",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            zIndex: 100
-          }}
-        />
+        </NewFolderForm>
+        <Overlay onClick={e => this.onHandleSubmit(e)} />
       </div>
     );
   }

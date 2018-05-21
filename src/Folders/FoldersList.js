@@ -81,25 +81,48 @@ export class FoldersList extends PureComponent {
 
   render() {
     const { isFolderFocused, activeFolder, folders } = this.props;
-    const foldersList = this.props.folders.map(folderName => (
-      <Folder
-        name={folderName}
-        key={folderName}
-        handleFolderClick={id => this.handleFolderClick(id)}
-        selected={activeFolder === folderName}
-        highlighted={activeFolder === folderName && isFolderFocused}
-      />
-    ));
+    let foldersList;
+
+    if (this.state.creationMode) {
+      const defaultNewFolderName = getDefaultValue(folders);
+      foldersList = this.props.folders
+        .concat(defaultNewFolderName)
+        .sort((a, b) => a.localeCompare(b))
+        .map(
+          folderName =>
+            defaultNewFolderName === folderName ? (
+              <NewFolderInput
+                key={defaultNewFolderName}
+                handleSubmit={newFolderName => this.handleSubmit(newFolderName)}
+                defaultValue={defaultNewFolderName}
+              />
+            ) : (
+              <Folder
+                name={folderName}
+                key={folderName}
+                handleFolderClick={id => this.handleFolderClick(id)}
+                selected={false}
+                highlighted={false}
+              />
+            )
+        );
+    } else {
+      foldersList = this.props.folders
+        .sort((a, b) => a.localeCompare(b))
+        .map(folderName => (
+          <Folder
+            name={folderName}
+            key={folderName}
+            handleFolderClick={id => this.handleFolderClick(id)}
+            selected={activeFolder === folderName}
+            highlighted={activeFolder === folderName && isFolderFocused}
+          />
+        ));
+    }
 
     return (
       <FolderListContainer>
         <FoldersUl>{foldersList}</FoldersUl>
-        {this.state.creationMode && (
-          <NewFolderInput
-            handleSubmit={newFolderName => this.handleSubmit(newFolderName)}
-            defaultValue={getDefaultValue(folders)}
-          />
-        )}
         <NewFolder handleClick={() => this.handleNewFolderClick()} />
       </FolderListContainer>
     );
