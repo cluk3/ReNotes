@@ -11,13 +11,23 @@ import {
 import styled from "styled-components";
 import { ENTITIES } from "../constants";
 import { EditorState } from "draft-js";
+import format from "date-fns/format";
 
 const NoteEditorContainer = styled.div`
   height: 100%;
   max-height; 100%;
   overflow: auto;
-  padding: 1em 1em 0 1em;
+  padding: 0.5em 1em 1em 1em;
   border-left: #dedede solid 1px;
+`;
+
+const LastModified = styled.span`
+  margin-bottom: 1em;
+  display: block;
+  text-align: center;
+  color: #9ca09f;
+  font-size: 14px;
+  font-weight: 300;
 `;
 
 export class NoteEditor extends Component {
@@ -64,6 +74,9 @@ export class NoteEditor extends Component {
   render() {
     return (
       <NoteEditorContainer onClick={this.handleClick}>
+        <LastModified>
+          {format(this.props.lastModified, "D MMMM YYYY [at] h:mm A")}
+        </LastModified>
         {this.props.editorState && (
           <Editor
             editorState={this.props.editorState}
@@ -78,9 +91,11 @@ export class NoteEditor extends Component {
 
 function mapStateToProps({ notes, folders, focusedElement }) {
   const { activeNote } = notes;
+  const note = notes.byId[notes.activeNote];
   return {
-    editorState: activeNote ? notes.byId[notes.activeNote].editorState : null,
+    editorState: activeNote ? note.editorState : null,
     activeNote,
+    lastModified: note.lastModified,
     parentFolderName: folders.activeFolder,
     isEditorFocused: focusedElement.elementType === ENTITIES.EDITOR
   };

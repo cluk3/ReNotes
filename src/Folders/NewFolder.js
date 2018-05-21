@@ -6,7 +6,7 @@ const NewFolderButton = styled.button`
   bottom: 0;
   border: none;
   font-size: 16px;
-  background-color: #fafafa;
+  background-color: #f3f4f5;
   display: flex;
   align-items: center;
   padding: 0.5em 0.5em;
@@ -15,7 +15,7 @@ const ButtonText = styled.span`
   padding-left: 0.3em;
 `;
 const Plus = styled.svg`
-  fill: #aaaaaa;
+  fill: #888889;
 `;
 
 const NewFolder = ({ handleClick }) => {

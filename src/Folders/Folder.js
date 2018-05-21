@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 const getbackgroundColor = props => {
   if (props.highlighted) {
-    return "#4286f4";
+    return "#3b90fe";
   } else if (props.selected) {
-    return "#dedede";
+    return "#dcdee0";
   }
-  return "#fafafa";
+  return "#f3f4f5";
 };
 
 const FolderLi = styled.li`

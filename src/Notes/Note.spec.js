@@ -7,7 +7,7 @@ describe("Note", () => {
     const output = shallow(
       <Note
         text={`title\nexcerpt`}
-        creationDate={2314324124123}
+        lastModified={2314324124123}
         handleNoteClick={jest.fn()}
         selected={false}
       />
@@ -19,7 +19,7 @@ describe("Note", () => {
     const output = shallow(
       <Note
         text="test"
-        creationDate={2314324124123}
+        lastModified={2314324124123}
         handleNoteClick={jest.fn()}
         selected={false}
       />
@@ -31,7 +31,7 @@ describe("Note", () => {
     const output = shallow(
       <Note
         text="test"
-        creationDate={2314324124123}
+        lastModified={2314324124123}
         handleNoteClick={jest.fn()}
         selected={false}
       />
@@ -43,7 +43,7 @@ describe("Note", () => {
     const output = shallow(
       <Note
         text="test"
-        creationDate={2314324124123}
+        lastModified={2314324124123}
         handleNoteClick={jest.fn()}
         selected={false}
       />
@@ -55,7 +55,7 @@ describe("Note", () => {
     const output = shallow(
       <Note
         text={`test title\ntest excerpt`}
-        creationDate={2314324124123}
+        lastModified={2314324124123}
         handleNoteClick={jest.fn()}
         selected={false}
       />
@@ -68,7 +68,7 @@ describe("Note", () => {
     const output = shallow(
       <Note
         text={`title\nexcerpt`}
-        creationDate={2314324124123}
+        lastModified={2314324124123}
         handleNoteClick={jest.fn()}
         selected={true}
       />

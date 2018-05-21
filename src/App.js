@@ -13,19 +13,21 @@ const commonColumnStyles = `
   display: block;
   position: relative;
   overflow: hidden;
-  background-color: #fafafa;
 `;
 
 const FoldersColumn = styled.div`
   ${commonColumnStyles};
+  background-color: #f3f4f5;
 `;
 
 const NotesColumn = styled.div`
   ${commonColumnStyles};
+  background-color: #f9f9f7;
 `;
 
 const EditorColumn = styled.div`
   ${commonColumnStyles};
+  background-color: #f9f9f7;
 `;
 
 const ColumnsContainer = styled.div`

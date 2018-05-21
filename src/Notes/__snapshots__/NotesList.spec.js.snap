@@ -11,7 +11,7 @@ exports[`NotesList should render correctly 1`] = `
 >
   Notes List
   <Note
-    creationDate={1235353245432}
+    lastModified={1235353245432}
     handleNoteClick={[Function]}
     key="note-4234"
     selected={false}

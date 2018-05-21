@@ -9,18 +9,17 @@ import {
 
 const getbackgroundColor = props => {
   if (props.highlighted) {
-    return "#efc853";
+    return "#fbdb7c";
   } else if (props.selected) {
-    return "#dedede";
+    return "#dfdfdd";
   }
-  return "#fafafa";
+  return "#f9f9f7";
 };
 
 const NoteBody = styled.div`
   font-size: 14px;
   padding: 1em 1em 1em 0;
-  ${({ selected, highlighted }) =>
-    !selected && !highlighted ? "border-bottom: #dedede solid 1px" : ""};
+  border-bottom: #dedede solid 1px;
 `;
 
 const Title = styled.h2`
@@ -56,14 +55,14 @@ const NoteContainer = styled.div`
 
 const Note = ({
   text,
-  creationDate,
+  lastModified,
   handleNoteClick,
   selected,
   highlighted
 }) => {
   const title = createTitleFromText(text);
   const excerpt = createExcerptFromText(text);
-  const creationTime = humanFriendlyDate(creationDate);
+  const creationTime = humanFriendlyDate(lastModified);
   return (
     <NoteContainer selected={selected} highlighted={highlighted}>
       <NoteBody onClick={handleNoteClick}>
@@ -79,7 +78,7 @@ const Note = ({
 
 Note.propTypes = {
   text: PropTypes.string.isRequired,
-  creationDate: PropTypes.number.isRequired,
+  lastModified: PropTypes.number.isRequired,
   handleNoteClick: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
   highlighted: PropTypes.bool.isRequired

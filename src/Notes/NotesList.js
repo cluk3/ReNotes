@@ -2,9 +2,8 @@ import React, { PureComponent } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import _ from "lodash";
 import PropTypes from "prop-types";
-import { setActiveNote } from "./stateManager";
+import { setActiveNote, deleteNote } from "./stateManager";
 import Note from "./Note";
 import { ENTITIES } from "../constants";
 
@@ -18,7 +17,8 @@ export class NotesList extends PureComponent {
     notes: PropTypes.array.isRequired,
     activeFolderName: PropTypes.string,
     activeNote: PropTypes.string,
-    setActiveNote: PropTypes.func.isRequired
+    setActiveNote: PropTypes.func.isRequired,
+    deleteNote: PropTypes.func.isRequired
   };
 
   handleNoteClick(noteId) {
@@ -27,39 +27,31 @@ export class NotesList extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      notes: notesBeforeUpdate,
-      activeFolderName,
-      activeNote: deletedNoteId
+      activeFolderName: prevActiveFolderName,
+      activeNote: prevActiveNoteId
     } = prevProps;
-    if (
-      activeFolderName === this.props.activeFolderName &&
-      notesBeforeUpdate.length > this.props.notes.length
-    ) {
-      const deletedNoteIndex = _.findIndex(
-        notesBeforeUpdate,
-        ({ noteId }) => noteId === deletedNoteId
-      );
-      let newActiveNote;
-      if (notesBeforeUpdate.length === 1) {
-        // it was the last in the array
-        newActiveNote = "";
-      } else if (deletedNoteIndex === notesBeforeUpdate.length - 1) {
-        // it was in the last position
-        newActiveNote = notesBeforeUpdate[deletedNoteIndex - 1];
-      } else {
-        newActiveNote = notesBeforeUpdate[deletedNoteIndex + 1];
+
+    if (prevActiveNoteId && prevActiveNoteId !== this.props.activeNote) {
+      const prevActiveNote = prevProps.notes.find(
+          note => note.noteId === prevActiveNoteId
+        ),
+        prevNoteText = prevActiveNote.editorState
+          .getCurrentContent()
+          .getPlainText();
+
+      if (prevNoteText.length === 0) {
+        this.props.deleteNote(prevActiveNoteId, prevActiveFolderName);
       }
-      this.props.setActiveNote(newActiveNote.noteId);
     }
   }
 
   render() {
     const { notes, activeNote, isNoteListFocused } = this.props;
-    const notesList = notes.map(({ creationDate, editorState, noteId }) => {
+    const notesList = notes.map(({ lastModified, editorState, noteId }) => {
       const isNoteSelected = activeNote === noteId;
       return (
         <Note
-          creationDate={creationDate}
+          lastModified={lastModified}
           text={editorState.getCurrentContent().getPlainText()}
           key={noteId}
           handleNoteClick={() => this.handleNoteClick(noteId)}
@@ -92,7 +84,8 @@ function mapStateToProps({ notes, folders, focusedElement }) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      setActiveNote
+      setActiveNote,
+      deleteNote
     },
     dispatch
   );

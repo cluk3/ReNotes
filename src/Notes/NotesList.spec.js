@@ -10,7 +10,7 @@ describe("NotesList", () => {
     props = {
       notes: [
         {
-          creationDate: 1235353245432,
+          lastModified: 1235353245432,
           text: `foo\nbar`,
           noteId: "note-4234"
         }
