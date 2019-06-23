@@ -75,7 +75,7 @@ export class NoteEditor extends Component {
     return (
       <NoteEditorContainer onClick={this.handleClick}>
         <LastModified>
-          {format(this.props.lastModified, "D MMMM YYYY [at] h:mm A")}
+          {this.props.lastModified && format(this.props.lastModified, "D MMMM YYYY [at] h:mm A")}
         </LastModified>
         {this.props.editorState && (
           <Editor
@@ -95,7 +95,7 @@ function mapStateToProps({ notes, folders, focusedElement }) {
   return {
     editorState: activeNote ? note.editorState : null,
     activeNote,
-    lastModified: note.lastModified,
+    lastModified: note && note.lastModified,
     parentFolderName: folders.activeFolder,
     isEditorFocused: focusedElement.elementType === ENTITIES.EDITOR
   };
