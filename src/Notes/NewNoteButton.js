@@ -5,6 +5,8 @@ import { createNewNote } from "./stateManager";
 import { setFocusedElement } from "../containers/Focusable/stateManager";
 import PropTypes from "prop-types";
 import { ENTITIES } from "../constants";
+import ToolbarButton from "../Toolbar/ToolbarButton";
+import PlusSvg from "../assets/Plus";
 
 class NewNoteButton extends PureComponent {
   static propTypes = {
@@ -21,7 +23,9 @@ class NewNoteButton extends PureComponent {
 
   render() {
     return (
-      <button onClick={() => this.handleNewNoteClick()}>+ New Note</button>
+      <ToolbarButton onClick={() => this.handleNewNoteClick()}>
+        <PlusSvg />
+      </ToolbarButton>
     );
   }
 }

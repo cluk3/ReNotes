@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { deleteFolder } from "../Folders/stateManager";
 import { deleteNote } from "../Notes/stateManager";
 import { ENTITIES } from "../constants";
+import deleteIcon from "../assets/notes-delete-icon.png";
+import ToolbarButton from "./ToolbarButton";
 
 const confirmFolderDeleteMessage =
   "Deleting the folder will delete also all the note into it, are you sure?";
@@ -31,7 +33,11 @@ class DeleteButton extends PureComponent {
     }
   }
   render() {
-    return <button onClick={() => this.deleteSelectedItem()}>Delete</button>;
+    return (
+      <ToolbarButton onClick={() => this.deleteSelectedItem()}>
+        <img src={deleteIcon} height="18px" alt="delete" />
+      </ToolbarButton>
+    );
   }
 }
 
