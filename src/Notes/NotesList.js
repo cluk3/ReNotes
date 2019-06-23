@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { setActiveNote, deleteNote } from "./stateManager";
+import { setActiveNote, deleteNote } from "./modules/notes";
 import Note from "./Note";
 import { ENTITIES } from "../constants";
 
@@ -15,7 +15,7 @@ const NotesListContainer = styled.div`
 export class NotesList extends PureComponent {
   static propTypes = {
     notes: PropTypes.array.isRequired,
-    activeFolderName: PropTypes.string,
+    activeFolderId: PropTypes.string,
     activeNote: PropTypes.string,
     setActiveNote: PropTypes.func.isRequired,
     deleteNote: PropTypes.func.isRequired
@@ -27,7 +27,7 @@ export class NotesList extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      activeFolderName: prevActiveFolderName,
+      activeFolderId: prevActiveFolderId,
       activeNote: prevActiveNoteId
     } = prevProps;
 
@@ -40,7 +40,7 @@ export class NotesList extends PureComponent {
           .getPlainText();
 
       if (prevNoteText.length === 0) {
-        this.props.deleteNote(prevActiveNoteId, prevActiveFolderName);
+        this.props.deleteNote(prevActiveNoteId, prevActiveFolderId);
       }
     }
   }
@@ -66,7 +66,7 @@ export class NotesList extends PureComponent {
 }
 
 function mapStateToProps({ notes, folders, focusedElement }) {
-  const activeFolder = folders.byName[folders.activeFolder];
+  const activeFolder = folders.byId[folders.activeFolder];
   // right now since we recreate the notes everytime the component is re-rendered.
   // Can be solved by reselect memoization
   return {
@@ -75,7 +75,7 @@ function mapStateToProps({ notes, folders, focusedElement }) {
           Object.assign({ noteId }, notes.byId[noteId])
         )
       : [],
-    activeFolderName: folders.activeFolder,
+    activeFolderId: folders.activeFolder,
     activeNote: notes.activeNote,
     isNoteListFocused: focusedElement.elementType === ENTITIES.NOTES
   };

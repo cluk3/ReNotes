@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const getbackgroundColor = props => {
@@ -15,25 +15,17 @@ const FolderLi = styled.li`
   padding: 0.4em 0 0.4em 1em;
   background-color: ${getbackgroundColor};
 `;
-class Folder extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = { value: "New Folder" };
-  }
 
-  render() {
-    const { name, handleFolderClick, selected, highlighted } = this.props;
-
-    return (
-      <FolderLi
-        onClick={e => handleFolderClick(name)}
-        selected={selected}
-        highlighted={highlighted}
-      >
-        {name}
-      </FolderLi>
-    );
-  }
+const Folder = ({ name, handleFolderClick, selected, highlighted }) => {
+  return (
+    <FolderLi
+      onClick={handleFolderClick}
+      selected={selected}
+      highlighted={highlighted}
+    >
+      {name}
+    </FolderLi>
+  );
 }
 
 export default Folder;

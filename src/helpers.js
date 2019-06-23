@@ -49,3 +49,15 @@ export const createExcerptFromText = fp.pipe(
 );
 
 export const createTitleFromText = text => text.split("\n")[0] || "New Note";
+
+export const electNewElement = (elementIndex, list) => {
+  if (list.length === 1) {
+    // it was the last in the array
+    return;
+  }
+  if (elementIndex === list.length - 1) {
+    // it was in the last position
+    return list[elementIndex - 1];
+  }
+  return list[elementIndex + 1];
+}

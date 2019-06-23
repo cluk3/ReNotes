@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { deleteFolder } from "../Folders/stateManager";
-import { deleteNote } from "../Notes/stateManager";
+import { deleteFolder } from "../Folders/modules/folders";
+import { deleteNote } from "../Notes/modules/notes";
 import { ENTITIES } from "../constants";
 import deleteIcon from "../assets/notes-delete-icon.png";
 import ToolbarButton from "./ToolbarButton";
@@ -22,12 +22,12 @@ class DeleteButton extends PureComponent {
 
     if (focusedElement.elementType === ENTITIES.FOLDERS) {
       const isFolderEmpty =
-        folders.byName[folders.activeFolder].notes.length === 0;
+        folders.byId[folders.activeFolder].notes.length === 0;
       const confirmDelete = !isFolderEmpty
         ? window.confirm(confirmFolderDeleteMessage)
         : true;
 
-      confirmDelete && deleteFolder(folders.activeFolder);
+      confirmDelete && deleteFolder(folders);
     } else {
       deleteNote(notes.activeNote, folders.activeFolder);
     }

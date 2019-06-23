@@ -1,19 +1,25 @@
 import _ from "lodash";
 import { EditorState, ContentState } from "draft-js";
+import uuidv4 from 'uuid/v4'
+import {
+  DELETE_FOLDER
+} from "../../Folders/modules/folders";
+import { electNewElement } from '../../helpers'
 
 export const CREATE_NEW_NOTE = "CREATE_NEW_NOTE";
 export const DELETE_NOTE = "DELETE_NOTE";
 export const SET_ACTIVE_NOTE = "SET_ACTIVE_NOTE";
 export const UPDATE_EDITOR_STATE = "UPDATE_EDITOR_STATE";
 
-export function createNewNote(parentFolderName, noteId, editorState) {
+export function createNewNote(parentFolderId) {
+  const noteId = uuidv4();
   return {
     type: CREATE_NEW_NOTE,
     payload: {
       noteId,
-      parentFolderName,
+      parentFolderId,
       editorState: EditorState.moveFocusToEnd(
-        editorState || EditorState.createEmpty()
+        EditorState.createEmpty()
       )
     }
   };
@@ -29,12 +35,12 @@ export function updateEditorState(editorState, noteId) {
   };
 }
 
-export function deleteNote(noteId, parentFolderName) {
+export function deleteNote(noteId, parentFolderId) {
   return {
     type: DELETE_NOTE,
     payload: {
       noteId,
-      parentFolderName
+      parentFolderId
     }
   };
 }
@@ -57,21 +63,21 @@ const initialState = {
         )
       ),
       lastModified: Date.now() - 1000 * 60 * 60 * 24,
-      parentFolderName: "Test Folder"
+      parentFolderId: "0"
     },
     "1": {
       editorState: EditorState.createWithContent(
         ContentState.createFromText("Titolo 1\nlorem ipsum foo bar sit")
       ),
       lastModified: Date.now() - 1000 * 60 * 60 * 24 * 3,
-      parentFolderName: "Test Folder"
+      parentFolderId: "0"
     },
     "2": {
       editorState: EditorState.createWithContent(
         ContentState.createFromText("Titolo 2\nlorem ipsum foo bar sit")
       ),
       lastModified: Date.now() - 1000 * 60 * 60 * 24 * 7,
-      parentFolderName: "Test Folder 2"
+      parentFolderId: "1"
     }
   },
   allIds: ["0", "1", "2"],
@@ -90,7 +96,7 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
           [noteId]: {
             editorState,
             lastModified: Date.now(),
-            parentFolderName: payload.parentFolderName
+            parentFolderId: payload.parentFolderId
           }
         },
         activeNote: noteId
@@ -98,29 +104,27 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
 
     case DELETE_NOTE:
       const notesInActualFolder = state.allIds.filter(
-        noteId =>
-          state.byId[noteId].parentFolderName === payload.parentFolderName
+        noteId => byId[noteId].parentFolderId === payload.parentFolderId
       );
       const deletedNoteIndex = _.findIndex(
         notesInActualFolder,
         noteId => noteId === payload.noteId
       );
-      let newActiveNote;
-      if (notesInActualFolder.length === 1) {
-        // it was the last in the array
-        newActiveNote = "";
-      } else if (deletedNoteIndex === notesInActualFolder.length - 1) {
-        // it was in the last position
-        newActiveNote = notesInActualFolder[deletedNoteIndex - 1];
-      } else {
-        newActiveNote = notesInActualFolder[deletedNoteIndex + 1];
-      }
+      const newActiveNote = electNewElement(deletedNoteIndex, notesInActualFolder);
 
       return {
         ...state,
         allIds: allIds.filter(noteId => noteId !== payload.noteId),
         byId: _.omit(byId, payload.noteId),
         activeNote: newActiveNote
+      };
+
+    case DELETE_FOLDER:
+      const filteredIds = allIds.filter(noteId => byId[noteId].parentFolderId !== payload.folderId);
+      return {
+        ...state,
+        allIds: allIds.filter(noteId => byId[noteId].parentFolderId !== payload.folderId),
+        byId: _.pick(byId, filteredIds)
       };
 
     case SET_ACTIVE_NOTE:

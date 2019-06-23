@@ -59,7 +59,7 @@ class Folder extends PureComponent {
     const trimmedValue = this.state.value.trim();
     if (trimmedValue === "") {
       return this.showConfirmPrompt(
-        "Please choose a different name. Folder name can't be blank."
+        "Please choose a name. Folder name can't be blank."
       );
     }
     const succeded = this.props.handleSubmit(trimmedValue);

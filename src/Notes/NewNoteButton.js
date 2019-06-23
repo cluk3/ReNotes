@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { createNewNote } from "./stateManager";
+import { createNewNote } from "./modules/notes";
 import { setFocusedElement } from "../containers/Focusable/stateManager";
 import PropTypes from "prop-types";
 import { ENTITIES } from "../constants";
@@ -10,14 +10,13 @@ import PlusSvg from "../assets/Plus";
 
 class NewNoteButton extends PureComponent {
   static propTypes = {
-    activeFolderName: PropTypes.string,
+    activeFolderId: PropTypes.string,
     activeNote: PropTypes.string,
     createNewNote: PropTypes.func.isRequired
   };
 
   handleNewNoteClick() {
-    const noteId = `note-${Date.now()}`;
-    this.props.createNewNote(this.props.activeFolderName, noteId);
+    this.props.createNewNote(this.props.activeFolderId);
     this.props.setFocusedElement(ENTITIES.EDITOR);
   }
 
@@ -32,7 +31,7 @@ class NewNoteButton extends PureComponent {
 
 function mapStateToProps({ notes, folders }) {
   return {
-    activeFolderName: folders.activeFolder
+    activeFolderId: folders.activeFolder
   };
 }
 

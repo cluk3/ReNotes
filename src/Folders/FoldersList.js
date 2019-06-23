@@ -4,7 +4,7 @@ import NewFolder from "./NewFolder";
 import NewFolderInput from "./NewFolderInput";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { createNewFolder, setActiveFolder } from "./stateManager";
+import { createNewFolder, setActiveFolder, changeFolderName, endEditingName } from "./modules/folders";
 import { getDefaultValue } from "../helpers";
 import styled from "styled-components";
 import { ENTITIES } from "../constants";
@@ -37,105 +37,77 @@ export class FoldersList extends PureComponent {
     setActiveFolder: PropTypes.func.isRequired
   };
 
-  componentDidUpdate(prevProps) {
-    const prevActiveFolder = prevProps.activeFolder;
-    const prevFoldersNames = prevProps.folders.allNames;
-    if (prevFoldersNames.length > this.props.folders.allNames.length) {
-      const folderToDeleteIndex = prevFoldersNames.indexOf(prevActiveFolder);
-      let newActiveFolder;
-      if (prevFoldersNames.length === 1) {
-        // it was the last in the array
-        newActiveFolder = "";
-      } else if (folderToDeleteIndex === prevFoldersNames.length - 1) {
-        // it was in the last position
-        newActiveFolder = prevFoldersNames[folderToDeleteIndex - 1];
-      } else {
-        newActiveFolder = prevFoldersNames[folderToDeleteIndex + 1];
-      }
-      this.props.setActiveFolder(
-        newActiveFolder,
-        this.props.folders.byName[newActiveFolder].notes[0]
-      );
-    }
-  }
-
-  handleFolderClick(clickedFolderName) {
+  handleFolderClick(clickedFolderId) {
     const { activeFolder, setActiveFolder, folders } = this.props;
 
-    activeFolder !== clickedFolderName &&
+    activeFolder !== clickedFolderId &&
       setActiveFolder(
-        clickedFolderName,
-        folders.byName[clickedFolderName].notes[0]
+        clickedFolderId,
+        folders.byId[clickedFolderId].notes[0]
       );
   }
 
   handleNewFolderClick() {
-    this.setState({
-      creationMode: true
-    });
+    const { folders, createNewFolder } = this.props;
+    const defaultNewFolderName = getDefaultValue(folders.allIds.map(id => folders.byId[id].name));
+    createNewFolder(defaultNewFolderName);
   }
 
-  handleSubmit(newFolderName) {
+  handleSubmit(oldFolderName, newFolderName, folderId) {
     const success = true;
-    if (
-      this.props.folders.allNames.some(
-        folderName => folderName === newFolderName
-      )
-    ) {
-      return !success;
-    } else {
-      this.setState({
-        creationMode: false
-      });
-      this.props.createNewFolder(newFolderName);
+    const { endEditingName, folders, changeFolderName } = this.props;
+
+    if(oldFolderName === newFolderName) {
+      endEditingName();
       return success;
     }
+    if (
+      folders.allIds
+        .map(id => ({
+          ...folders.byId[id],
+          id
+        }))
+        .some(
+          folder => folder.name === newFolderName
+        )
+    ) {
+      return !success;
+    }
+
+    changeFolderName(folderId, newFolderName);
+    return success;
   }
 
   render() {
     const { isFolderFocused, activeFolder, folders } = this.props;
-    let foldersList;
 
-    if (this.state.creationMode) {
-      const defaultNewFolderName = getDefaultValue(folders.allNames);
-      foldersList = folders.allNames
-        .concat(defaultNewFolderName)
-        .sort((a, b) => a.localeCompare(b))
-        .map(
-          folderName =>
-            defaultNewFolderName === folderName ? (
-              <NewFolderInput
-                key={defaultNewFolderName}
-                handleSubmit={newFolderName => this.handleSubmit(newFolderName)}
-                defaultValue={defaultNewFolderName}
-              />
-            ) : (
-              <Folder
-                name={folderName}
-                key={folderName}
-                handleFolderClick={id => this.handleFolderClick(id)}
-                selected={false}
-                highlighted={false}
-              />
-            )
-        );
-    } else {
-      foldersList = folders.allNames
-        .sort((a, b) => a.localeCompare(b))
-        .map(folderName => (
+    const FoldersList = folders.allIds
+      .map(id => ({
+        ...folders.byId[id],
+        id
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map(({id: folderId, name: folderName}) => (
+        folders.editingName === folderId ? (
+          <NewFolderInput
+            key={folderId}
+            handleSubmit={newFolderName => this.handleSubmit(folderName, newFolderName, folderId)}
+            defaultValue={folderName}
+          />
+        ) : (
           <Folder
             name={folderName}
-            key={folderName}
-            handleFolderClick={id => this.handleFolderClick(id)}
-            selected={activeFolder === folderName}
-            highlighted={activeFolder === folderName && isFolderFocused}
+            key={folderId}
+            handleFolderClick={() => this.handleFolderClick(folderId)}
+            selected={activeFolder === folderId}
+            highlighted={activeFolder === folderId && isFolderFocused}
           />
-        ));
-    }
+        )
+      ));
 
     return (
       <FolderListContainer>
-        <FoldersUl>{foldersList}</FoldersUl>
+        <FoldersUl>{FoldersList}</FoldersUl>
         <NewFolder handleClick={() => this.handleNewFolderClick()} />
       </FolderListContainer>
     );
@@ -154,7 +126,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       createNewFolder,
-      setActiveFolder
+      setActiveFolder,
+      changeFolderName,
+      endEditingName
     },
     dispatch
   );

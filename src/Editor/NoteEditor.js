@@ -7,7 +7,7 @@ import {
   updateEditorState,
   createNewNote,
   setActiveNote
-} from "../Notes/stateManager";
+} from "../Notes/modules/notes";
 import styled from "styled-components";
 import { ENTITIES } from "../constants";
 import { EditorState } from "draft-js";
@@ -65,9 +65,8 @@ export class NoteEditor extends Component {
     } = this.props;
     const editorGainedFocus = !prevProps.isEditorFocused && isEditorFocused;
 
-    if (!editorState && editorGainedFocus) {
-      const noteId = `note-${Date.now()}`;
-      return createNewNote(parentFolderName, noteId);
+    if (!editorState && editorGainedFocus) {;
+      return createNewNote(parentFolderName);
     }
   }
 
