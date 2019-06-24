@@ -72,7 +72,7 @@ export function setActiveNote(noteId) {
   };
 }
 
-const initialState = {
+export const initialState = {
   byId: {
     "0": {
       editorState: EditorState.createWithContent(

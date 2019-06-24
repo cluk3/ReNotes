@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@testing-library/react": "^8.0.1",
     "date-fns": "^1.29.0",
     "draft-js": "^0.10.4",
     "husky": "^0.14.3",
+    "jest-dom": "^3.5.0",
+    "jest-styled-components": "^6.3.3",
     "lint-staged": "^6.0.0",
     "lodash": "^4.17.4",
     "prettier": "^1.9.2",
@@ -26,13 +29,7 @@
     "eject": "react-scripts eject",
     "coverage": "react-scripts test --coverage"
   },
-  "devDependencies": {
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "enzyme-to-json": "^3.3.0",
-    "jest-enzyme": "^4.0.2",
-    "react-test-renderer": "^16.2.0"
-  },
+  "devDependencies": {},
   "browserslist": {
     "production": [
       ">0.2%",

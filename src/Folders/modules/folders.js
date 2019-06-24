@@ -56,8 +56,7 @@ export function changeFolderName(folderId, newName) {
 
 export function endEditingName() {
   return {
-    type: END_EDITING_NAME,
-    payload: {}
+    type: END_EDITING_NAME
   };
 }
 
@@ -75,7 +74,7 @@ export function setActiveFolder(folderId, firstNoteId) {
 
 const TEST_FOLDER = "Test Folder";
 const TEST_FOLDER_2 = "Test Folder 2";
-const initialState = {
+export const initialState = {
   byId: {
     "0": { notes: ["0", "1"], name: TEST_FOLDER },
     "1": { notes: ["2"], name: TEST_FOLDER_2 }

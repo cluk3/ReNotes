@@ -11,8 +11,10 @@ export function setFocusedElement(elementType) {
   };
 }
 
+export const initialState = { elementType: ENTITIES.FOLDERS }
+
 export function focusableReducer(
-  state = { elementType: ENTITIES.FOLDERS },
+  state = initialState,
   { type, payload = {} }
 ) {
   switch (type) {

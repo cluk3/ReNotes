@@ -1,5 +1,21 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { renderWithRedux } from './testRenderWithRedux'
+import App from './App';
+import 'jest-styled-components';
 
-it("has to be written!", () => {});
+it('renders the App', () => {
+  const { container } = renderWithRedux(<App />);
+  expect(container.querySelector('.App')).toBeInTheDocument();
+});
+
+test('it works', () => {
+    const { container } = renderWithRedux(<App />)
+    expect(container.firstChild).toMatchSnapshot()
+  })
+
+it('renders the folders column', () => {
+    const { store, getByText } = renderWithRedux(<App />);
+    console.log(store)
+    expect(getByText(store.getState().folders.byId["0"].name)).toBeInTheDocument();
+  });
