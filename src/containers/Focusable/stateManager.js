@@ -1,6 +1,6 @@
-import { ENTITIES } from "../../constants";
+import { ENTITIES } from '../../constants';
 
-export const SET_FOCUSED_ELEMENT = "SET_FOCUSED_ELEMENT";
+export const SET_FOCUSED_ELEMENT = 'SET_FOCUSED_ELEMENT';
 
 export function setFocusedElement(elementType) {
   return {
@@ -11,12 +11,9 @@ export function setFocusedElement(elementType) {
   };
 }
 
-export const initialState = { elementType: ENTITIES.FOLDERS }
+export const initialState = { elementType: ENTITIES.FOLDERS };
 
-export function focusableReducer(
-  state = initialState,
-  { type, payload = {} }
-) {
+export function focusableReducer(state = initialState, { type, payload = {} }) {
   switch (type) {
     case SET_FOCUSED_ELEMENT:
       const { elementType } = payload;

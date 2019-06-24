@@ -1,11 +1,11 @@
-import React, { PureComponent } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { setFocusedElement } from "./stateManager";
-import styled from "styled-components";
+import React, { PureComponent } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { setFocusedElement } from './stateManager';
+import styled from 'styled-components';
 
 const FocusableContainer = styled.div.attrs({
-  tabIndex: "-1"
+  tabIndex: '-1'
 })`
   height: 100%;
   &:focus {

@@ -296,7 +296,7 @@ exports[`it works 1`] = `
               <h2
                 class="c16"
               >
-                Titolo 0
+                lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
               </h2>
               <div
                 class="c17"
@@ -309,7 +309,7 @@ exports[`it works 1`] = `
                 <span
                   class="c19"
                 >
-                  lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
+                  No additional text
                 </span>
               </div>
             </div>
@@ -323,7 +323,7 @@ exports[`it works 1`] = `
               <h2
                 class="c16"
               >
-                Titolo 1
+                lorem ipsum foo bar sit
               </h2>
               <div
                 class="c17"
@@ -336,7 +336,7 @@ exports[`it works 1`] = `
                 <span
                   class="c19"
                 >
-                  lorem ipsum foo bar sit
+                  No additional text
                 </span>
               </div>
             </div>
@@ -360,7 +360,7 @@ exports[`it works 1`] = `
           <span
             class="c23"
           >
-            23 June 2019 at 4:38 PM
+            23 June 2019 at 5:07 PM
           </span>
           <div
             class="DraftEditor-root"
@@ -381,36 +381,15 @@ exports[`it works 1`] = `
                   <div
                     class=""
                     data-block="true"
-                    data-editor="9ltnq"
-                    data-offset-key="4iagi-0-0"
+                    data-editor="123"
+                    data-offset-key="123-0-0"
                   >
                     <div
                       class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-                      data-offset-key="4iagi-0-0"
+                      data-offset-key="123-0-0"
                     >
                       <span
-                        data-offset-key="4iagi-0-0"
-                      >
-                        <span
-                          data-text="true"
-                        >
-                          Titolo 0
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class=""
-                    data-block="true"
-                    data-editor="9ltnq"
-                    data-offset-key="2j6kh-0-0"
-                  >
-                    <div
-                      class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-                      data-offset-key="2j6kh-0-0"
-                    >
-                      <span
-                        data-offset-key="2j6kh-0-0"
+                        data-offset-key="123-0-0"
                       >
                         <span
                           data-text="true"

@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import styled from "styled-components";
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
 
 const ToolbarDiv = styled.div`
   height: 36px;
@@ -10,6 +10,7 @@ const ToolbarDiv = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
+
 class Toolbar extends PureComponent {
   render() {
     return <ToolbarDiv>{this.props.children}</ToolbarDiv>;

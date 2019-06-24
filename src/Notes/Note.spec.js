@@ -1,6 +1,6 @@
-import React from "react";
-import Note from "./Note";
-describe("Note", () => {
+import React from 'react';
+import Note from './Note';
+describe('Note', () => {
   // it("should render correctly", () => {
   //   const output = shallow(
   //     <Note
@@ -12,7 +12,6 @@ describe("Note", () => {
   //   );
   //   expect(shallowToJson(output)).toMatchSnapshot();
   // });
-
   // it("should show the correct title", () => {
   //   const output = shallow(
   //     <Note
@@ -24,7 +23,6 @@ describe("Note", () => {
   //   );
   //   expect(output.find("h2").text()).toEqual("test");
   // });
-
   // it("should show the correct creation date info", () => {
   //   const output = shallow(
   //     <Note
@@ -36,7 +34,6 @@ describe("Note", () => {
   //   );
   //   expect(output.find("span").text()).toEqual("Monday");
   // });
-
   // it("should show the default excerpt when note has no body", () => {
   //   const output = shallow(
   //     <Note
@@ -48,7 +45,6 @@ describe("Note", () => {
   //   );
   //   expect(output.find("p").text()).toEqual("No additional text");
   // });
-
   // it("should show the correct title and excerpt with new line", () => {
   //   const output = shallow(
   //     <Note
@@ -61,7 +57,6 @@ describe("Note", () => {
   //   expect(output.find("h2").text()).toEqual("test title");
   //   expect(output.find("p").text()).toEqual("test excerpt");
   // });
-
   // it("should have background grey when selected", () => {
   //   const output = shallow(
   //     <Note

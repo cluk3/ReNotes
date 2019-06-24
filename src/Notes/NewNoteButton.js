@@ -1,12 +1,12 @@
-import React, { PureComponent } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { createNewNote } from "./modules/notes";
-import { setFocusedElement } from "../containers/Focusable/stateManager";
-import PropTypes from "prop-types";
-import { ENTITIES } from "../constants";
-import ToolbarButton from "../Toolbar/ToolbarButton";
-import PlusSvg from "../assets/Plus";
+import React, { PureComponent } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { createNewNote } from './modules/notes';
+import { setFocusedElement } from '../containers/Focusable/stateManager';
+import PropTypes from 'prop-types';
+import { ENTITIES } from '../constants';
+import ToolbarButton from '../Toolbar/ToolbarButton';
+import PlusSvg from '../assets/Plus';
 
 class NewNoteButton extends PureComponent {
   static propTypes = {

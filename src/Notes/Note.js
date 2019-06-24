@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import {
   createExcerptFromText,
   createTitleFromText,
   humanFriendlyDate
-} from "../helpers";
+} from '../helpers';
 
 const getbackgroundColor = props => {
   if (props.highlighted) {
-    return "#fbdb7c";
+    return '#fbdb7c';
   } else if (props.selected) {
-    return "#dfdfdd";
+    return '#dfdfdd';
   }
-  return "#f9f9f7";
+  return '#f9f9f7';
 };
 
 const NoteBody = styled.div`

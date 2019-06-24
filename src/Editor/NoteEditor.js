@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Editor } from "draft-js";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Editor } from 'draft-js';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import {
   updateEditorState,
   createNewNote,
   setActiveNote
-} from "../Notes/modules/notes";
-import styled from "styled-components";
-import { ENTITIES } from "../constants";
-import { EditorState } from "draft-js";
-import format from "date-fns/format";
+} from '../Notes/modules/notes';
+import styled from 'styled-components';
+import { ENTITIES } from '../constants';
+import { EditorState } from 'draft-js';
+import format from 'date-fns/format';
 
 const NoteEditorContainer = styled.div`
   height: 100%;
@@ -65,7 +65,7 @@ export class NoteEditor extends Component {
     } = this.props;
     const editorGainedFocus = !prevProps.isEditorFocused && isEditorFocused;
 
-    if (!editorState && editorGainedFocus) {;
+    if (!editorState && editorGainedFocus) {
       return createNewNote(parentFolderName);
     }
   }
@@ -74,7 +74,8 @@ export class NoteEditor extends Component {
     return (
       <NoteEditorContainer onClick={this.handleClick}>
         <LastModified>
-          {this.props.lastModified && format(this.props.lastModified, "D MMMM YYYY [at] h:mm A")}
+          {this.props.lastModified &&
+            format(this.props.lastModified, 'D MMMM YYYY [at] h:mm A')}
         </LastModified>
         {this.props.editorState && (
           <Editor

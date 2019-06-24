@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const WidthContext = React.createContext("100%");
+const WidthContext = React.createContext('100%');
 
 class ResizableContainer extends React.Component {
   constructor(props) {
@@ -35,12 +35,12 @@ class ResizableContainer extends React.Component {
     let splitterIndex = 0;
     return React.Children.map(children, child => {
       let clonedChild;
-      if (child.displayName === "ResizableColumn") {
+      if (child.displayName === 'ResizableColumn') {
         clonedChild = React.cloneElement(child, {
           percentualIncrement: this.getPercentualIncrement(columnIndex)
         });
         columnIndex++;
-      } else if (child.displayName === "Splitter") {
+      } else if (child.displayName === 'Splitter') {
         clonedChild = React.cloneElement(child, {
           notifyResize: this.notifyResize(splitterIndex)
         });
@@ -88,11 +88,11 @@ class ResizableColumn extends React.Component {
   render() {
     const resizingStyle = this.state.resizing
       ? {
-          userSelect: "none",
-          pointerEvents: "none",
-          cursor: "col-resize"
+          userSelect: 'none',
+          pointerEvents: 'none',
+          cursor: 'col-resize'
         }
-      : "";
+      : '';
     const style = {
       width: `calc((100% - ${this.props.splitterWidth}) * ${
         this.state.percentualWidth
@@ -116,8 +116,8 @@ class Resizer extends React.Component {
     this.setState(() => ({
       mousePositionX
     }));
-    window.addEventListener("mousemove", this.resize, false);
-    window.addEventListener("mouseup", this.stopResize, false);
+    window.addEventListener('mousemove', this.resize, false);
+    window.addEventListener('mouseup', this.stopResize, false);
   };
   resize = event => {
     const mousePositionX = event.clientX;
@@ -130,8 +130,8 @@ class Resizer extends React.Component {
     this.setState(() => ({
       resizing: false
     }));
-    window.removeEventListener("mousemove", this.resize, false);
-    window.removeEventListener("mouseup", this.stopResize, false);
+    window.removeEventListener('mousemove', this.resize, false);
+    window.removeEventListener('mouseup', this.stopResize, false);
   };
 
   render() {

@@ -1,5 +1,5 @@
 export const ENTITIES = {
-  FOLDERS: "FOLDERS",
-  NOTES: "NOTES",
-  EDITOR: "EDITOR"
+  FOLDERS: 'FOLDERS',
+  NOTES: 'NOTES',
+  EDITOR: 'EDITOR'
 };

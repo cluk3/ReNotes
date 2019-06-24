@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
-import { connect } from "react-redux";
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import { setActiveNote, deleteNote } from "./modules/notes";
-import Note from "./Note";
-import { ENTITIES } from "../constants";
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { setActiveNote, deleteNote } from './modules/notes';
+import Note from './Note';
+import { ENTITIES } from '../constants';
 
 const NotesListContainer = styled.div`
   max-height: 100%;

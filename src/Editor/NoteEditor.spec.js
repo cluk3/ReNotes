@@ -1,14 +1,13 @@
-import React from "react";
-import NoteEditor from "./NoteEditor";
-import { renderWithRedux } from '../testRenderWithRedux'
+import React from 'react';
+import NoteEditor from './NoteEditor';
+import { renderWithRedux } from '../testRenderWithRedux';
 import 'jest-styled-components';
 
-describe("NoteEditor", () => {
-
+describe('NoteEditor', () => {
   it('works', () => {
     const { container } = renderWithRedux(<NoteEditor />);
-    expect(container.firstChild).toMatchSnapshot()
-  })
+    expect(container.firstChild).toMatchSnapshot();
+  });
 
   // it("should be initialized with no text if it's a new note", () => {});
   // it("should be initialized with no text if folder is empty", () => {});

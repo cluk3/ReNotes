@@ -1,14 +1,14 @@
-import React, { PureComponent } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { deleteFolder } from "../Folders/modules/folders";
-import { deleteNoteAndElectNewActive } from "../Notes/modules/notes";
-import { ENTITIES } from "../constants";
-import deleteIcon from "../assets/notes-delete-icon.png";
-import ToolbarButton from "./ToolbarButton";
+import React, { PureComponent } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { deleteFolder } from '../Folders/modules/folders';
+import { deleteNoteAndElectNewActive } from '../Notes/modules/notes';
+import { ENTITIES } from '../constants';
+import deleteIcon from '../assets/notes-delete-icon.png';
+import ToolbarButton from './ToolbarButton';
 
 const confirmFolderDeleteMessage =
-  "Deleting the folder will delete also all the note into it, are you sure?";
+  'Deleting the folder will delete also all the note into it, are you sure?';
 
 class DeleteButton extends PureComponent {
   deleteSelectedItem() {

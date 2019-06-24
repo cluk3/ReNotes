@@ -1,15 +1,14 @@
-import React from "react";
-import NotesList from "./NotesList";
-import { ENTITIES } from "../constants";
-import { renderWithRedux } from '../testRenderWithRedux'
+import React from 'react';
+import NotesList from './NotesList';
+import { ENTITIES } from '../constants';
+import { renderWithRedux } from '../testRenderWithRedux';
 import 'jest-styled-components';
 
-describe("NotesList", () => {
-
+describe('NotesList', () => {
   test('it works', () => {
     const { container } = renderWithRedux(<NotesList />);
-    expect(container.firstChild).toMatchSnapshot()
-  })
+    expect(container.firstChild).toMatchSnapshot();
+  });
 
   // it("should render correctly", () => {
   //   const output = shallow(<NotesList {...props} />);

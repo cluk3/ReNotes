@@ -24,7 +24,7 @@ exports[`NoteEditor works 1`] = `
   <span
     class="c1"
   >
-    23 June 2019 at 4:38 PM
+    23 June 2019 at 5:07 PM
   </span>
   <div
     class="DraftEditor-root"
@@ -45,36 +45,15 @@ exports[`NoteEditor works 1`] = `
           <div
             class=""
             data-block="true"
-            data-editor="a16dr"
-            data-offset-key="5b1gc-0-0"
+            data-editor="123"
+            data-offset-key="123-0-0"
           >
             <div
               class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-              data-offset-key="5b1gc-0-0"
+              data-offset-key="123-0-0"
             >
               <span
-                data-offset-key="5b1gc-0-0"
-              >
-                <span
-                  data-text="true"
-                >
-                  Titolo 0
-                </span>
-              </span>
-            </div>
-          </div>
-          <div
-            class=""
-            data-block="true"
-            data-editor="a16dr"
-            data-offset-key="38fp0-0-0"
-          >
-            <div
-              class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-              data-offset-key="38fp0-0-0"
-            >
-              <span
-                data-offset-key="38fp0-0-0"
+                data-offset-key="123-0-0"
               >
                 <span
                   data-text="true"

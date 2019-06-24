@@ -1,9 +1,9 @@
-import React, { PureComponent } from "react";
-import styled from "styled-components";
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
 
 const NewFolderInput = styled.input.attrs({
   autoFocus: true,
-  type: "text"
+  type: 'text'
 })`
   outline: none;
   width: 99%;
@@ -57,14 +57,14 @@ class Folder extends PureComponent {
   handleSubmit(event) {
     event.preventDefault();
     const trimmedValue = this.state.value.trim();
-    if (trimmedValue === "") {
+    if (trimmedValue === '') {
       return this.showConfirmPrompt(
         "Please choose a name. Folder name can't be blank."
       );
     }
     const succeded = this.props.handleSubmit(trimmedValue);
     if (!succeded) {
-      this.showConfirmPrompt("Name Taken. Please choose a different name.");
+      this.showConfirmPrompt('Name Taken. Please choose a different name.');
     }
   }
 

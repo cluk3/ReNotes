@@ -1,17 +1,17 @@
-import uuidv4 from 'uuid/v4'
-import _ from "lodash";
+import uuidv4 from 'uuid/v4';
+import _ from 'lodash';
 import {
   CREATE_NEW_NOTE,
   DELETE_NOTE,
   setActiveNote
-} from "../../Notes/modules/notes";
-import { electNewElement } from '../../helpers'
+} from '../../Notes/modules/notes';
+import { electNewElement } from '../../helpers';
 
-export const CREATE_NEW_FOLDER = "CREATE_NEW_FOLDER";
-export const DELETE_FOLDER = "DELETE_FOLDER";
-export const SET_ACTIVE_FOLDER = "SET_ACTIVE_FOLDER";
-export const CHANGE_FOLDER_NAME = "CHANGE_FOLDER_NAME";
-export const END_EDITING_NAME = "END_EDITING_NAME";
+export const CREATE_NEW_FOLDER = 'CREATE_NEW_FOLDER';
+export const DELETE_FOLDER = 'DELETE_FOLDER';
+export const SET_ACTIVE_FOLDER = 'SET_ACTIVE_FOLDER';
+export const CHANGE_FOLDER_NAME = 'CHANGE_FOLDER_NAME';
+export const END_EDITING_NAME = 'END_EDITING_NAME';
 
 export function createNewFolder(folderName) {
   const folderId = uuidv4();
@@ -72,15 +72,15 @@ export function setActiveFolder(folderId, firstNoteId) {
   };
 }
 
-const TEST_FOLDER = "Test Folder";
-const TEST_FOLDER_2 = "Test Folder 2";
+const TEST_FOLDER = 'Test Folder';
+const TEST_FOLDER_2 = 'Test Folder 2';
 export const initialState = {
   byId: {
-    "0": { notes: ["0", "1"], name: TEST_FOLDER },
-    "1": { notes: ["2"], name: TEST_FOLDER_2 }
+    '0': { notes: ['0', '1'], name: TEST_FOLDER },
+    '1': { notes: ['2'], name: TEST_FOLDER_2 }
   },
-  allIds: ["0", "1"],
-  activeFolder: "0",
+  allIds: ['0', '1'],
+  activeFolder: '0',
   editingName: null
 };
 
@@ -105,13 +105,11 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
       return {
         ...state,
         byId: _.omit(state.byId, folderId),
-        allIds: state.allIds.filter(
-          id => folderId !== id
-        ),
+        allIds: state.allIds.filter(id => folderId !== id),
         activeFolder: null
       };
     case CHANGE_FOLDER_NAME:
-      const {newName} = payload;
+      const { newName } = payload;
       return {
         ...state,
         byId: {
@@ -131,9 +129,7 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
           ...state.byId,
           [payload.parentFolderId]: {
             ...parentFolder,
-            notes: parentFolder.notes.concat(
-              payload.noteId
-            )
+            notes: parentFolder.notes.concat(payload.noteId)
           }
         }
       };

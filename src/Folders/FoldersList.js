@@ -1,13 +1,18 @@
-import React, { PureComponent } from "react";
-import Folder from "./Folder";
-import NewFolder from "./NewFolder";
-import NewFolderInput from "./NewFolderInput";
-import { connect } from "react-redux";
-import { createNewFolder, setActiveFolder, changeFolderName, endEditingName } from "./modules/folders";
-import { getDefaultValue } from "../helpers";
-import styled from "styled-components";
-import { ENTITIES } from "../constants";
-import PropTypes from "prop-types";
+import React, { PureComponent } from 'react';
+import Folder from './Folder';
+import NewFolder from './NewFolder';
+import NewFolderInput from './NewFolderInput';
+import { connect } from 'react-redux';
+import {
+  createNewFolder,
+  setActiveFolder,
+  changeFolderName,
+  endEditingName
+} from './modules/folders';
+import { getDefaultValue } from '../helpers';
+import styled from 'styled-components';
+import { ENTITIES } from '../constants';
+import PropTypes from 'prop-types';
 
 const FoldersUl = styled.ul`
   margin: 0;
@@ -40,15 +45,14 @@ export class FoldersList extends PureComponent {
     const { activeFolder, setActiveFolder, folders } = this.props;
 
     activeFolder !== clickedFolderId &&
-      setActiveFolder(
-        clickedFolderId,
-        folders.byId[clickedFolderId].notes[0]
-      );
+      setActiveFolder(clickedFolderId, folders.byId[clickedFolderId].notes[0]);
   }
 
   handleNewFolderClick() {
     const { folders, createNewFolder } = this.props;
-    const defaultNewFolderName = getDefaultValue(folders.allIds.map(id => folders.byId[id].name));
+    const defaultNewFolderName = getDefaultValue(
+      folders.allIds.map(id => folders.byId[id].name)
+    );
     createNewFolder(defaultNewFolderName);
   }
 
@@ -56,7 +60,7 @@ export class FoldersList extends PureComponent {
     const success = true;
     const { endEditingName, folders, changeFolderName } = this.props;
 
-    if(oldFolderName === newFolderName) {
+    if (oldFolderName === newFolderName) {
       endEditingName();
       return success;
     }
@@ -66,9 +70,7 @@ export class FoldersList extends PureComponent {
           ...folders.byId[id],
           id
         }))
-        .some(
-          folder => folder.name === newFolderName
-        )
+        .some(folder => folder.name === newFolderName)
     ) {
       return !success;
     }
@@ -86,23 +88,26 @@ export class FoldersList extends PureComponent {
         id
       }))
       .sort((a, b) => a.name.localeCompare(b.name))
-      .map(({id: folderId, name: folderName}) => (
-        folders.editingName === folderId ? (
-          <NewFolderInput
-            key={folderId}
-            handleSubmit={newFolderName => this.handleSubmit(folderName, newFolderName, folderId)}
-            defaultValue={folderName}
-          />
-        ) : (
-          <Folder
-            name={folderName}
-            key={folderId}
-            handleFolderClick={() => this.handleFolderClick(folderId)}
-            selected={activeFolder === folderId}
-            highlighted={activeFolder === folderId && isFolderFocused}
-          />
-        )
-      ));
+      .map(
+        ({ id: folderId, name: folderName }) =>
+          folders.editingName === folderId ? (
+            <NewFolderInput
+              key={folderId}
+              handleSubmit={newFolderName =>
+                this.handleSubmit(folderName, newFolderName, folderId)
+              }
+              defaultValue={folderName}
+            />
+          ) : (
+            <Folder
+              name={folderName}
+              key={folderId}
+              handleFolderClick={() => this.handleFolderClick(folderId)}
+              selected={activeFolder === folderId}
+              highlighted={activeFolder === folderId && isFolderFocused}
+            />
+          )
+      );
 
     return (
       <FolderListContainer>
@@ -126,6 +131,6 @@ const mapDispatchToProps = {
   setActiveFolder,
   changeFolderName,
   endEditingName
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoldersList);
