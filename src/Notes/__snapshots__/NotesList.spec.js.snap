@@ -1,34 +1,114 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NotesList should render correctly 1`] = `
+exports[`NotesList it works 1`] = `
+.c0 {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.c1 {
+  background-color: #dfdfdd;
+  padding-left: 1em;
+}
+
+.c7 {
+  background-color: #f9f9f7;
+  padding-left: 1em;
+}
+
+.c2 {
+  font-size: 14px;
+  padding: 1em 1em 1em 0;
+  border-bottom: #dedede solid 1px;
+}
+
+.c3 {
+  font-size: 15px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  line-height: 1.4;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.c5 {
+  padding-right: 1em;
+  white-space: nowrap;
+}
+
+.c6 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 <div
-  style={
-    Object {
-      "maxHeight": "100%",
-      "overflowY": "auto",
-    }
-  }
+  class="c0"
 >
-  Notes List
-  <Note
-    lastModified={1235353245432}
-    handleNoteClick={[Function]}
-    key="note-4234"
-    selected={false}
-    text="foo
-  bar"
-  />
-  <button
-    onClick={[Function]}
-    style={
-      Object {
-        "bottom": "8px",
-        "left": "8px",
-        "position": "absolute",
-      }
-    }
+  <div
+    class="c1"
   >
-    + New Note
-  </button>
+    <div
+      class="c2"
+    >
+      <h2
+        class="c3"
+      >
+        Titolo 0
+      </h2>
+      <div
+        class="c4"
+      >
+        <span
+          class="c5"
+        >
+          Yesterday
+        </span>
+        <span
+          class="c6"
+        >
+          lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="c7"
+  >
+    <div
+      class="c2"
+    >
+      <h2
+        class="c3"
+      >
+        Titolo 1
+      </h2>
+      <div
+        class="c4"
+      >
+        <span
+          class="c5"
+        >
+          Friday
+        </span>
+        <span
+          class="c6"
+        >
+          lorem ipsum foo bar sit
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
 `;

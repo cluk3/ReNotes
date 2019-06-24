@@ -1,25 +1,15 @@
 import React from "react";
-import { NotesList } from "./NotesList";
+import NotesList from "./NotesList";
 import { ENTITIES } from "../constants";
+import { renderWithRedux } from '../testRenderWithRedux'
+import 'jest-styled-components';
 
 describe("NotesList", () => {
-  let props;
-  beforeEach(() => {
-    props = {
-      notes: [
-        {
-          lastModified: 1235353245432,
-          text: `foo\nbar`,
-          noteId: "note-4234"
-        }
-      ],
-      activeFolderName: "testFolder",
-      activeNote: "note-4333",
-      createNewNote: jest.fn(),
-      setItemToDelete: jest.fn(),
-      setActiveNote: jest.fn()
-    };
-  });
+
+  test('it works', () => {
+    const { container } = renderWithRedux(<NotesList />);
+    expect(container.firstChild).toMatchSnapshot()
+  })
 
   // it("should render correctly", () => {
   //   const output = shallow(<NotesList {...props} />);

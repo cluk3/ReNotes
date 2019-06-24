@@ -1,45 +1,236 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`it works 1`] = `
+.c0 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.c1 {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background-color: #f3f4f5;
+}
+
+.c2 {
+  height: 36px;
+  background-color: #dcdcdc;
+  color: white;
+  border-bottom: #a9a9a9 solid 1px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3 {
+  height: 100%;
+}
+
+.c3:focus {
+  outline: none;
+}
+
+.c4 {
+  height: 100%;
+  overflow-y: auto;
+  border-right: #dedede solid 1px;
+}
+
+.c5 {
+  margin: 0;
+  padding: 0;
+}
+
+.c6 {
+  list-style: none;
+  padding: 0.4em 0 0.4em 1em;
+  background-color: #3b90fe;
+}
+
+.c7 {
+  list-style: none;
+  padding: 0.4em 0 0.4em 1em;
+  background-color: #f3f4f5;
+}
+
+.c8 {
+  position: absolute;
+  bottom: 0;
+  border: none;
+  font-size: 16px;
+  background-color: #f3f4f5;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0.5em 0.5em;
+}
+
+.c9 {
+  fill: #888889;
+}
+
+.c10 {
+  padding-left: 0.3em;
+}
+
+.c11 {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background-color: #f9f9f7;
+}
+
+.c12 {
+  margin-right: 0.5em;
+  border-radius: 0.5em;
+  padding: 0.2em 1.2em;
+  min-height: 2.4em;
+  outline: none;
+}
+
+.c12:active {
+  background-color: #dcdcdc;
+  outline: none;
+}
+
+.c12:hover > svg {
+  fill: #dcdcdc;
+}
+
+.c13 {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.c14 {
+  background-color: #dfdfdd;
+  padding-left: 1em;
+}
+
+.c20 {
+  background-color: #f9f9f7;
+  padding-left: 1em;
+}
+
+.c15 {
+  font-size: 14px;
+  padding: 1em 1em 1em 0;
+  border-bottom: #dedede solid 1px;
+}
+
+.c16 {
+  font-size: 15px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  line-height: 1.4;
+}
+
+.c17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.c18 {
+  padding-right: 1em;
+  white-space: nowrap;
+}
+
+.c19 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c21 {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background-color: #f9f9f7;
+}
+
+.c22 {
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
+  padding: 0.5em 1em 1em 1em;
+  border-left: #dedede solid 1px;
+}
+
+.c23 {
+  margin-bottom: 1em;
+  display: block;
+  text-align: center;
+  color: #9ca09f;
+  font-size: 14px;
+  font-weight: 300;
+}
+
 <div
   class="App"
   style="height: 100vh;"
 >
   <div
-    class="sc-ckVGcZ iJOOXo"
+    class="c0"
   >
     <div
-      class="sc-kGXeez iaQzty"
+      class="c1"
     >
       <div
-        class="sc-kAzzGY dPXUAR"
+        class="c2"
       />
       <div
-        class="sc-kgoBCf feBRHC"
+        class="c3"
         tabindex="-1"
       >
         <div
-          class="sc-htoDjs eYfNzp"
+          class="c4"
         >
           <ul
-            class="sc-gzVnrw fhxDdR"
+            class="c5"
           >
             <li
-              class="sc-bdVaJa lbmVYO"
+              class="c6"
             >
               Test Folder
             </li>
             <li
-              class="sc-bdVaJa cNQevM"
+              class="c7"
             >
               Test Folder 2
             </li>
           </ul>
           <button
-            class="sc-htpNat nluLb"
+            class="c8"
           >
             <svg
-              class="sc-bwzfXH iKqnfx"
+              class="c9"
               height="20px"
               viewBox="0 0 30 30"
               width="20px"
@@ -50,7 +241,7 @@ exports[`it works 1`] = `
               />
             </svg>
             <span
-              class="sc-bxivhb cJXUZW"
+              class="c10"
             >
               New Folder
             </span>
@@ -59,13 +250,13 @@ exports[`it works 1`] = `
       </div>
     </div>
     <div
-      class="sc-kpOJdX jSdPDo"
+      class="c11"
     >
       <div
-        class="sc-kAzzGY dPXUAR"
+        class="c2"
       >
         <button
-          class="sc-chPdSV lcKFXv"
+          class="c12"
         >
           <img
             alt="delete"
@@ -74,10 +265,10 @@ exports[`it works 1`] = `
           />
         </button>
         <button
-          class="sc-chPdSV lcKFXv"
+          class="c12"
         >
           <svg
-            class="sc-bwzfXH iKqnfx"
+            class="c9"
             height="20px"
             viewBox="0 0 30 30"
             width="20px"
@@ -90,33 +281,33 @@ exports[`it works 1`] = `
         </button>
       </div>
       <div
-        class="sc-kgoBCf feBRHC"
+        class="c3"
         tabindex="-1"
       >
         <div
-          class="sc-fjdhpX evAlNU"
+          class="c13"
         >
           <div
-            class="sc-jTzLTM iQelLU"
+            class="c14"
           >
             <div
-              class="sc-dnqmqq kUbenw"
+              class="c15"
             >
               <h2
-                class="sc-iwsKbI dpLJVi"
+                class="c16"
               >
                 Titolo 0
               </h2>
               <div
-                class="sc-gqjmRU bJpxxH"
+                class="c17"
               >
                 <span
-                  class="sc-gZMcBi jDqMxS"
+                  class="c18"
                 >
                   Yesterday
                 </span>
                 <span
-                  class="sc-VigVT iDMXyk"
+                  class="c19"
                 >
                   lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
                 </span>
@@ -124,26 +315,26 @@ exports[`it works 1`] = `
             </div>
           </div>
           <div
-            class="sc-jTzLTM lbCQnq"
+            class="c20"
           >
             <div
-              class="sc-dnqmqq kUbenw"
+              class="c15"
             >
               <h2
-                class="sc-iwsKbI dpLJVi"
+                class="c16"
               >
                 Titolo 1
               </h2>
               <div
-                class="sc-gqjmRU bJpxxH"
+                class="c17"
               >
                 <span
-                  class="sc-gZMcBi jDqMxS"
+                  class="c18"
                 >
                   Friday
                 </span>
                 <span
-                  class="sc-VigVT iDMXyk"
+                  class="c19"
                 >
                   lorem ipsum foo bar sit
                 </span>
@@ -154,22 +345,22 @@ exports[`it works 1`] = `
       </div>
     </div>
     <div
-      class="sc-dxgOiQ glsvYV"
+      class="c21"
     >
       <div
-        class="sc-kAzzGY dPXUAR"
+        class="c2"
       />
       <div
-        class="sc-kgoBCf feBRHC"
+        class="c3"
         tabindex="-1"
       >
         <div
-          class="sc-jzJRlG dlCcPI"
+          class="c22"
         >
           <span
-            class="sc-cSHVUG kTVCbH"
+            class="c23"
           >
-            23 June 2019 at 3:45 PM
+            23 June 2019 at 4:38 PM
           </span>
           <div
             class="DraftEditor-root"
@@ -190,15 +381,15 @@ exports[`it works 1`] = `
                   <div
                     class=""
                     data-block="true"
-                    data-editor="1kd27"
-                    data-offset-key="4o49p-0-0"
+                    data-editor="9ltnq"
+                    data-offset-key="4iagi-0-0"
                   >
                     <div
                       class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-                      data-offset-key="4o49p-0-0"
+                      data-offset-key="4iagi-0-0"
                     >
                       <span
-                        data-offset-key="4o49p-0-0"
+                        data-offset-key="4iagi-0-0"
                       >
                         <span
                           data-text="true"
@@ -211,15 +402,15 @@ exports[`it works 1`] = `
                   <div
                     class=""
                     data-block="true"
-                    data-editor="1kd27"
-                    data-offset-key="5tr0-0-0"
+                    data-editor="9ltnq"
+                    data-offset-key="2j6kh-0-0"
                   >
                     <div
                       class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-                      data-offset-key="5tr0-0-0"
+                      data-offset-key="2j6kh-0-0"
                     >
                       <span
-                        data-offset-key="5tr0-0-0"
+                        data-offset-key="2j6kh-0-0"
                       >
                         <span
                           data-text="true"

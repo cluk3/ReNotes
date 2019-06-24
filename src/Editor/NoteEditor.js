@@ -15,7 +15,7 @@ import format from "date-fns/format";
 
 const NoteEditorContainer = styled.div`
   height: 100%;
-  max-height; 100%;
+  max-height: 100%;
   overflow: auto;
   padding: 0.5em 1em 1em 1em;
   border-left: #dedede solid 1px;
