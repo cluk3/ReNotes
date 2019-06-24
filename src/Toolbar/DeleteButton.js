@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { deleteFolder } from "../Folders/modules/folders";
-import { deleteNote } from "../Notes/modules/notes";
+import { deleteNoteAndElectNewActive } from "../Notes/modules/notes";
 import { ENTITIES } from "../constants";
 import deleteIcon from "../assets/notes-delete-icon.png";
 import ToolbarButton from "./ToolbarButton";
@@ -17,7 +17,7 @@ class DeleteButton extends PureComponent {
       notes,
       focusedElement,
       deleteFolder,
-      deleteNote
+      deleteNoteAndElectNewActive
     } = this.props;
 
     if (focusedElement.elementType === ENTITIES.FOLDERS) {
@@ -29,7 +29,7 @@ class DeleteButton extends PureComponent {
 
       confirmDelete && deleteFolder(folders);
     } else {
-      deleteNote(notes.activeNote, folders.activeFolder);
+      deleteNoteAndElectNewActive(notes.activeNote, folders.activeFolder);
     }
   }
   render() {
@@ -53,7 +53,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       deleteFolder,
-      deleteNote
+      deleteNoteAndElectNewActive
     },
     dispatch
   );
