@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -81,14 +80,9 @@ function mapStateToProps({ notes, folders, focusedElement }) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      setActiveNote,
-      deleteNote
-    },
-    dispatch
-  );
-}
+const mapDispatchToProps = {
+  setActiveNote,
+  deleteNote
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesList);

@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import Folder from "./Folder";
 import NewFolder from "./NewFolder";
 import NewFolderInput from "./NewFolderInput";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { createNewFolder, setActiveFolder, changeFolderName, endEditingName } from "./modules/folders";
 import { getDefaultValue } from "../helpers";
@@ -122,16 +121,11 @@ function mapStateToProps({ folders, focusedElement }) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      createNewFolder,
-      setActiveFolder,
-      changeFolderName,
-      endEditingName
-    },
-    dispatch
-  );
+const mapDispatchToProps = {
+  createNewFolder,
+  setActiveFolder,
+  changeFolderName,
+  endEditingName
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoldersList);
