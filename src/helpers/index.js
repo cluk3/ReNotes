@@ -2,7 +2,6 @@ import isToday from 'date-fns/is_today';
 import isYesterday from 'date-fns/is_yesterday';
 import differenceInDays from 'date-fns/difference_in_days';
 import format from 'date-fns/format';
-import fp from 'lodash/fp';
 
 const YESTERDAY = 'Yesterday';
 
@@ -41,12 +40,11 @@ export const humanFriendlyDate = date => {
   }
 };
 
-export const createExcerptFromText = fp.pipe(
-  fp.split('\n'),
-  fp.filter(fp.identity),
-  fp.nth(1),
-  fp.defaultTo('No additional text')
-);
+export const createExcerptFromText = (text = '') => {
+  const lines = text.split('\n').filter(Boolean);
+
+  return lines[1] || 'No additional text';
+};
 
 export const createTitleFromText = text => text.split('\n')[0] || 'New Note';
 

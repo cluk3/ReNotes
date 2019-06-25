@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4';
-import _ from 'lodash';
+import omit from 'lodash/omit';
 import {
   CREATE_NEW_NOTE,
   DELETE_NOTE,
@@ -104,7 +104,7 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
     case DELETE_FOLDER:
       return {
         ...state,
-        byId: _.omit(state.byId, folderId),
+        byId: omit(state.byId, folderId),
         allIds: state.allIds.filter(id => folderId !== id),
         activeFolder: null
       };

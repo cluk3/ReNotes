@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import omit from 'lodash/omit';
+import findIndex from 'lodash/findIndex';
+import pick from 'lodash/pick';
 import { EditorState, ContentState } from 'draft-js';
 import uuidv4 from 'uuid/v4';
 import { DELETE_FOLDER } from '../../Folders/modules/folders';
@@ -124,14 +126,14 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
       return {
         ...state,
         allIds: allIds.filter(noteId => noteId !== payload.noteId),
-        byId: _.omit(byId, payload.noteId)
+        byId: omit(byId, payload.noteId)
       };
 
     case ELECT_NEW_ACTIVE:
       const notesInActualFolder = state.allIds.filter(
         noteId => byId[noteId].parentFolderId === payload.parentFolderId
       );
-      const deletedNoteIndex = _.findIndex(
+      const deletedNoteIndex = findIndex(
         notesInActualFolder,
         noteId => noteId === payload.noteId
       );
@@ -154,7 +156,7 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
         allIds: allIds.filter(
           noteId => byId[noteId].parentFolderId !== payload.folderId
         ),
-        byId: _.pick(byId, filteredIds)
+        byId: pick(byId, filteredIds)
       };
 
     case SET_ACTIVE_NOTE:
