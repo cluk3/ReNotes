@@ -2,13 +2,16 @@
   "name": "my-notes",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://renotes.netlify.com/",
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "coverage": "react-scripts test --coverage",
-    "lint:css": "stylelint './src/**/*.js'"
+    "lint:css": "stylelint './src/**/*.js'",
+    "deploy": "npm run build && netlify deploy"
   },
   "dependencies": {
     "date-fns": "^1.29.0",
@@ -26,17 +29,18 @@
   },
   "devDependencies": {
     "@testing-library/react": "^8.0.1",
-    "stylelint": "^10.1.0",
-    "stylelint-config-recommended": "^2.2.0",
-    "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-processor-styled-components": "^1.8.0",
     "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "husky": "^0.14.3",
     "jest-dom": "^3.5.0",
     "jest-styled-components": "^6.3.3",
     "lint-staged": "^6.0.0",
-    "prettier": "^1.9.2"
+    "prettier": "^1.9.2",
+    "source-map-explorer": "^2.0.1",
+    "stylelint": "^10.1.0",
+    "stylelint-config-recommended": "^2.2.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.8.0"
   },
   "browserslist": {
     "production": [
