@@ -27,44 +27,28 @@ exports[`NoteEditor works 1`] = `
     23 June 2019 at 5:07 PM
   </span>
   <div
-    class="DraftEditor-root"
+    class="quill "
   >
     <div
-      class="DraftEditor-editorContainer"
+      class="ql-container ql-snow"
     >
       <div
-        class="notranslate public-DraftEditor-content"
+        class="ql-editor"
         contenteditable="true"
-        role="textbox"
-        spellcheck="false"
-        style="outline: none; user-select: text; white-space: pre-wrap; word-wrap: break-word;"
+        data-gramm="false"
       >
-        <div
-          data-contents="true"
-        >
-          <div
-            class=""
-            data-block="true"
-            data-editor="123"
-            data-offset-key="123-0-0"
-          >
-            <div
-              class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-              data-offset-key="123-0-0"
-            >
-              <span
-                data-offset-key="123-0-0"
-              >
-                <span
-                  data-text="true"
-                >
-                  lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
-                </span>
-              </span>
-            </div>
-          </div>
-        </div>
+        <p>
+          Titolo 0
+        </p>
+        <p>
+          lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
+        </p>
       </div>
+      <div
+        class="ql-clipboard"
+        contenteditable="true"
+        tabindex="-1"
+      />
     </div>
   </div>
 </div>

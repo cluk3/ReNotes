@@ -4,8 +4,16 @@ import '@testing-library/react/cleanup-after-each';
 // this adds jest-dom's custom assertions
 import 'jest-dom/extend-expect';
 
-// avoid Draft.js snapshot changing everytime
-jest.mock('draft-js/lib/generateRandomKey', () => () => '123');
+//mock DOM API for Quill
+global.MutationObserver = class {
+  constructor(callback) {}
+  disconnect() {}
+  observe(element, initObject) {}
+  takeRecords() {
+    return [];
+  }
+};
+global.document.getSelection = function() {};
 
 jest.mock('./helpers/index.js', () => ({
   ...jest.requireActual('./helpers/index.js'),

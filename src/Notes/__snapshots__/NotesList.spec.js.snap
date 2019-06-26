@@ -65,7 +65,7 @@ exports[`NotesList it works 1`] = `
       <h2
         class="c3"
       >
-        lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
+        Titolo 0
       </h2>
       <div
         class="c4"
@@ -78,7 +78,7 @@ exports[`NotesList it works 1`] = `
         <span
           class="c6"
         >
-          No additional text
+          lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
         </span>
       </div>
     </div>
@@ -92,7 +92,7 @@ exports[`NotesList it works 1`] = `
       <h2
         class="c3"
       >
-        lorem ipsum foo bar sit
+        Titolo 1
       </h2>
       <div
         class="c4"
@@ -105,7 +105,7 @@ exports[`NotesList it works 1`] = `
         <span
           class="c6"
         >
-          No additional text
+          lorem ipsum foo bar sit
         </span>
       </div>
     </div>

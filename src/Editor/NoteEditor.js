@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Editor } from 'draft-js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
@@ -10,8 +9,10 @@ import {
 } from 'Notes/modules/notes';
 import styled from 'styled-components';
 import { ENTITIES } from 'constants.js';
-import { EditorState } from 'draft-js';
 import format from 'date-fns/format';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import './customQuill.css';
 
 const NoteEditorContainer = styled.div`
   height: 100%;
@@ -32,7 +33,7 @@ const LastModified = styled.span`
 
 export class NoteEditor extends Component {
   static propTypes = {
-    editorState: PropTypes.any,
+    editorState: PropTypes.object,
     activeNote: PropTypes.string,
     parentFolderName: PropTypes.string,
     setActiveNote: PropTypes.func.isRequired,
@@ -43,16 +44,15 @@ export class NoteEditor extends Component {
   constructor(props) {
     super(props);
     this.setDomEditorRef = ref => (this.domEditor = ref);
-    this.onChange = editorState => {
-      this.props.updateEditorState(editorState, this.props.activeNote);
-    };
-    this.handleClick = ev => {
-      if (!this.domEditor.refs.editorContainer.contains(ev.target)) {
-        this.props.updateEditorState(
-          EditorState.moveFocusToEnd(this.props.editorState),
-          this.props.activeNote
-        );
-      }
+    this.onChange = (content, delta, source, editor) => {
+      console.log('------->   ', editor);
+      console.log('content ------->   ', content);
+      console.log('source ------->   ', source);
+      this.props.updateEditorState(
+        editor.getContents(),
+        editor.getText(),
+        this.props.activeNote
+      );
     };
   }
 
@@ -72,16 +72,17 @@ export class NoteEditor extends Component {
 
   render() {
     return (
-      <NoteEditorContainer onClick={this.handleClick}>
+      <NoteEditorContainer>
         <LastModified>
           {this.props.lastModified &&
             format(this.props.lastModified, 'D MMMM YYYY [at] h:mm A')}
         </LastModified>
         {this.props.editorState && (
-          <Editor
-            editorState={this.props.editorState}
+          <ReactQuill
+            theme="snow"
+            value={this.props.editorState.contents}
             onChange={this.onChange}
-            ref={this.setDomEditorRef}
+            modules={{ toolbar: false }}
           />
         )}
       </NoteEditorContainer>

@@ -1,0 +1,10 @@
+
+.ql-editor {
+  padding: 0;
+}
+.ql-container.ql-snow {
+  border: none;
+}
+.quill {
+  height: 100%;
+}

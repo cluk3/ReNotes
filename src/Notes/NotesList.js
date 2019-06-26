@@ -11,6 +11,8 @@ const NotesListContainer = styled.div`
   overflow-y: auto;
 `;
 
+const isNoteEmpty = text => text.length === 0 || text === '\n';
+
 export class NotesList extends PureComponent {
   static propTypes = {
     notes: PropTypes.array.isRequired,
@@ -34,11 +36,9 @@ export class NotesList extends PureComponent {
       const prevActiveNote = prevProps.notes.find(
           note => note.noteId === prevActiveNoteId
         ),
-        prevNoteText = prevActiveNote.editorState
-          .getCurrentContent()
-          .getPlainText();
+        prevNoteText = prevActiveNote.editorState.text;
 
-      if (prevNoteText.length === 0) {
+      if (isNoteEmpty(prevNoteText)) {
         this.props.deleteNote(prevActiveNoteId, prevActiveFolderId);
       }
     }
@@ -51,7 +51,7 @@ export class NotesList extends PureComponent {
       return (
         <Note
           lastModified={lastModified}
-          text={editorState.getCurrentContent().getPlainText()}
+          text={editorState.text}
           key={noteId}
           handleNoteClick={() => this.handleNoteClick(noteId)}
           selected={isNoteSelected}

@@ -1,7 +1,6 @@
 import omit from 'lodash/omit';
 import findIndex from 'lodash/findIndex';
 import pick from 'lodash/pick';
-import { EditorState, ContentState } from 'draft-js';
 import uuidv4 from 'uuid/v4';
 import { DELETE_FOLDER } from '../../Folders/modules/folders';
 import { electNewElement } from '../../helpers';
@@ -19,17 +18,29 @@ export function createNewNote(parentFolderId) {
     payload: {
       noteId,
       parentFolderId,
-      editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
+      editorState: {
+        contents: {
+          ops: [
+            {
+              insert: ''
+            }
+          ]
+        },
+        text: ''
+      }
     }
   };
 }
 
-export function updateEditorState(editorState, noteId) {
+export function updateEditorState(contents, text, noteId) {
   return {
     type: UPDATE_EDITOR_STATE,
     payload: {
       noteId,
-      editorState
+      editorState: {
+        contents,
+        text
+      }
     }
   };
 }
@@ -77,25 +88,34 @@ const STUB_DATE = 1561406857389;
 export const initialState = {
   byId: {
     '0': {
-      editorState: EditorState.createWithContent(
-        ContentState.createFromText(
-          'Titolo 0\nlorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen'
-        )
-      ),
+      editorState: {
+        contents: {
+          ops: [
+            {
+              insert:
+                'Titolo 0\nlorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen\n'
+            }
+          ]
+        },
+        text:
+          'Titolo 0\nlorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen\n'
+      },
       lastModified: STUB_DATE - 1000 * 60 * 60 * 24,
       parentFolderId: '0'
     },
     '1': {
-      editorState: EditorState.createWithContent(
-        ContentState.createFromText('Titolo 1\nlorem ipsum foo bar sit')
-      ),
+      editorState: {
+        contents: { ops: [{ insert: 'Titolo 1\nlorem ipsum foo bar sit' }] },
+        text: 'Titolo 1\nlorem ipsum foo bar sit'
+      },
       lastModified: STUB_DATE - 1000 * 60 * 60 * 24 * 3,
       parentFolderId: '0'
     },
     '2': {
-      editorState: EditorState.createWithContent(
-        ContentState.createFromText('Titolo 2\nlorem ipsum foo bar sit')
-      ),
+      editorState: {
+        contents: { ops: [{ insert: 'Titolo 1\nlorem ipsum foo bar sit' }] },
+        text: 'Titolo 1\nlorem ipsum foo bar sit'
+      },
       lastModified: STUB_DATE - 1000 * 60 * 60 * 24 * 7,
       parentFolderId: '1'
     }
