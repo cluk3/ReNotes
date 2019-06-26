@@ -6,3 +6,8 @@ import 'jest-dom/extend-expect';
 
 // avoid Draft.js snapshot changing everytime
 jest.mock('draft-js/lib/generateRandomKey', () => () => '123');
+
+jest.mock('./helpers/index.js', () => ({
+  ...jest.requireActual('./helpers/index.js'),
+  humanFriendlyDate: () => 'Mocked'
+}));

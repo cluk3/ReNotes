@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PlusSvg from '../assets/Plus';
+import PlusSvg from 'assets/Plus';
 
 const NewFolderButton = styled.button`
   position: absolute;

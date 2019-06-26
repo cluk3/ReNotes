@@ -7,7 +7,7 @@ import {
   humanFriendlyDate
 } from '../helpers';
 
-const getbackgroundColor = props => {
+const getBackgroundColor = props => {
   if (props.highlighted) {
     return '#fbdb7c';
   } else if (props.selected) {
@@ -49,7 +49,7 @@ const Excerpt = styled.span`
 `;
 
 const NoteContainer = styled.div`
-  background-color: ${getbackgroundColor};
+  background-color: ${getBackgroundColor};
   padding-left: 1em;
 `;
 

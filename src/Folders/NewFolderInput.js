@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 const NewFolderInput = styled.input.attrs({
   autoFocus: true,
-  type: 'text'
+  type: 'text',
+  'aria-label': 'Edit folder name'
 })`
   outline: none;
   width: 99%;
@@ -73,11 +74,9 @@ class Folder extends PureComponent {
       <div>
         <NewFolderForm onSubmit={e => this.handleSubmit(e)}>
           <NewFolderInput
-            type="text"
             value={this.state.value}
             onChange={e => this.handleChange(e)}
             onFocus={e => this.handleFocus(e)}
-            autoFocus
             innerRef={input => {
               this.textInput = input;
             }}

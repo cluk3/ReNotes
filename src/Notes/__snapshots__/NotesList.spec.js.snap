@@ -73,7 +73,7 @@ exports[`NotesList it works 1`] = `
         <span
           class="c5"
         >
-          Yesterday
+          Mocked
         </span>
         <span
           class="c6"
@@ -100,7 +100,7 @@ exports[`NotesList it works 1`] = `
         <span
           class="c5"
         >
-          Friday
+          Mocked
         </span>
         <span
           class="c6"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderWithRedux } from '../testRenderWithRedux';
+import { renderWithRedux } from '../testUtils';
 import Toolbar from './Toolbar';
 import 'jest-styled-components';
 

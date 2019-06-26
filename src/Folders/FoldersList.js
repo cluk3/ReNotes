@@ -9,9 +9,9 @@ import {
   changeFolderName,
   endEditingName
 } from './modules/folders';
-import { getDefaultValue } from '../helpers';
+import { getDefaultNewFolderName } from 'helpers';
 import styled from 'styled-components';
-import { ENTITIES } from '../constants';
+import { ENTITIES } from 'constants.js';
 import PropTypes from 'prop-types';
 
 const FoldersUl = styled.ul`
@@ -50,7 +50,7 @@ export class FoldersList extends PureComponent {
 
   handleNewFolderClick() {
     const { folders, createNewFolder } = this.props;
-    const defaultNewFolderName = getDefaultValue(
+    const defaultNewFolderName = getDefaultNewFolderName(
       folders.allIds.map(id => folders.byId[id].name)
     );
     createNewFolder(defaultNewFolderName);

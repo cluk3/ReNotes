@@ -1,4 +1,4 @@
-import { ENTITIES } from '../../constants';
+import { ENTITIES } from 'constants.js';
 
 export const SET_FOCUSED_ELEMENT = 'SET_FOCUSED_ELEMENT';
 

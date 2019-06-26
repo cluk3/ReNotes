@@ -4,8 +4,8 @@ import {
   CREATE_NEW_NOTE,
   DELETE_NOTE,
   setActiveNote
-} from '../../Notes/modules/notes';
-import { electNewElement } from '../../helpers';
+} from 'Notes/modules/notes';
+import { electNewElement } from 'helpers';
 
 export const CREATE_NEW_FOLDER = 'CREATE_NEW_FOLDER';
 export const DELETE_FOLDER = 'DELETE_FOLDER';

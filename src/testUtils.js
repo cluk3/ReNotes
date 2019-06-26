@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider, connect } from 'react-redux';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
 import { initialState as notesInitialState } from './Notes/modules/notes';
 import { initialState as foldersInitialState } from './Folders/modules/folders';
 import { initialState as focusedElementInitialState } from './containers/Focusable/stateManager';
 
 const reducer = state => state;
-const defaultInitialState = {
+export const defaultInitialState = {
   folders: foldersInitialState,
   notes: notesInitialState,
   focusedElement: focusedElementInitialState

@@ -5,11 +5,11 @@ import format from 'date-fns/format';
 
 const YESTERDAY = 'Yesterday';
 
-export const getDefaultValue = folders => {
+export const getDefaultNewFolderName = folderNames => {
   const NEW_FOLDER = 'New Folder';
-  if (!folders.includes(NEW_FOLDER)) return NEW_FOLDER;
+  if (!folderNames.includes(NEW_FOLDER)) return NEW_FOLDER;
 
-  const newFolders = folders.filter(folderName =>
+  const newFolders = folderNames.filter(folderName =>
     folderName.startsWith(NEW_FOLDER)
   );
 
@@ -19,7 +19,7 @@ export const getDefaultValue = folders => {
 
   while (i <= newFolders.length && !found) {
     newFolderName = `${NEW_FOLDER} ${i}`;
-    found = !folders.includes(newFolderName);
+    found = !newFolders.includes(newFolderName);
     i++;
   }
   return newFolderName;
@@ -46,7 +46,8 @@ export const createExcerptFromText = (text = '') => {
   return lines[1] || 'No additional text';
 };
 
-export const createTitleFromText = text => text.split('\n')[0] || 'New Note';
+export const createTitleFromText = (text = '') =>
+  text.split('\n')[0] || 'New Note';
 
 export const electNewElement = (elementIndex, list) => {
   if (list.length === 1) {

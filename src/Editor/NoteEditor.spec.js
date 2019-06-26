@@ -1,6 +1,6 @@
 import React from 'react';
 import NoteEditor from './NoteEditor';
-import { renderWithRedux } from '../testRenderWithRedux';
+import { renderWithRedux } from 'testUtils';
 import 'jest-styled-components';
 
 describe('NoteEditor', () => {

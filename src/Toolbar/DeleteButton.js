@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { deleteFolder } from '../Folders/modules/folders';
 import { deleteNoteAndElectNewActive } from '../Notes/modules/notes';
-import { ENTITIES } from '../constants';
+import { ENTITIES } from 'constants.js';
 import deleteIcon from '../assets/notes-delete-icon.png';
 import ToolbarButton from './ToolbarButton';
 

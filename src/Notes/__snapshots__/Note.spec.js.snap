@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Note works 1`] = `
+.c0 {
+  background-color: #fbdb7c;
+  padding-left: 1em;
+}
+
+.c1 {
+  font-size: 14px;
+  padding: 1em 1em 1em 0;
+  border-bottom: #dedede solid 1px;
+}
+
+.c2 {
+  font-size: 15px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  line-height: 1.4;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.c4 {
+  padding-right: 1em;
+  white-space: nowrap;
+}
+
+.c5 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1"
+  >
+    <h2
+      class="c2"
+    >
+      Title
+    </h2>
+    <div
+      class="c3"
+    >
+      <span
+        class="c4"
+      >
+        Mocked
+      </span>
+      <span
+        class="c5"
+      >
+        excerpt
+      </span>
+    </div>
+  </div>
+</div>
+`;

@@ -7,9 +7,9 @@ import {
   updateEditorState,
   createNewNote,
   setActiveNote
-} from '../Notes/modules/notes';
+} from 'Notes/modules/notes';
 import styled from 'styled-components';
-import { ENTITIES } from '../constants';
+import { ENTITIES } from 'constants.js';
 import { EditorState } from 'draft-js';
 import format from 'date-fns/format';
 
