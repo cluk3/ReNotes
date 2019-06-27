@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createNewNote } from './modules/notes';
-import { setFocusedElement } from '../containers/Focusable/stateManager';
+import { setFocusedElement } from 'containers/Focusable/stateManager';
 import PropTypes from 'prop-types';
 import { ENTITIES } from 'constants.js';
-import ToolbarButton from '../Toolbar/ToolbarButton';
-import PlusSvg from '../assets/Plus';
+import ToolbarButton from 'Toolbar/ToolbarButton';
+import PlusSvg from 'assets/Plus';
+import { isNoteEmpty } from 'helpers';
 
 class NewNoteButton extends PureComponent {
   static propTypes = {
@@ -16,13 +16,16 @@ class NewNoteButton extends PureComponent {
   };
 
   handleNewNoteClick() {
-    this.props.createNewNote(this.props.activeFolderId);
-    this.props.setFocusedElement(ENTITIES.EDITOR);
+    if (!this.props.isActiveNoteEmpty) {
+      this.props.createNewNote(this.props.activeFolderId);
+      this.props.setFocusedElement(ENTITIES.EDITOR);
+    }
   }
 
   render() {
     return (
       <ToolbarButton
+        disabled={this.props.isActiveNoteEmpty}
         ariaLabel="Add new note"
         onClick={() => this.handleNewNoteClick()}
       >
@@ -33,19 +36,18 @@ class NewNoteButton extends PureComponent {
 }
 
 function mapStateToProps({ notes, folders }) {
+  const isActiveNoteSet = notes.activeNote !== null;
+  const activeNoteText =
+    isActiveNoteSet && notes.byId[notes.activeNote].editorState.text;
   return {
-    activeFolderId: folders.activeFolder
+    activeFolderId: folders.activeFolder,
+    isActiveNoteEmpty: isActiveNoteSet && isNoteEmpty(activeNoteText)
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      createNewNote,
-      setFocusedElement
-    },
-    dispatch
-  );
-}
+const mapDispatchToProps = {
+  createNewNote,
+  setFocusedElement
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewNoteButton);

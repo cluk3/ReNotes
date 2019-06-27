@@ -3,10 +3,9 @@
       "react-app",
       "prettier",
       "prettier/react",
-      "plugin:jsx-a11y/recommended",
-      "jsx-a11y"
+      "plugin:jsx-a11y/recommended"
     ],
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "jsx-a11y"],
     "rules": {
       "quotes": ["error", "single"]
     }
