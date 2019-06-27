@@ -34,7 +34,10 @@ class DeleteButton extends PureComponent {
   }
   render() {
     return (
-      <ToolbarButton onClick={() => this.deleteSelectedItem()}>
+      <ToolbarButton
+        ariaLabel="Delete Note or Folder"
+        onClick={() => this.deleteSelectedItem()}
+      >
         <img src={deleteIcon} height="18px" alt="delete" />
       </ToolbarButton>
     );

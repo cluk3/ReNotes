@@ -18,6 +18,6 @@ const Button = styled.button`
 
 export default class ToolbarButton extends PureComponent {
   render() {
-    return <Button onClick={this.props.onClick}>{this.props.children}</Button>;
+    return <Button aria-label={this.props.ariaLabel} onClick={this.props.onClick}>{this.props.children}</Button>;
   }
 }

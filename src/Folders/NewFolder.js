@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import PlusSvg from 'assets/Plus';
 
-const NewFolderButton = styled.button`
+const NewFolderButton = styled.button.attrs({
+  'aria-label': 'Add New Folder'
+})`
   position: absolute;
   bottom: 0;
   border: none;

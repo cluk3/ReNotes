@@ -22,7 +22,10 @@ class NewNoteButton extends PureComponent {
 
   render() {
     return (
-      <ToolbarButton onClick={() => this.handleNewNoteClick()}>
+      <ToolbarButton
+        ariaLabel="Add new note"
+        onClick={() => this.handleNewNoteClick()}
+      >
         <PlusSvg />
       </ToolbarButton>
     );
