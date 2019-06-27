@@ -60,3 +60,5 @@ export const electNewElement = (elementIndex, list) => {
   }
   return list[elementIndex + 1];
 };
+
+export const isNoteEmpty = text => text.length === 0 || text === '\n';

@@ -3,11 +3,17 @@ import rootReducer from './reducers';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 import thunk from 'redux-thunk';
+import { createStateObserverMiddleware } from 'helpers/stateObserver';
+import notesObserver from 'Notes/modules/observer';
 
 const sagaMiddleware = createSagaMiddleware();
 const initialState = {};
 const enhancers = [];
-const middleware = [sagaMiddleware, thunk];
+const middleware = [
+  sagaMiddleware,
+  thunk,
+  createStateObserverMiddleware(notesObserver)
+];
 
 const composeEnhancers =
   process.env.NODE_ENV === 'development' &&

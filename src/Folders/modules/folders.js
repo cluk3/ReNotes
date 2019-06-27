@@ -1,5 +1,6 @@
 import uuidv4 from 'uuid/v4';
 import omit from 'lodash/omit';
+import findKey from 'lodash/findKey';
 import {
   CREATE_NEW_NOTE,
   DELETE_NOTE,
@@ -134,13 +135,16 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
         }
       };
     case DELETE_NOTE:
+      const parentFolderId = findKey(state.byId, folder =>
+        folder.notes.includes(payload.noteId)
+      );
       return {
         ...state,
         byId: {
           ...state.byId,
-          [payload.parentFolderId]: {
-            ...state.byId[payload.parentFolderId],
-            notes: state.byId[payload.parentFolderId].notes.filter(
+          [parentFolderId]: {
+            ...state.byId[parentFolderId],
+            notes: state.byId[parentFolderId].notes.filter(
               note => payload.noteId !== note
             )
           }

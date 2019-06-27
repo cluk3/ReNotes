@@ -45,12 +45,11 @@ export function updateEditorState(contents, text, noteId) {
   };
 }
 
-export function deleteNote(noteId, parentFolderId) {
+export function deleteNote(noteId) {
   return {
     type: DELETE_NOTE,
     payload: {
-      noteId,
-      parentFolderId
+      noteId
     }
   };
 }
@@ -67,8 +66,7 @@ export function deleteNoteAndElectNewActive(noteId, parentFolderId) {
     dispatch({
       type: DELETE_NOTE,
       payload: {
-        noteId,
-        parentFolderId
+        noteId
       }
     });
   };
