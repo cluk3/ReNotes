@@ -2,7 +2,9 @@
     "extends": [
       "react-app",
       "prettier",
-      "prettier/react"
+      "prettier/react",
+      "plugin:jsx-a11y/recommended",
+      "jsx-a11y"
     ],
     "plugins": ["prettier"],
     "rules": {
