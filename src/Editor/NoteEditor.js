@@ -10,11 +10,8 @@ import {
 import styled from 'styled-components';
 import { ENTITIES } from 'constants.js';
 import format from 'date-fns/format';
-// import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import './customQuill.css';
 
-const ReactQuill = React.lazy(() => import('react-quill'));
+const QuillEditor = React.lazy(() => import('./QuillEditor'));
 
 const NoteEditorContainer = styled.div`
   height: 100%;
@@ -89,11 +86,9 @@ export class NoteEditor extends Component {
         <Suspense fallback={<div>Loading...</div>}>
           {this.state.loaded &&
             this.props.editorState && (
-              <ReactQuill
-                theme="snow"
+              <QuillEditor
                 value={this.props.editorState.contents}
                 onChange={this.onChange}
-                modules={{ toolbar: false }}
               />
             )}
         </Suspense>
