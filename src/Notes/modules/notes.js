@@ -169,7 +169,8 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
         allIds: allIds.filter(
           noteId => byId[noteId].parentFolderId !== payload.folderId
         ),
-        byId: pick(byId, filteredIds)
+        byId: pick(byId, filteredIds),
+        activeNote: null
       };
 
     case SET_ACTIVE_NOTE:

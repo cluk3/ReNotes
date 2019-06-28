@@ -36,7 +36,7 @@ class NewNoteButton extends PureComponent {
 }
 
 function mapStateToProps({ notes, folders }) {
-  const isActiveNoteSet = notes.activeNote !== null;
+  const isActiveNoteSet = !!notes.activeNote;
   const activeNoteText =
     isActiveNoteSet && notes.byId[notes.activeNote].editorState.text;
   return {
@@ -50,4 +50,7 @@ const mapDispatchToProps = {
   setFocusedElement
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewNoteButton);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewNoteButton);

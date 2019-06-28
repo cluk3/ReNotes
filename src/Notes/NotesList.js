@@ -65,4 +65,7 @@ const mapDispatchToProps = {
   deleteNote
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotesList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NotesList);

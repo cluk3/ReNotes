@@ -5,13 +5,16 @@ const notesObserver = {
   comparer(o, n) {
     return o.notes.activeNote !== n.notes.activeNote;
   },
-  action({ previousState, dispatch }) {
+  action({ previousState, actualState, dispatch }) {
     const prevActiveNoteId = previousState.notes.activeNote;
     if (!prevActiveNoteId) return;
     const prevActiveNote = previousState.notes.byId[prevActiveNoteId];
     const prevNoteText = prevActiveNote.editorState.text;
 
-    if (isNoteEmpty(prevNoteText)) {
+    if (
+      isNoteEmpty(prevNoteText) &&
+      actualState.notes.allIds.includes(prevActiveNoteId)
+    ) {
       dispatch(deleteNote(prevActiveNoteId));
     }
   }
