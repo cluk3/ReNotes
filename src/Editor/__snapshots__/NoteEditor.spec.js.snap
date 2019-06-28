@@ -13,7 +13,7 @@ exports[`NoteEditor works 1`] = `
   margin-bottom: 1em;
   display: block;
   text-align: center;
-  color: #9ca09f;
+  color: #555;
   font-size: 14px;
   font-weight: 300;
 }
@@ -26,30 +26,5 @@ exports[`NoteEditor works 1`] = `
   >
     23 June 2019 at 5:07 PM
   </span>
-  <div
-    class="quill "
-  >
-    <div
-      class="ql-container ql-snow"
-    >
-      <div
-        class="ql-editor"
-        contenteditable="true"
-        data-gramm="false"
-      >
-        <p>
-          Titolo 0
-        </p>
-        <p>
-          lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
-        </p>
-      </div>
-      <div
-        class="ql-clipboard"
-        contenteditable="true"
-        tabindex="-1"
-      />
-    </div>
-  </div>
 </div>
 `;

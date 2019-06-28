@@ -1,21 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FoldersList renders an input for modifying a folder when it is in edit mode 1`] = `
-.c0 {
-  height: 100%;
-  overflow-y: auto;
-  border-right: #dedede solid 1px;
-}
-
-.c1 {
-  margin: 0;
-  padding: 0;
-}
-
 .c5 {
   list-style: none;
   padding: 0.4em 0 0.4em 1em;
   background-color: #f3f4f5;
+}
+
+.c7 {
+  fill: #888889;
 }
 
 .c6 {
@@ -35,19 +28,8 @@ exports[`FoldersList renders an input for modifying a folder when it is in edit 
   padding: 0.5em 0.5em;
 }
 
-.c7 {
-  fill: #888889;
-}
-
 .c8 {
   padding-left: 0.3em;
-}
-
-.c2 {
-  position: relative;
-  z-index: 110;
-  background-color: #4286f4;
-  padding: 0.4em 0 0.4em 1em;
 }
 
 .c3 {
@@ -61,6 +43,13 @@ exports[`FoldersList renders an input for modifying a folder when it is in edit 
   padding: 0;
 }
 
+.c2 {
+  position: relative;
+  z-index: 110;
+  background-color: #4286f4;
+  padding: 0.4em 0 0.4em 1em;
+}
+
 .c4 {
   display: block;
   position: fixed;
@@ -69,6 +58,17 @@ exports[`FoldersList renders an input for modifying a folder when it is in edit 
   bottom: 0;
   right: 0;
   z-index: 100;
+}
+
+.c1 {
+  margin: 0;
+  padding: 0;
+}
+
+.c0 {
+  height: 100%;
+  overflow-y: auto;
+  border-right: #dedede solid 1px;
 }
 
 <div
@@ -99,6 +99,7 @@ exports[`FoldersList renders an input for modifying a folder when it is in edit 
     </li>
   </ul>
   <button
+    aria-label="Add New Folder"
     class="c6"
   >
     <svg
@@ -122,17 +123,6 @@ exports[`FoldersList renders an input for modifying a folder when it is in edit 
 `;
 
 exports[`FoldersList works 1`] = `
-.c0 {
-  height: 100%;
-  overflow-y: auto;
-  border-right: #dedede solid 1px;
-}
-
-.c1 {
-  margin: 0;
-  padding: 0;
-}
-
 .c2 {
   list-style: none;
   padding: 0.4em 0 0.4em 1em;
@@ -143,6 +133,10 @@ exports[`FoldersList works 1`] = `
   list-style: none;
   padding: 0.4em 0 0.4em 1em;
   background-color: #f3f4f5;
+}
+
+.c5 {
+  fill: #888889;
 }
 
 .c4 {
@@ -162,12 +156,19 @@ exports[`FoldersList works 1`] = `
   padding: 0.5em 0.5em;
 }
 
-.c5 {
-  fill: #888889;
-}
-
 .c6 {
   padding-left: 0.3em;
+}
+
+.c1 {
+  margin: 0;
+  padding: 0;
+}
+
+.c0 {
+  height: 100%;
+  overflow-y: auto;
+  border-right: #dedede solid 1px;
 }
 
 <div
@@ -188,6 +189,7 @@ exports[`FoldersList works 1`] = `
     </li>
   </ul>
   <button
+    aria-label="Add New Folder"
     class="c4"
   >
     <svg

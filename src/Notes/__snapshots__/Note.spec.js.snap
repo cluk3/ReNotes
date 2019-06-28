@@ -1,11 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Note works 1`] = `
-.c0 {
-  background-color: #fbdb7c;
-  padding-left: 1em;
-}
-
 .c1 {
   font-size: 14px;
   padding: 1em 1em 1em 0;
@@ -22,6 +17,11 @@ exports[`Note works 1`] = `
   line-height: 1.4;
 }
 
+.c4 {
+  padding-right: 1em;
+  white-space: nowrap;
+}
+
 .c3 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -32,15 +32,15 @@ exports[`Note works 1`] = `
   align-content: flex-start;
 }
 
-.c4 {
-  padding-right: 1em;
-  white-space: nowrap;
-}
-
 .c5 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.c0 {
+  background-color: #fbdb7c;
+  padding-left: 1em;
 }
 
 <div
