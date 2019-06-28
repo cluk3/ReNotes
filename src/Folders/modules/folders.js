@@ -135,9 +135,9 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
         }
       };
     case DELETE_NOTE:
-      const parentFolderId = findKey(state.byId, folder =>
-        folder.notes.includes(payload.noteId)
-      );
+      const parentFolderId = findKey(state.byId, folder => {
+        return folder.notes.includes(payload.noteId);
+      });
       return {
         ...state,
         byId: {

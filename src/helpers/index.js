@@ -52,7 +52,7 @@ export const createTitleFromText = (text = '') =>
 export const electNewElement = (elementIndex, list) => {
   if (list.length === 1) {
     // it was the last in the array
-    return;
+    return null;
   }
   if (elementIndex === list.length - 1) {
     // it was in the last position

@@ -9,7 +9,8 @@ export const CREATE_NEW_NOTE = 'CREATE_NEW_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const SET_ACTIVE_NOTE = 'SET_ACTIVE_NOTE';
 export const UPDATE_EDITOR_STATE = 'UPDATE_EDITOR_STATE';
-export const ELECT_NEW_ACTIVE = 'ELECT_NEW_ACTIVE';
+export const DELETE_NOTE_AND_ELECT_NEW_ACTIVE =
+  'DELETE_NOTE_AND_ELECT_NEW_ACTIVE';
 
 export function createNewNote(parentFolderId) {
   const noteId = uuidv4();
@@ -54,21 +55,12 @@ export function deleteNote(noteId) {
   };
 }
 
-export function deleteNoteAndElectNewActive(noteId, parentFolderId) {
-  return dispatch => {
-    dispatch({
-      type: ELECT_NEW_ACTIVE,
-      payload: {
-        noteId,
-        parentFolderId
-      }
-    });
-    dispatch({
-      type: DELETE_NOTE,
-      payload: {
-        noteId
-      }
-    });
+export function deleteNoteAndElectNewActive(noteId) {
+  return {
+    type: DELETE_NOTE_AND_ELECT_NEW_ACTIVE,
+    payload: {
+      noteId
+    }
   };
 }
 
@@ -147,9 +139,10 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
         byId: omit(byId, payload.noteId)
       };
 
-    case ELECT_NEW_ACTIVE:
+    case DELETE_NOTE_AND_ELECT_NEW_ACTIVE:
+      const { parentFolderId } = state.byId[payload.noteId];
       const notesInActualFolder = state.allIds.filter(
-        noteId => byId[noteId].parentFolderId === payload.parentFolderId
+        noteId => byId[noteId].parentFolderId === parentFolderId
       );
       const deletedNoteIndex = findIndex(
         notesInActualFolder,
@@ -162,6 +155,8 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
 
       return {
         ...state,
+        allIds: allIds.filter(noteId => noteId !== payload.noteId),
+        byId: omit(byId, payload.noteId),
         activeNote: newActiveNote
       };
 
