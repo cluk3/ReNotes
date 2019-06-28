@@ -35,13 +35,13 @@ export function deleteFolder(folders) {
   const newActiveNote = newActiveFolder ? byId[newActiveFolder].notes[0] : null;
 
   return dispatch => {
+    dispatch(setActiveFolder(newActiveFolder, newActiveNote));
     dispatch({
       type: DELETE_FOLDER,
       payload: {
         folderId: activeFolder
       }
     });
-    dispatch(setActiveFolder(newActiveFolder, newActiveNote));
   };
 }
 
