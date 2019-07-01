@@ -143,7 +143,7 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
           ...state.byId,
           [payload.parentFolderId]: {
             ...parentFolder,
-            notes: parentFolder.notes.concat(payload.noteId)
+            notes: [payload.noteId, ...parentFolder.notes]
           }
         }
       };

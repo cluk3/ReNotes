@@ -8,6 +8,7 @@ import {
 } from '../helpers';
 import { DragPreviewImage, useDrag } from 'react-dnd';
 import noteImage from './noteImage';
+import { animated } from 'react-spring';
 
 const getBackgroundColor = props => {
   if (props.highlighted) {
@@ -62,7 +63,8 @@ const Note = ({
   selected,
   highlighted,
   noteId,
-  parentFolderId
+  parentFolderId,
+  style
 }) => {
   const [, drag, preview] = useDrag({
     item: { type: 'Note', id: noteId, parentFolderId }
@@ -71,7 +73,7 @@ const Note = ({
   const excerpt = createExcerptFromText(text);
   const creationTime = humanFriendlyDate(lastModified);
   return (
-    <>
+    <animated.div style={style}>
       <DragPreviewImage connect={preview} src={noteImage} />
       <NoteContainer ref={drag} selected={selected} highlighted={highlighted}>
         <NoteBody onClick={handleNoteClick}>
@@ -82,7 +84,7 @@ const Note = ({
           </SecondRaw>
         </NoteBody>
       </NoteContainer>
-    </>
+    </animated.div>
   );
 };
 
