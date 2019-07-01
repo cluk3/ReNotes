@@ -77,7 +77,7 @@ class Folder extends PureComponent {
             value={this.state.value}
             onChange={e => this.handleChange(e)}
             onFocus={e => this.handleFocus(e)}
-            innerRef={input => {
+            ref={input => {
               this.textInput = input;
             }}
           />
