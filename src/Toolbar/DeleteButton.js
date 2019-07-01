@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { deleteFolder } from '../Folders/modules/folders';
 import { deleteNoteAndElectNewActive } from '../Notes/modules/notes';
@@ -52,14 +51,12 @@ function mapStateToProps({ folders, notes, focusedElement }) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      deleteFolder,
-      deleteNoteAndElectNewActive
-    },
-    dispatch
-  );
-}
+const mapDispatchToProps = {
+  deleteFolder,
+  deleteNoteAndElectNewActive
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteButton);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DeleteButton);

@@ -3,6 +3,7 @@ import omit from 'lodash/omit';
 import findKey from 'lodash/findKey';
 import {
   CREATE_NEW_NOTE,
+  DELETE_NOTE_AND_ELECT_NEW_ACTIVE,
   DELETE_NOTE,
   setActiveNote
 } from 'Notes/modules/notes';
@@ -134,10 +135,11 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
           }
         }
       };
+    case DELETE_NOTE_AND_ELECT_NEW_ACTIVE:
     case DELETE_NOTE:
-      const parentFolderId = findKey(state.byId, folder =>
-        folder.notes.includes(payload.noteId)
-      );
+      const parentFolderId = findKey(state.byId, folder => {
+        return folder.notes.includes(payload.noteId);
+      });
       return {
         ...state,
         byId: {
