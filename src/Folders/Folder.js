@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDrop } from 'react-dnd';
 
 const getbackgroundColor = props => {
   if (props.highlighted) {
@@ -16,12 +17,29 @@ const FolderLi = styled.li`
   background-color: ${getbackgroundColor};
 `;
 
-const Folder = ({ name, handleFolderClick, selected, highlighted }) => {
+const Folder = ({
+  name,
+  handleFolderClick,
+  selected,
+  highlighted,
+  folderId,
+  moveNoteToFolder
+}) => {
+  const [{ isOver, canDrop }, drop] = useDrop({
+    accept: 'Note',
+    canDrop: item => item.parentFolderId !== folderId,
+    drop: item => moveNoteToFolder(item.id, folderId),
+    collect: monitor => ({
+      isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop()
+    })
+  });
   return (
     <FolderLi
+      ref={drop}
       onClick={handleFolderClick}
       selected={selected}
-      highlighted={highlighted}
+      highlighted={highlighted || (canDrop && isOver)}
     >
       {name}
     </FolderLi>

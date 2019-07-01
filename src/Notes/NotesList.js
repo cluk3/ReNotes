@@ -26,19 +26,23 @@ export class NotesList extends PureComponent {
 
   render() {
     const { notes, activeNote, isNoteListFocused } = this.props;
-    const notesList = notes.map(({ lastModified, editorState, noteId }) => {
-      const isNoteSelected = activeNote === noteId;
-      return (
-        <Note
-          lastModified={lastModified}
-          text={editorState.text}
-          key={noteId}
-          handleNoteClick={() => this.handleNoteClick(noteId)}
-          selected={isNoteSelected}
-          highlighted={isNoteListFocused && isNoteSelected}
-        />
-      );
-    });
+    const notesList = notes.map(
+      ({ lastModified, editorState, noteId, parentFolderId }) => {
+        const isNoteSelected = activeNote === noteId;
+        return (
+          <Note
+            lastModified={lastModified}
+            text={editorState.text}
+            noteId={noteId}
+            parentFolderId={parentFolderId}
+            key={noteId}
+            handleNoteClick={() => this.handleNoteClick(noteId)}
+            selected={isNoteSelected}
+            highlighted={isNoteListFocused && isNoteSelected}
+          />
+        );
+      }
+    );
 
     return <NotesListContainer>{notesList}</NotesListContainer>;
   }

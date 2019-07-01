@@ -6,6 +6,8 @@ import {
   createTitleFromText,
   humanFriendlyDate
 } from '../helpers';
+import { DragPreviewImage, useDrag } from 'react-dnd';
+import noteImage from './noteImage';
 
 const getBackgroundColor = props => {
   if (props.highlighted) {
@@ -58,21 +60,29 @@ const Note = ({
   lastModified,
   handleNoteClick,
   selected,
-  highlighted
+  highlighted,
+  noteId,
+  parentFolderId
 }) => {
+  const [, drag, preview] = useDrag({
+    item: { type: 'Note', id: noteId, parentFolderId }
+  });
   const title = createTitleFromText(text);
   const excerpt = createExcerptFromText(text);
   const creationTime = humanFriendlyDate(lastModified);
   return (
-    <NoteContainer selected={selected} highlighted={highlighted}>
-      <NoteBody onClick={handleNoteClick}>
-        <Title>{title}</Title>
-        <SecondRaw>
-          <Date>{creationTime}</Date>
-          <Excerpt>{excerpt}</Excerpt>
-        </SecondRaw>
-      </NoteBody>
-    </NoteContainer>
+    <>
+      <DragPreviewImage connect={preview} src={noteImage} />
+      <NoteContainer ref={drag} selected={selected} highlighted={highlighted}>
+        <NoteBody onClick={handleNoteClick}>
+          <Title>{title}</Title>
+          <SecondRaw>
+            <Date>{creationTime}</Date>
+            <Excerpt>{excerpt}</Excerpt>
+          </SecondRaw>
+        </NoteBody>
+      </NoteContainer>
+    </>
   );
 };
 
@@ -81,7 +91,9 @@ Note.propTypes = {
   lastModified: PropTypes.number.isRequired,
   handleNoteClick: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
-  highlighted: PropTypes.bool.isRequired
+  highlighted: PropTypes.bool.isRequired,
+  noteId: PropTypes.string.isRequired,
+  parentFolderId: PropTypes.string.isRequired
 };
 
 export default Note;

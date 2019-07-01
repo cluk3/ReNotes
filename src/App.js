@@ -8,6 +8,8 @@ import Toolbar from './Toolbar/Toolbar';
 import NotesToolbar from './Notes/NotesToolbar';
 import Focusable from './containers/Focusable';
 import { ENTITIES } from './constants';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const commonColumnStyles = `
   display: block;
@@ -43,26 +45,28 @@ class App extends Component {
   render() {
     return (
       <div className="App" style={{ height: '100vh' }}>
-        <ColumnsContainer>
-          <FoldersColumn key={0}>
-            <Toolbar />
-            <Focusable elementType={ENTITIES.FOLDERS}>
-              <FoldersList />
-            </Focusable>
-          </FoldersColumn>
-          <NotesColumn key={1}>
-            <NotesToolbar />
-            <Focusable elementType={ENTITIES.NOTES}>
-              <NotesList />
-            </Focusable>
-          </NotesColumn>
-          <EditorColumn key={2}>
-            <Toolbar />
-            <Focusable elementType={ENTITIES.EDITOR}>
-              <NoteEditor />
-            </Focusable>
-          </EditorColumn>
-        </ColumnsContainer>
+        <DndProvider backend={HTML5Backend}>
+          <ColumnsContainer>
+            <FoldersColumn key={0}>
+              <Toolbar />
+              <Focusable elementType={ENTITIES.FOLDERS}>
+                <FoldersList />
+              </Focusable>
+            </FoldersColumn>
+            <NotesColumn key={1}>
+              <NotesToolbar />
+              <Focusable elementType={ENTITIES.NOTES}>
+                <NotesList />
+              </Focusable>
+            </NotesColumn>
+            <EditorColumn key={2}>
+              <Toolbar />
+              <Focusable elementType={ENTITIES.EDITOR}>
+                <NoteEditor />
+              </Focusable>
+            </EditorColumn>
+          </ColumnsContainer>
+        </DndProvider>
       </div>
     );
   }

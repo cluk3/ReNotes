@@ -2,7 +2,10 @@ import omit from 'lodash/omit';
 import findIndex from 'lodash/findIndex';
 import pick from 'lodash/pick';
 import uuidv4 from 'uuid/v4';
-import { DELETE_FOLDER } from '../../Folders/modules/folders';
+import {
+  DELETE_FOLDER,
+  MOVE_NOTE_TO_FOLDER
+} from 'Folders/modules/folders';
 import { electNewElement } from '../../helpers';
 
 export const CREATE_NEW_NOTE = 'CREATE_NEW_NOTE';
@@ -103,8 +106,8 @@ export const initialState = {
     },
     '2': {
       editorState: {
-        contents: { ops: [{ insert: 'Titolo 1\nlorem ipsum foo bar sit' }] },
-        text: 'Titolo 1\nlorem ipsum foo bar sit'
+        contents: { ops: [{ insert: 'Titolo 2\nlorem ipsum foo bar sit' }] },
+        text: 'Titolo 2\nlorem ipsum foo bar sit'
       },
       lastModified: STUB_DATE - 1000 * 60 * 60 * 24 * 7,
       parentFolderId: '1'
@@ -183,11 +186,23 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
       return {
         ...state,
         byId: {
-          ...state.byId,
+          ...byId,
           [noteId]: {
-            ...state.byId[noteId],
+            ...byId[noteId],
             editorState,
             lastModified: Date.now()
+          }
+        }
+      };
+
+    case MOVE_NOTE_TO_FOLDER:
+      return {
+        ...state,
+        byId: {
+          ...byId,
+          [noteId]: {
+            ...byId[noteId],
+            parentFolderId: payload.folderId
           }
         }
       };

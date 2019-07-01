@@ -7,7 +7,8 @@ import {
   createNewFolder,
   setActiveFolder,
   changeFolderName,
-  endEditingName
+  endEditingName,
+  moveNoteToFolder
 } from './modules/folders';
 import { getDefaultNewFolderName } from 'helpers';
 import styled from 'styled-components';
@@ -38,7 +39,10 @@ export class FoldersList extends PureComponent {
     activeFolder: PropTypes.string,
     isFolderFocused: PropTypes.bool.isRequired,
     createNewFolder: PropTypes.func.isRequired,
-    setActiveFolder: PropTypes.func.isRequired
+    setActiveFolder: PropTypes.func.isRequired,
+    changeFolderName: PropTypes.func.isRequired,
+    endEditingName: PropTypes.func.isRequired,
+    moveNoteToFolder: PropTypes.func.isRequired
   };
 
   handleFolderClick(clickedFolderId) {
@@ -80,7 +84,12 @@ export class FoldersList extends PureComponent {
   }
 
   render() {
-    const { isFolderFocused, activeFolder, folders } = this.props;
+    const {
+      isFolderFocused,
+      activeFolder,
+      folders,
+      moveNoteToFolder
+    } = this.props;
 
     const FoldersList = folders.allIds
       .map(id => ({
@@ -88,25 +97,26 @@ export class FoldersList extends PureComponent {
         id
       }))
       .sort((a, b) => a.name.localeCompare(b.name))
-      .map(
-        ({ id: folderId, name: folderName }) =>
-          folders.editingName === folderId ? (
-            <NewFolderInput
-              key={folderId}
-              handleSubmit={newFolderName =>
-                this.handleSubmit(folderName, newFolderName, folderId)
-              }
-              defaultValue={folderName}
-            />
-          ) : (
-            <Folder
-              name={folderName}
-              key={folderId}
-              handleFolderClick={() => this.handleFolderClick(folderId)}
-              selected={activeFolder === folderId}
-              highlighted={activeFolder === folderId && isFolderFocused}
-            />
-          )
+      .map(({ id: folderId, name: folderName }) =>
+        folders.editingName === folderId ? (
+          <NewFolderInput
+            key={folderId}
+            handleSubmit={newFolderName =>
+              this.handleSubmit(folderName, newFolderName, folderId)
+            }
+            defaultValue={folderName}
+          />
+        ) : (
+          <Folder
+            name={folderName}
+            folderId={folderId}
+            key={folderId}
+            handleFolderClick={() => this.handleFolderClick(folderId)}
+            selected={activeFolder === folderId}
+            highlighted={activeFolder === folderId && isFolderFocused}
+            moveNoteToFolder={moveNoteToFolder}
+          />
+        )
       );
 
     return (
@@ -130,7 +140,11 @@ const mapDispatchToProps = {
   createNewFolder,
   setActiveFolder,
   changeFolderName,
-  endEditingName
+  endEditingName,
+  moveNoteToFolder
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoldersList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FoldersList);

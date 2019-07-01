@@ -1,6 +1,7 @@
 import uuidv4 from 'uuid/v4';
 import omit from 'lodash/omit';
 import findKey from 'lodash/findKey';
+import toPairs from 'lodash/toPairs';
 import {
   CREATE_NEW_NOTE,
   DELETE_NOTE_AND_ELECT_NEW_ACTIVE,
@@ -14,6 +15,7 @@ export const DELETE_FOLDER = 'DELETE_FOLDER';
 export const SET_ACTIVE_FOLDER = 'SET_ACTIVE_FOLDER';
 export const CHANGE_FOLDER_NAME = 'CHANGE_FOLDER_NAME';
 export const END_EDITING_NAME = 'END_EDITING_NAME';
+export const MOVE_NOTE_TO_FOLDER = 'MOVE_NOTE_TO_FOLDER';
 
 export function createNewFolder(folderName) {
   const folderId = uuidv4();
@@ -51,6 +53,16 @@ export function changeFolderName(folderId, newName) {
     type: CHANGE_FOLDER_NAME,
     payload: {
       newName,
+      folderId
+    }
+  };
+}
+
+export function moveNoteToFolder(noteId, folderId) {
+  return {
+    type: MOVE_NOTE_TO_FOLDER,
+    payload: {
+      noteId,
       folderId
     }
   };
@@ -161,6 +173,27 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
       return {
         ...state,
         editingName: null
+      };
+    case MOVE_NOTE_TO_FOLDER:
+      const [formerParentId, formerParent] = toPairs(state.byId).find(
+        ([, folder]) => folder.notes.includes(payload.noteId)
+      );
+      const newParent = state.byId[payload.folderId];
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [formerParentId]: {
+            ...formerParent,
+            notes: formerParent.notes.filter(
+              noteId => noteId !== payload.noteId
+            )
+          },
+          [payload.folderId]: {
+            ...newParent,
+            notes: newParent.notes.concat(payload.noteId)
+          }
+        }
       };
     default:
       return state;
