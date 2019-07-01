@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const FocusableContainer = styled.div.attrs({
   tabIndex: '-1'
 })`
-  height: 100%;
+  height: calc(100% - ${({ heightOffset }) => heightOffset}px);
   &:focus {
     outline: none;
   }
@@ -20,7 +20,10 @@ export class Focusable extends PureComponent {
   }
   render() {
     return (
-      <FocusableContainer onFocus={() => this.handleFocus()}>
+      <FocusableContainer
+        heightOffset={this.props.offset}
+        onFocus={() => this.handleFocus()}
+      >
         {this.props.children}
       </FocusableContainer>
     );
@@ -36,4 +39,7 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(null, mapDispatchToProps)(Focusable);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Focusable);

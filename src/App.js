@@ -49,19 +49,19 @@ class App extends Component {
           <ColumnsContainer>
             <FoldersColumn key={0}>
               <Toolbar />
-              <Focusable elementType={ENTITIES.FOLDERS}>
+              <Focusable offset="68" elementType={ENTITIES.FOLDERS}>
                 <FoldersList />
               </Focusable>
             </FoldersColumn>
             <NotesColumn key={1}>
               <NotesToolbar />
-              <Focusable elementType={ENTITIES.NOTES}>
+              <Focusable offset="37" elementType={ENTITIES.NOTES}>
                 <NotesList />
               </Focusable>
             </NotesColumn>
             <EditorColumn key={2}>
               <Toolbar />
-              <Focusable elementType={ENTITIES.EDITOR}>
+              <Focusable offset="37" elementType={ENTITIES.EDITOR}>
                 <NoteEditor />
               </Focusable>
             </EditorColumn>
