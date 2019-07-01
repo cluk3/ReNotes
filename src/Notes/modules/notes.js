@@ -2,10 +2,7 @@ import omit from 'lodash/omit';
 import findIndex from 'lodash/findIndex';
 import pick from 'lodash/pick';
 import uuidv4 from 'uuid/v4';
-import {
-  DELETE_FOLDER,
-  MOVE_NOTE_TO_FOLDER
-} from 'Folders/modules/folders';
+import { DELETE_FOLDER, MOVE_NOTE_TO_FOLDER } from 'Folders/modules/folders';
 import { electNewElement } from '../../helpers';
 
 export const CREATE_NEW_NOTE = 'CREATE_NEW_NOTE';
@@ -36,7 +33,7 @@ export function createNewNote(parentFolderId) {
   };
 }
 
-export function updateEditorState(contents, text, noteId) {
+export function updateEditorState(contents, text, noteId, source) {
   return {
     type: UPDATE_EDITOR_STATE,
     payload: {
@@ -44,7 +41,8 @@ export function updateEditorState(contents, text, noteId) {
       editorState: {
         contents,
         text
-      }
+      },
+      lastModified: source === 'user' && Date.now()
     }
   };
 }
@@ -118,14 +116,14 @@ export const initialState = {
 };
 
 export function notesReducer(state = initialState, { type, payload = {} }) {
-  const { byId, allIds } = state;
+  const { byId: notesById, allIds: allNotesIds } = state;
   const { noteId, editorState } = payload;
   switch (type) {
     case CREATE_NEW_NOTE:
       return {
-        allIds: allIds.concat(noteId),
+        allIds: [noteId, ...allNotesIds],
         byId: {
-          ...byId,
+          ...notesById,
           [noteId]: {
             editorState,
             lastModified: Date.now(),
@@ -138,59 +136,46 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
     case DELETE_NOTE:
       return {
         ...state,
-        allIds: allIds.filter(noteId => noteId !== payload.noteId),
-        byId: omit(byId, payload.noteId)
+        allIds: allNotesIds.filter(_noteId => _noteId !== noteId),
+        byId: omit(notesById, noteId)
       };
 
     case DELETE_NOTE_AND_ELECT_NEW_ACTIVE:
-      const { parentFolderId } = state.byId[payload.noteId];
-      const notesInActualFolder = state.allIds.filter(
-        noteId => byId[noteId].parentFolderId === parentFolderId
-      );
-      const deletedNoteIndex = findIndex(
-        notesInActualFolder,
-        noteId => noteId === payload.noteId
-      );
-      const newActiveNote = electNewElement(
-        deletedNoteIndex,
-        notesInActualFolder
-      );
-
       return {
         ...state,
-        allIds: allIds.filter(noteId => noteId !== payload.noteId),
-        byId: omit(byId, payload.noteId),
-        activeNote: newActiveNote
+        allIds: allNotesIds.filter(_noteId => _noteId !== noteId),
+        byId: omit(notesById, payload.noteId),
+        activeNote: electNewNote(notesById, allNotesIds, noteId)
       };
 
     case DELETE_FOLDER:
-      const filteredIds = allIds.filter(
-        noteId => byId[noteId].parentFolderId !== payload.folderId
+      const filteredIds = allNotesIds.filter(
+        noteId => notesById[noteId].parentFolderId !== payload.folderId
       );
       return {
         ...state,
-        allIds: allIds.filter(
-          noteId => byId[noteId].parentFolderId !== payload.folderId
+        allIds: allNotesIds.filter(
+          noteId => notesById[noteId].parentFolderId !== payload.folderId
         ),
-        byId: pick(byId, filteredIds),
+        byId: pick(notesById, filteredIds),
         activeNote: null
       };
 
     case SET_ACTIVE_NOTE:
       return {
         ...state,
-        activeNote: payload.noteId
+        activeNote: noteId
       };
 
     case UPDATE_EDITOR_STATE:
       return {
         ...state,
         byId: {
-          ...byId,
+          ...notesById,
           [noteId]: {
-            ...byId[noteId],
+            ...notesById[noteId],
             editorState,
-            lastModified: Date.now()
+            lastModified: payload.lastModified || notesById[noteId].lastModified
           }
         }
       };
@@ -199,15 +184,28 @@ export function notesReducer(state = initialState, { type, payload = {} }) {
       return {
         ...state,
         byId: {
-          ...byId,
+          ...notesById,
           [noteId]: {
-            ...byId[noteId],
+            ...notesById[noteId],
             parentFolderId: payload.folderId
           }
-        }
+        },
+        activeNote: electNewNote(notesById, allNotesIds, noteId)
       };
 
     default:
       return state;
   }
+}
+
+function electNewNote(notesById, allNotesIds, noteId) {
+  const { parentFolderId } = notesById[noteId];
+  const notesInActualFolder = allNotesIds.filter(
+    _noteId => notesById[_noteId].parentFolderId === parentFolderId
+  );
+  const deletedNoteIndex = findIndex(
+    notesInActualFolder,
+    _noteId => _noteId === noteId
+  );
+  return electNewElement(deletedNoteIndex, notesInActualFolder);
 }

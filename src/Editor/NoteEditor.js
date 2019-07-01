@@ -49,7 +49,8 @@ export class NoteEditor extends Component {
       this.props.updateEditorState(
         editor.getContents(),
         editor.getText(),
-        this.props.activeNote
+        this.props.activeNote,
+        source
       );
     };
   }
@@ -84,13 +85,12 @@ export class NoteEditor extends Component {
             format(this.props.lastModified, 'D MMMM YYYY [at] h:mm A')}
         </LastModified>
         <Suspense fallback={<div>Loading...</div>}>
-          {this.state.loaded &&
-            this.props.editorState && (
-              <QuillEditor
-                value={this.props.editorState.contents}
-                onChange={this.onChange}
-              />
-            )}
+          {this.state.loaded && this.props.editorState && (
+            <QuillEditor
+              value={this.props.editorState.contents}
+              onChange={this.onChange}
+            />
+          )}
         </Suspense>
       </NoteEditorContainer>
     );
@@ -120,4 +120,7 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NoteEditor);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NoteEditor);
