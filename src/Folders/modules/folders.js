@@ -16,6 +16,7 @@ export const SET_ACTIVE_FOLDER = 'SET_ACTIVE_FOLDER';
 export const CHANGE_FOLDER_NAME = 'CHANGE_FOLDER_NAME';
 export const END_EDITING_NAME = 'END_EDITING_NAME';
 export const MOVE_NOTE_TO_FOLDER = 'MOVE_NOTE_TO_FOLDER';
+export const START_EDITING_NAME = 'START_EDITING_NAME';
 
 export function createNewFolder(folderName) {
   const folderId = uuidv4();
@@ -33,18 +34,27 @@ export function createNewFolder(folderName) {
 
 export function deleteFolder(folders) {
   const { activeFolder, allIds, byId } = folders;
+  const isFolderEmpty = byId[activeFolder].notes.length === 0;
+  const confirmDelete =
+    isFolderEmpty ||
+    window.confirm(
+      'Deleting the folder will delete also all the note into it, are you sure?'
+    );
+
+  if (!confirmDelete) return;
+
   const folderToDeleteIndex = allIds.indexOf(activeFolder);
   const newActiveFolder = electNewElement(folderToDeleteIndex, allIds);
   const newActiveNote = newActiveFolder ? byId[newActiveFolder].notes[0] : null;
 
   return dispatch => {
-    dispatch(setActiveFolder(newActiveFolder, newActiveNote));
     dispatch({
       type: DELETE_FOLDER,
       payload: {
         folderId: activeFolder
       }
     });
+    dispatch(setActiveFolder(newActiveFolder, newActiveNote));
   };
 }
 
@@ -71,6 +81,13 @@ export function moveNoteToFolder(noteId, folderId) {
 export function endEditingName() {
   return {
     type: END_EDITING_NAME
+  };
+}
+
+export function startEditingName(folderId) {
+  return {
+    type: START_EDITING_NAME,
+    payload: { folderId }
   };
 }
 
@@ -173,6 +190,11 @@ export function foldersReducer(state = initialState, { type, payload = {} }) {
       return {
         ...state,
         editingName: null
+      };
+    case START_EDITING_NAME:
+      return {
+        ...state,
+        editingName: folderId
       };
     case MOVE_NOTE_TO_FOLDER:
       const [formerParentId, formerParent] = toPairs(state.byId).find(

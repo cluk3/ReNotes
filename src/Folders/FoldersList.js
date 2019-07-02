@@ -8,12 +8,15 @@ import {
   setActiveFolder,
   changeFolderName,
   endEditingName,
-  moveNoteToFolder
+  moveNoteToFolder,
+  deleteFolder,
+  startEditingName
 } from './modules/folders';
 import { getDefaultNewFolderName } from 'helpers';
 import styled from 'styled-components';
 import { ENTITIES } from 'constants.js';
 import PropTypes from 'prop-types';
+import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
 const FoldersUl = styled.ul`
   margin: 0;
@@ -45,20 +48,29 @@ export class FoldersList extends PureComponent {
     moveNoteToFolder: PropTypes.func.isRequired
   };
 
-  handleFolderClick(clickedFolderId) {
+  handleFolderClick = clickedFolderId => {
     const { activeFolder, setActiveFolder, folders } = this.props;
 
     activeFolder !== clickedFolderId &&
       setActiveFolder(clickedFolderId, folders.byId[clickedFolderId].notes[0]);
-  }
+  };
 
-  handleNewFolderClick() {
+  handleDeleteFolder = () => {
+    const { deleteFolder, folders } = this.props;
+    deleteFolder(folders);
+  };
+
+  handleRenameFolder = () => {
+    this.props.startEditingName(this.props.activeFolder);
+  };
+
+  handleNewFolderClick = () => {
     const { folders, createNewFolder } = this.props;
     const defaultNewFolderName = getDefaultNewFolderName(
       folders.allIds.map(id => folders.byId[id].name)
     );
     createNewFolder(defaultNewFolderName);
-  }
+  };
 
   handleSubmit(oldFolderName, newFolderName, folderId) {
     const success = true;
@@ -121,8 +133,20 @@ export class FoldersList extends PureComponent {
 
     return (
       <FolderListContainer>
-        <FoldersUl>{FoldersList}</FoldersUl>
+        <ContextMenuTrigger id="foldersContextMenu">
+          <FoldersUl>{FoldersList}</FoldersUl>
+        </ContextMenuTrigger>
         <NewFolder handleClick={() => this.handleNewFolderClick()} />
+        <ContextMenu id="foldersContextMenu">
+          <MenuItem onClick={this.handleRenameFolder}>
+            Rename Folder...
+          </MenuItem>
+          <MenuItem onClick={this.handleDeleteFolder}>
+            Delete Folder...
+          </MenuItem>
+          <MenuItem divider />
+          <MenuItem onClick={this.handleNewFolderClick}>New Folder...</MenuItem>
+        </ContextMenu>
       </FolderListContainer>
     );
   }
@@ -141,7 +165,9 @@ const mapDispatchToProps = {
   setActiveFolder,
   changeFolderName,
   endEditingName,
-  moveNoteToFolder
+  moveNoteToFolder,
+  deleteFolder,
+  startEditingName
 };
 
 export default connect(

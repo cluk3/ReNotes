@@ -6,9 +6,6 @@ import { ENTITIES } from 'constants.js';
 import deleteIcon from '../assets/notes-delete-icon.png';
 import ToolbarButton from './ToolbarButton';
 
-const confirmFolderDeleteMessage =
-  'Deleting the folder will delete also all the note into it, are you sure?';
-
 class DeleteButton extends PureComponent {
   deleteSelectedItem() {
     const {
@@ -20,13 +17,7 @@ class DeleteButton extends PureComponent {
     } = this.props;
 
     if (focusedElement.elementType === ENTITIES.FOLDERS) {
-      const isFolderEmpty =
-        folders.byId[folders.activeFolder].notes.length === 0;
-      const confirmDelete = !isFolderEmpty
-        ? window.confirm(confirmFolderDeleteMessage)
-        : true;
-
-      confirmDelete && deleteFolder(folders);
+      deleteFolder(folders);
     } else {
       deleteNoteAndElectNewActive(notes.activeNote, folders.activeFolder);
     }

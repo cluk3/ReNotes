@@ -38,6 +38,7 @@ const Folder = ({
     <FolderLi
       ref={drop}
       onClick={handleFolderClick}
+      onContextMenu={handleFolderClick}
       selected={selected}
       highlighted={highlighted || (canDrop && isOver)}
     >
