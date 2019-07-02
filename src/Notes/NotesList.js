@@ -2,10 +2,15 @@ import React, { useCallback, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { setActiveNote, deleteNote } from './modules/notes';
+import {
+  setActiveNote,
+  deleteNoteAndElectNewActive,
+  createNewNote
+} from './modules/notes';
 import Note from './Note';
 import { ENTITIES } from 'constants.js';
 import { useTransition } from 'react-spring';
+import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
 const NotesListContainer = styled.div`
   max-height: 100%;
@@ -27,8 +32,11 @@ export const NotesList = props => {
     activeNote,
     isNoteListFocused,
     setActiveNote,
-    activeFolderId
+    activeFolderId,
+    createNewNote,
+    deleteNoteAndElectNewActive
   } = props;
+
   const prevFolderId = usePrevious(activeFolderId);
   const handleNoteClick = useCallback(
     noteId => {
@@ -36,6 +44,15 @@ export const NotesList = props => {
     },
     [activeNote, setActiveNote]
   );
+  const handleDeleteNote = useCallback(
+    () => deleteNoteAndElectNewActive(activeNote),
+    [activeNote, deleteNoteAndElectNewActive]
+  );
+  const handleNewNoteClick = useCallback(() => createNewNote(activeFolderId), [
+    activeFolderId,
+    createNewNote
+  ]);
+
   const transitions = useTransition(notes, note => note.noteId, {
     from: { opacity: 0, height: 0 },
     enter: { opacity: 1, height: HARDCODED_NOTE_HEIGHT },
@@ -60,14 +77,27 @@ export const NotesList = props => {
     );
   });
 
-  return <NotesListContainer>{notesList}</NotesListContainer>;
+  return (
+    <>
+      <ContextMenuTrigger id="notesContextMenu">
+        <NotesListContainer>{notesList}</NotesListContainer>
+      </ContextMenuTrigger>
+      <ContextMenu id="notesContextMenu">
+        <MenuItem onClick={handleDeleteNote}>Delete</MenuItem>
+        <MenuItem onClick={() => {}}>Pin Note</MenuItem>
+        <MenuItem divider />
+        <MenuItem onClick={handleNewNoteClick}>New Note</MenuItem>
+      </ContextMenu>
+    </>
+  );
 };
+
 NotesList.propTypes = {
   notes: PropTypes.array.isRequired,
   activeFolderId: PropTypes.string,
   activeNote: PropTypes.string,
   setActiveNote: PropTypes.func.isRequired,
-  deleteNote: PropTypes.func.isRequired
+  deleteNoteAndElectNewActive: PropTypes.func.isRequired
 };
 
 function mapStateToProps({ notes, folders, focusedElement }) {
@@ -88,7 +118,8 @@ function mapStateToProps({ notes, folders, focusedElement }) {
 
 const mapDispatchToProps = {
   setActiveNote,
-  deleteNote
+  deleteNoteAndElectNewActive,
+  createNewNote
 };
 
 export default connect(
