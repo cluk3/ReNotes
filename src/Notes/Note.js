@@ -9,6 +9,7 @@ import {
 import { DragPreviewImage, useDrag } from 'react-dnd';
 import noteImage from './noteImage';
 import { animated } from 'react-spring';
+import { Flipped } from 'react-flip-toolkit';
 
 const getBackgroundColor = props => {
   if (props.highlighted) {
@@ -16,7 +17,7 @@ const getBackgroundColor = props => {
   } else if (props.selected) {
     return '#dfdfdd';
   }
-  return '#f9f9f7';
+  return 'rgba(249, 249, 247, 0)';
 };
 
 const NoteBody = styled.div`
@@ -75,15 +76,28 @@ const Note = ({
   return (
     <animated.div style={style}>
       <DragPreviewImage connect={preview} src={noteImage} />
-      <NoteContainer ref={drag} selected={selected} highlighted={highlighted}>
-        <NoteBody onClick={handleNoteClick}>
-          <Title>{title}</Title>
-          <SecondRaw>
-            <Date>{creationTime}</Date>
-            <Excerpt>{excerpt}</Excerpt>
-          </SecondRaw>
-        </NoteBody>
-      </NoteContainer>
+      <Flipped
+        flipId={noteId}
+        spring={{
+          stiffness: 160,
+          damping: 25
+        }}
+      >
+        <NoteContainer ref={drag} selected={selected} highlighted={highlighted}>
+          <NoteBody
+            onContextMenu={() => {
+              handleNoteClick();
+            }}
+            onClick={handleNoteClick}
+          >
+            <Title>{title}</Title>
+            <SecondRaw>
+              <Date>{creationTime}</Date>
+              <Excerpt>{excerpt}</Excerpt>
+            </SecondRaw>
+          </NoteBody>
+        </NoteContainer>
+      </Flipped>
     </animated.div>
   );
 };

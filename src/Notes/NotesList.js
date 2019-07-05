@@ -11,6 +11,7 @@ import Note from './Note';
 import { ENTITIES } from 'constants.js';
 import { useTransition } from 'react-spring';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
+import { Flipper } from 'react-flip-toolkit';
 
 const NotesListContainer = styled.div`
   max-height: 100%;
@@ -53,7 +54,9 @@ export const NotesList = props => {
     createNewNote
   ]);
 
-  const transitions = useTransition(notes, note => note.noteId, {
+  const sortedNotes = notes.sort((b, a) => a.lastModified - b.lastModified);
+
+  const transitions = useTransition(sortedNotes, note => note.noteId, {
     from: { opacity: 0, height: 0 },
     enter: { opacity: 1, height: HARDCODED_NOTE_HEIGHT },
     leave: { opacity: 0, height: 0 },
@@ -79,8 +82,17 @@ export const NotesList = props => {
 
   return (
     <>
-      <ContextMenuTrigger id="notesContextMenu">
-        <NotesListContainer>{notesList}</NotesListContainer>
+      <ContextMenuTrigger id="notesContextMenu" holdToDisplay={-1}>
+        <Flipper
+          flipKey={sortedNotes.map(x => x.noteId).join('')}
+          staggerConfig={{
+            default: {
+              speed: 0.8
+            }
+          }}
+        >
+          <NotesListContainer>{notesList}</NotesListContainer>
+        </Flipper>
       </ContextMenuTrigger>
       <ContextMenu id="notesContextMenu">
         <MenuItem onClick={handleDeleteNote}>Delete</MenuItem>
