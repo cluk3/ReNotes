@@ -1,23 +1,26 @@
 import React from 'react';
 import Note from './Note';
 import 'jest-styled-components';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+import { renderWithDnD } from 'testUtils';
 
 const defaultProps = {
   text: 'Title\nexcerpt',
   lastModified: 10010013,
   handleNoteClick: jest.fn(),
   selected: true,
-  highlighted: true
+  highlighted: true,
+  noteId: 'testId',
+  parentFolderId: 'testFolderId'
 };
 describe('Note', () => {
   it('works', () => {
-    const { container } = render(<Note {...defaultProps} />);
+    const { container } = renderWithDnD(<Note {...defaultProps} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('should execute handleNoteClick on Note click', () => {
-    const { getByText } = render(<Note {...defaultProps} />);
+    const { getByText } = renderWithDnD(<Note {...defaultProps} />);
     fireEvent.click(getByText('excerpt'));
     expect(defaultProps.handleNoteClick).toHaveBeenCalled();
   });

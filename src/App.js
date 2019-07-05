@@ -8,8 +8,8 @@ import Toolbar from './Toolbar/Toolbar';
 import NotesToolbar from './Notes/NotesToolbar';
 import Focusable from './containers/Focusable';
 import { ENTITIES } from './constants';
-import { DndProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd-cjs';
+import HTML5Backend from 'react-dnd-html5-backend-cjs';
 
 const commonColumnStyles = `
   display: block;

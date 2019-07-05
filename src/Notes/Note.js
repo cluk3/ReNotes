@@ -6,7 +6,7 @@ import {
   createTitleFromText,
   humanFriendlyDate
 } from '../helpers';
-import { DragPreviewImage, useDrag } from 'react-dnd';
+import { DragPreviewImage, useDrag } from 'react-dnd-cjs';
 import noteImage from './noteImage';
 import { animated } from 'react-spring';
 import { Flipped } from 'react-flip-toolkit';
@@ -83,7 +83,12 @@ const Note = ({
           damping: 25
         }}
       >
-        <NoteContainer ref={drag} selected={selected} highlighted={highlighted}>
+        <NoteContainer
+          data-testid={`Note-${noteId}`}
+          ref={drag}
+          selected={selected}
+          highlighted={highlighted}
+        >
           <NoteBody
             onContextMenu={() => {
               handleNoteClick();

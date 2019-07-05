@@ -44,7 +44,7 @@ exports[`NotesList it works 1`] = `
 }
 
 .c7 {
-  background-color: #f9f9f7;
+  background-color: rgba(249,249,247,0);
   padding-left: 1em;
 }
 
@@ -54,59 +54,83 @@ exports[`NotesList it works 1`] = `
 }
 
 <div
-  class="c0"
+  class="react-contextmenu-wrapper"
 >
-  <div
-    class="c1"
-  >
+  <div>
     <div
-      class="c2"
+      class="c0"
     >
-      <h2
-        class="c3"
-      >
-        Titolo 0
-      </h2>
       <div
-        class="c4"
+        style="opacity: 1; height: 66px;"
       >
-        <span
-          class="c5"
+        <div
+          class="c1"
+          data-flip-config="{\\"spring\\":{\\"stiffness\\":160,\\"damping\\":25},\\"translate\\":true,\\"scale\\":true,\\"opacity\\":true}"
+          data-flip-id="0"
+          data-portal-key="portal"
+          data-testid="Note-0"
+          draggable="true"
         >
-          Mocked
-        </span>
-        <span
-          class="c6"
-        >
-          lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
-        </span>
+          <div
+            class="c2"
+          >
+            <h2
+              class="c3"
+            >
+              Titolo 0
+            </h2>
+            <div
+              class="c4"
+            >
+              <span
+                class="c5"
+              >
+                Mocked
+              </span>
+              <span
+                class="c6"
+              >
+                lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <div
-    class="c7"
-  >
-    <div
-      class="c2"
-    >
-      <h2
-        class="c3"
-      >
-        Titolo 1
-      </h2>
       <div
-        class="c4"
+        style="opacity: 1; height: 66px;"
       >
-        <span
-          class="c5"
+        <div
+          class="c7"
+          data-flip-config="{\\"spring\\":{\\"stiffness\\":160,\\"damping\\":25},\\"translate\\":true,\\"scale\\":true,\\"opacity\\":true}"
+          data-flip-id="1"
+          data-portal-key="portal"
+          data-testid="Note-1"
+          draggable="true"
         >
-          Mocked
-        </span>
-        <span
-          class="c6"
-        >
-          lorem ipsum foo bar sit
-        </span>
+          <div
+            class="c2"
+          >
+            <h2
+              class="c3"
+            >
+              Titolo 1
+            </h2>
+            <div
+              class="c4"
+            >
+              <span
+                class="c5"
+              >
+                Mocked
+              </span>
+              <span
+                class="c6"
+              >
+                lorem ipsum foo bar sit
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

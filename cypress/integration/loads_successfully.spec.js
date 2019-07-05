@@ -36,7 +36,11 @@ describe('ReNotes', function() {
     cy.visit('/');
     cy.get('button[aria-label="Add new note"]').click();
     cy.contains('Titolo 1').click();
-    cy.contains('New Note').should('not.exist');
+    cy.get('[data-testid^=Note').should(notes => {
+      expect(notes).to.have.length(2);
+
+      expect(notes[1]).to.contain('Titolo 1');
+    });
   });
 });
 

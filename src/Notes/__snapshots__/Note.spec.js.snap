@@ -43,30 +43,37 @@ exports[`Note works 1`] = `
   padding-left: 1em;
 }
 
-<div
-  class="c0"
->
+<div>
   <div
-    class="c1"
+    class="c0"
+    data-flip-config="{\\"spring\\":{\\"stiffness\\":160,\\"damping\\":25},\\"translate\\":true,\\"scale\\":true,\\"opacity\\":true}"
+    data-flip-id="testId"
+    data-portal-key="portal"
+    data-testid="Note-testId"
+    draggable="true"
   >
-    <h2
-      class="c2"
-    >
-      Title
-    </h2>
     <div
-      class="c3"
+      class="c1"
     >
-      <span
-        class="c4"
+      <h2
+        class="c2"
       >
-        Mocked
-      </span>
-      <span
-        class="c5"
+        Title
+      </h2>
+      <div
+        class="c3"
       >
-        excerpt
-      </span>
+        <span
+          class="c4"
+        >
+          Mocked
+        </span>
+        <span
+          class="c5"
+        >
+          excerpt
+        </span>
+      </div>
     </div>
   </div>
 </div>

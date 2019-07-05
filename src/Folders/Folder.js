@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDrop } from 'react-dnd';
+import { useDrop } from 'react-dnd-cjs';
 
 const getbackgroundColor = props => {
   if (props.highlighted) {

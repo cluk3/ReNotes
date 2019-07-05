@@ -1,6 +1,5 @@
 import React from 'react';
 import NotesList from './NotesList';
-import { ENTITIES } from '../constants';
 import { renderWithRedux } from 'testUtils';
 import 'jest-styled-components';
 

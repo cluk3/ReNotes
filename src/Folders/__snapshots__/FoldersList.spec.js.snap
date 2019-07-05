@@ -74,30 +74,34 @@ exports[`FoldersList renders an input for modifying a folder when it is in edit 
 <div
   class="c0"
 >
-  <ul
-    class="c1"
+  <div
+    class="react-contextmenu-wrapper"
   >
-    <div>
-      <form
-        class="c2"
-      >
-        <input
-          aria-label="Edit folder name"
-          class="c3"
-          type="text"
-          value="Test Folder"
-        />
-      </form>
-      <div
-        class="c4"
-      />
-    </div>
-    <li
-      class="c5"
+    <ul
+      class="c1"
     >
-      Test Folder 2
-    </li>
-  </ul>
+      <div>
+        <form
+          class="c2"
+        >
+          <input
+            aria-label="Edit folder name"
+            class="c3"
+            type="text"
+            value="Test Folder"
+          />
+        </form>
+        <div
+          class="c4"
+        />
+      </div>
+      <li
+        class="c5"
+      >
+        Test Folder 2
+      </li>
+    </ul>
+  </div>
   <button
     aria-label="Add New Folder"
     class="c6"
@@ -119,6 +123,44 @@ exports[`FoldersList renders an input for modifying a folder when it is in edit 
       New Folder
     </span>
   </button>
+  <nav
+    class="react-contextmenu"
+    role="menu"
+    style="position: fixed; opacity: 0; pointer-events: none;"
+    tabindex="-1"
+  >
+    <div
+      aria-disabled="false"
+      class="react-contextmenu-item"
+      role="menuitem"
+      tabindex="-1"
+    >
+      Rename Folder...
+    </div>
+    <div
+      aria-disabled="false"
+      class="react-contextmenu-item"
+      role="menuitem"
+      tabindex="-1"
+    >
+      Delete Folder...
+    </div>
+    <div
+      aria-disabled="false"
+      aria-orientation="horizontal"
+      class="react-contextmenu-item react-contextmenu-item--divider"
+      role="menuitem"
+      tabindex="-1"
+    />
+    <div
+      aria-disabled="false"
+      class="react-contextmenu-item"
+      role="menuitem"
+      tabindex="-1"
+    >
+      New Folder...
+    </div>
+  </nav>
 </div>
 `;
 
@@ -174,20 +216,24 @@ exports[`FoldersList works 1`] = `
 <div
   class="c0"
 >
-  <ul
-    class="c1"
+  <div
+    class="react-contextmenu-wrapper"
   >
-    <li
-      class="c2"
+    <ul
+      class="c1"
     >
-      Test Folder
-    </li>
-    <li
-      class="c3"
-    >
-      Test Folder 2
-    </li>
-  </ul>
+      <li
+        class="c2"
+      >
+        Test Folder
+      </li>
+      <li
+        class="c3"
+      >
+        Test Folder 2
+      </li>
+    </ul>
+  </div>
   <button
     aria-label="Add New Folder"
     class="c4"
@@ -209,5 +255,43 @@ exports[`FoldersList works 1`] = `
       New Folder
     </span>
   </button>
+  <nav
+    class="react-contextmenu"
+    role="menu"
+    style="position: fixed; opacity: 0; pointer-events: none;"
+    tabindex="-1"
+  >
+    <div
+      aria-disabled="false"
+      class="react-contextmenu-item"
+      role="menuitem"
+      tabindex="-1"
+    >
+      Rename Folder...
+    </div>
+    <div
+      aria-disabled="false"
+      class="react-contextmenu-item"
+      role="menuitem"
+      tabindex="-1"
+    >
+      Delete Folder...
+    </div>
+    <div
+      aria-disabled="false"
+      aria-orientation="horizontal"
+      class="react-contextmenu-item react-contextmenu-item--divider"
+      role="menuitem"
+      tabindex="-1"
+    />
+    <div
+      aria-disabled="false"
+      class="react-contextmenu-item"
+      role="menuitem"
+      tabindex="-1"
+    >
+      New Folder...
+    </div>
+  </nav>
 </div>
 `;

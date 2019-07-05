@@ -49,13 +49,13 @@ exports[`it works 1`] = `
   border-right: #dedede solid 1px;
 }
 
-.c15 {
+.c16 {
   font-size: 14px;
   padding: 1em 1em 1em 0;
   border-bottom: #dedede solid 1px;
 }
 
-.c16 {
+.c17 {
   font-size: 15px;
   margin: 0;
   white-space: nowrap;
@@ -65,12 +65,12 @@ exports[`it works 1`] = `
   line-height: 1.4;
 }
 
-.c18 {
+.c19 {
   padding-right: 1em;
   white-space: nowrap;
 }
 
-.c17 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -80,28 +80,28 @@ exports[`it works 1`] = `
   align-content: flex-start;
 }
 
-.c19 {
+.c20 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.c14 {
+.c15 {
   background-color: #dfdfdd;
   padding-left: 1em;
 }
 
-.c20 {
-  background-color: #f9f9f7;
+.c21 {
+  background-color: rgba(249,249,247,0);
   padding-left: 1em;
 }
 
-.c13 {
+.c14 {
   max-height: 100%;
   overflow-y: auto;
 }
 
-.c22 {
+.c23 {
   height: 100%;
   max-height: 100%;
   overflow: auto;
@@ -109,7 +109,7 @@ exports[`it works 1`] = `
   border-left: #dedede solid 1px;
 }
 
-.c23 {
+.c24 {
   margin-bottom: 1em;
   display: block;
   text-align: center;
@@ -155,10 +155,18 @@ exports[`it works 1`] = `
 }
 
 .c3 {
-  height: 100%;
+  height: calc(100% - 68px);
 }
 
 .c3:focus {
+  outline: none;
+}
+
+.c13 {
+  height: calc(100% - 37px);
+}
+
+.c13:focus {
   outline: none;
 }
 
@@ -176,7 +184,7 @@ exports[`it works 1`] = `
   background-color: #f9f9f7;
 }
 
-.c21 {
+.c22 {
   display: block;
   position: relative;
   overflow: hidden;
@@ -212,20 +220,24 @@ exports[`it works 1`] = `
         <div
           class="c4"
         >
-          <ul
-            class="c5"
+          <div
+            class="react-contextmenu-wrapper"
           >
-            <li
-              class="c6"
+            <ul
+              class="c5"
             >
-              Test Folder
-            </li>
-            <li
-              class="c7"
-            >
-              Test Folder 2
-            </li>
-          </ul>
+              <li
+                class="c6"
+              >
+                Test Folder
+              </li>
+              <li
+                class="c7"
+              >
+                Test Folder 2
+              </li>
+            </ul>
+          </div>
           <button
             aria-label="Add New Folder"
             class="c8"
@@ -247,6 +259,44 @@ exports[`it works 1`] = `
               New Folder
             </span>
           </button>
+          <nav
+            class="react-contextmenu"
+            role="menu"
+            style="position: fixed; opacity: 0; pointer-events: none;"
+            tabindex="-1"
+          >
+            <div
+              aria-disabled="false"
+              class="react-contextmenu-item"
+              role="menuitem"
+              tabindex="-1"
+            >
+              Rename Folder...
+            </div>
+            <div
+              aria-disabled="false"
+              class="react-contextmenu-item"
+              role="menuitem"
+              tabindex="-1"
+            >
+              Delete Folder...
+            </div>
+            <div
+              aria-disabled="false"
+              aria-orientation="horizontal"
+              class="react-contextmenu-item react-contextmenu-item--divider"
+              role="menuitem"
+              tabindex="-1"
+            />
+            <div
+              aria-disabled="false"
+              class="react-contextmenu-item"
+              role="menuitem"
+              tabindex="-1"
+            >
+              New Folder...
+            </div>
+          </nav>
         </div>
       </div>
     </div>
@@ -284,84 +334,146 @@ exports[`it works 1`] = `
         </button>
       </div>
       <div
-        class="c3"
+        class="c13"
         tabindex="-1"
       >
         <div
-          class="c13"
+          class="react-contextmenu-wrapper"
         >
-          <div
-            class="c14"
-          >
+          <div>
             <div
-              class="c15"
+              class="c14"
             >
-              <h2
-                class="c16"
-              >
-                Titolo 0
-              </h2>
               <div
-                class="c17"
+                style="opacity: 1; height: 66px;"
               >
-                <span
-                  class="c18"
+                <div
+                  class="c15"
+                  data-flip-config="{\\"spring\\":{\\"stiffness\\":160,\\"damping\\":25},\\"translate\\":true,\\"scale\\":true,\\"opacity\\":true}"
+                  data-flip-id="0"
+                  data-portal-key="portal"
+                  data-testid="Note-0"
+                  draggable="true"
                 >
-                  Mocked
-                </span>
-                <span
-                  class="c19"
-                >
-                  lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
-                </span>
+                  <div
+                    class="c16"
+                  >
+                    <h2
+                      class="c17"
+                    >
+                      Titolo 0
+                    </h2>
+                    <div
+                      class="c18"
+                    >
+                      <span
+                        class="c19"
+                      >
+                        Mocked
+                      </span>
+                      <span
+                        class="c20"
+                      >
+                        lorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div
-            class="c20"
-          >
-            <div
-              class="c15"
-            >
-              <h2
-                class="c16"
-              >
-                Titolo 1
-              </h2>
               <div
-                class="c17"
+                style="opacity: 1; height: 66px;"
               >
-                <span
-                  class="c18"
+                <div
+                  class="c21"
+                  data-flip-config="{\\"spring\\":{\\"stiffness\\":160,\\"damping\\":25},\\"translate\\":true,\\"scale\\":true,\\"opacity\\":true}"
+                  data-flip-id="1"
+                  data-portal-key="portal"
+                  data-testid="Note-1"
+                  draggable="true"
                 >
-                  Mocked
-                </span>
-                <span
-                  class="c19"
-                >
-                  lorem ipsum foo bar sit
-                </span>
+                  <div
+                    class="c16"
+                  >
+                    <h2
+                      class="c17"
+                    >
+                      Titolo 1
+                    </h2>
+                    <div
+                      class="c18"
+                    >
+                      <span
+                        class="c19"
+                      >
+                        Mocked
+                      </span>
+                      <span
+                        class="c20"
+                      >
+                        lorem ipsum foo bar sit
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <nav
+          class="react-contextmenu"
+          role="menu"
+          style="position: fixed; opacity: 0; pointer-events: none;"
+          tabindex="-1"
+        >
+          <div
+            aria-disabled="false"
+            class="react-contextmenu-item"
+            role="menuitem"
+            tabindex="-1"
+          >
+            Delete
+          </div>
+          <div
+            aria-disabled="false"
+            class="react-contextmenu-item"
+            role="menuitem"
+            tabindex="-1"
+          >
+            Pin Note
+          </div>
+          <div
+            aria-disabled="false"
+            aria-orientation="horizontal"
+            class="react-contextmenu-item react-contextmenu-item--divider"
+            role="menuitem"
+            tabindex="-1"
+          />
+          <div
+            aria-disabled="false"
+            class="react-contextmenu-item"
+            role="menuitem"
+            tabindex="-1"
+          >
+            New Note
+          </div>
+        </nav>
       </div>
     </div>
     <div
-      class="c21"
+      class="c22"
     >
       <div
         class="c2"
       />
       <div
-        class="c3"
+        class="c13"
         tabindex="-1"
       >
         <div
-          class="c22"
+          class="c23"
         >
           <span
-            class="c23"
+            class="c24"
           >
             23 June 2019 at 5:07 PM
           </span>
