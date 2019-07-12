@@ -10,7 +10,8 @@ import {
 import Note from './Note';
 import { ENTITIES } from 'constants.js';
 import { useTransition } from 'react-spring';
-import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
+import useContextMenu from 'react-use-context-menu';
+import { ContextMenu, ContextMenuItem } from 'styled/contextMenu';
 import { Flipper } from 'react-flip-toolkit';
 
 const NotesListContainer = styled.div`
@@ -37,6 +38,20 @@ export const NotesList = props => {
     createNewNote,
     deleteNoteAndElectNewActive
   } = props;
+
+  const [
+    bindMenu,
+    bindMenuItem,
+    useContextTrigger,
+    { setVisible }
+  ] = useContextMenu();
+
+  const hideAndFire = handlerFn => () => {
+    setVisible(false);
+    handlerFn();
+  };
+
+  const [bindTrigger] = useContextTrigger();
 
   const prevFolderId = usePrevious(activeFolderId);
   const handleNoteClick = useCallback(
@@ -82,23 +97,33 @@ export const NotesList = props => {
 
   return (
     <>
-      <ContextMenuTrigger id="notesContextMenu" holdToDisplay={-1}>
-        <Flipper
-          flipKey={sortedNotes.map(x => x.noteId).join('')}
-          staggerConfig={{
-            default: {
-              speed: 0.8
-            }
-          }}
+      <Flipper
+        flipKey={sortedNotes.map(x => x.noteId).join('')}
+        staggerConfig={{
+          default: {
+            speed: 0.8
+          }
+        }}
+      >
+        <NotesListContainer {...bindTrigger}>{notesList}</NotesListContainer>
+      </Flipper>
+      <ContextMenu {...bindMenu}>
+        <ContextMenuItem
+          {...bindMenuItem}
+          onClick={hideAndFire(handleDeleteNote)}
         >
-          <NotesListContainer>{notesList}</NotesListContainer>
-        </Flipper>
-      </ContextMenuTrigger>
-      <ContextMenu id="notesContextMenu">
-        <MenuItem onClick={handleDeleteNote}>Delete</MenuItem>
-        <MenuItem onClick={() => {}}>Pin Note</MenuItem>
-        <MenuItem divider />
-        <MenuItem onClick={handleNewNoteClick}>New Note</MenuItem>
+          Delete
+        </ContextMenuItem>
+        <ContextMenuItem {...bindMenuItem} onClick={() => {}}>
+          Pin Note
+        </ContextMenuItem>
+        <hr />
+        <ContextMenuItem
+          {...bindMenuItem}
+          onClick={hideAndFire(handleNewNoteClick)}
+        >
+          New Note
+        </ContextMenuItem>
       </ContextMenu>
     </>
   );
