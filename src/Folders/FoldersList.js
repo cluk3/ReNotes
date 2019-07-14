@@ -27,7 +27,6 @@ const FoldersUl = styled.ul`
 const FolderListContainer = styled.div`
   height: 100%;
   overflow-y: auto;
-  border-right: #dedede solid 1px;
 `;
 
 export function FoldersList(props) {

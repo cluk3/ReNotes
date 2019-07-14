@@ -18,7 +18,6 @@ const NoteEditorContainer = styled.div`
   max-height: 100%;
   overflow: auto;
   padding: 0.5em 1em 1em 1em;
-  border-left: #dedede solid 1px;
 `;
 
 const LastModified = styled.span`
