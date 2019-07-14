@@ -52,7 +52,7 @@ body.row-resize {
 .reflex-container.vertical > .reflex-splitter {
   cursor: col-resize;
   height: 100%;
-  width: 2px;
+  width: 1px;
 }
 
 .reflex-element.vertical .reflex-handle {

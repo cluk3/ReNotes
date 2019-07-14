@@ -3,8 +3,13 @@ import { connect } from 'react-redux';
 import { deleteFolder } from '../Folders/modules/folders';
 import { deleteNoteAndElectNewActive } from '../Notes/modules/notes';
 import { ENTITIES } from 'constants.js';
-import deleteIcon from '../assets/notes-delete-icon.png';
 import ToolbarButton from './ToolbarButton';
+import { ReactComponent as Trash } from './trash.svg';
+import styled from 'styled-components';
+
+const TrashIcon = styled(Trash)`
+  fill: #888889;
+`;
 
 class DeleteButton extends PureComponent {
   deleteSelectedItem() {
@@ -28,7 +33,7 @@ class DeleteButton extends PureComponent {
         ariaLabel="Delete Note or Folder"
         onClick={() => this.deleteSelectedItem()}
       >
-        <img src={deleteIcon} height="18px" alt="delete" />
+        <TrashIcon />
       </ToolbarButton>
     );
   }
