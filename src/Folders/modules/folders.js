@@ -18,6 +18,9 @@ export const END_EDITING_NAME = 'END_EDITING_NAME';
 export const MOVE_NOTE_TO_FOLDER = 'MOVE_NOTE_TO_FOLDER';
 export const START_EDITING_NAME = 'START_EDITING_NAME';
 
+export const NOTES_FOLDER_ID = '0';
+export const RD_FOLDER_ID = '1';
+
 export function createNewFolder(folderName) {
   const folderId = uuidv4();
   return dispatch => {
@@ -34,6 +37,7 @@ export function createNewFolder(folderName) {
 
 export function deleteFolder(folders) {
   const { activeFolder, allIds, byId } = folders;
+  if (byId[activeFolder].undeletable) return { type: 'NOOP' };
   const isFolderEmpty = byId[activeFolder].notes.length === 0;
   const confirmDelete =
     isFolderEmpty ||
@@ -41,7 +45,7 @@ export function deleteFolder(folders) {
       'Deleting the folder will delete also all the note into it, are you sure?'
     );
 
-  if (!confirmDelete) return;
+  if (!confirmDelete) return { type: 'NOOP' };
 
   const folderToDeleteIndex = allIds.indexOf(activeFolder);
   const newActiveFolder = electNewElement(folderToDeleteIndex, allIds);
@@ -107,11 +111,13 @@ const TEST_FOLDER = 'Test Folder';
 const TEST_FOLDER_2 = 'Test Folder 2';
 export const initialState = {
   byId: {
-    '0': { notes: ['0', '1'], name: TEST_FOLDER },
-    '1': { notes: ['2'], name: TEST_FOLDER_2 }
+    [NOTES_FOLDER_ID]: { notes: [], name: 'Notes', undeletable: true },
+    [RD_FOLDER_ID]: { notes: [], name: 'Recently Deleted', undeletable: true },
+    '2': { notes: ['0', '1'], name: TEST_FOLDER },
+    '3': { notes: ['2'], name: TEST_FOLDER_2 }
   },
-  allIds: ['0', '1'],
-  activeFolder: '0',
+  allIds: [NOTES_FOLDER_ID, RD_FOLDER_ID, '2', '3'],
+  activeFolder: NOTES_FOLDER_ID,
   editingName: null
 };
 

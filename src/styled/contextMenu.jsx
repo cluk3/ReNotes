@@ -15,10 +15,12 @@ export const ContextMenu = styled.nav`
   z-index: 9999;
 `;
 
-export const ContextMenuItem = styled.div`
+export const ContextMenuItem = styled.div.attrs(props => ({
+  'aria-disabled': props.isDisabled
+}))`
   background: 0 0;
   border: 0;
-  color: #373a3c;
+  color: ${({isDisabled}) => isDisabled ? '#dcdcdc' : '#373a3c'};
   cursor: pointer;
   font-weight: 400;
   line-height: 1.5;

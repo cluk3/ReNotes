@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { deleteFolder } from '../Folders/modules/folders';
+import {
+  deleteFolder,
+  NOTES_FOLDER_ID,
+  RD_FOLDER_ID
+} from '../Folders/modules/folders';
 import { deleteNoteAndElectNewActive } from '../Notes/modules/notes';
 import { ENTITIES } from 'constants.js';
 import ToolbarButton from './ToolbarButton';
@@ -18,8 +22,11 @@ class DeleteButton extends PureComponent {
       notes,
       focusedElement,
       deleteFolder,
-      deleteNoteAndElectNewActive
+      deleteNoteAndElectNewActive,
+      isDeleteDisabled
     } = this.props;
+
+    if (isDeleteDisabled) return;
 
     if (focusedElement.elementType === ENTITIES.FOLDERS) {
       deleteFolder(folders);
@@ -32,6 +39,7 @@ class DeleteButton extends PureComponent {
       <ToolbarButton
         ariaLabel="Delete Note or Folder"
         onClick={() => this.deleteSelectedItem()}
+        disabled={this.props.isDeleteDisabled}
       >
         <TrashIcon />
       </ToolbarButton>
@@ -43,7 +51,12 @@ function mapStateToProps({ folders, notes, focusedElement }) {
   return {
     folders,
     notes,
-    focusedElement
+    focusedElement,
+    isDeleteDisabled:
+      ([NOTES_FOLDER_ID, RD_FOLDER_ID].includes(folders.activeFolder) &&
+        focusedElement.elementType === ENTITIES.FOLDERS) ||
+      (focusedElement.elementType === ENTITIES.NOTES &&
+        folders.byId[folders.activeFolder].notes.length === 0)
   };
 }
 

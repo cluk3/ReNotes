@@ -10,7 +10,9 @@ import {
   endEditingName,
   moveNoteToFolder,
   deleteFolder,
-  startEditingName
+  startEditingName,
+  NOTES_FOLDER_ID,
+  RD_FOLDER_ID
 } from './modules/folders';
 import { getDefaultNewFolderName } from 'helpers';
 import styled from 'styled-components';
@@ -108,11 +110,30 @@ export function FoldersList(props) {
     [endEditingName, folders, changeFolderName]
   );
 
-  const FoldersList = folders.allIds
-    .map(id => ({
-      ...folders.byId[id],
-      id
-    }))
+  const buildFolder = (folderName, folderId) => (
+    <Folder
+      name={folderName}
+      folderId={folderId}
+      key={folderId}
+      handleFolderClick={() => handleFolderClick(folderId)}
+      selected={activeFolder === folderId}
+      highlighted={activeFolder === folderId && isFolderFocused}
+      moveNoteToFolder={moveNoteToFolder}
+    />
+  );
+
+  const foldersData = folders.allIds.map(id => ({
+    ...folders.byId[id],
+    id
+  }));
+
+  const notesFolderData = foldersData.find(data => data.id === NOTES_FOLDER_ID);
+  const recentlyDeletedFolderData = foldersData.find(
+    data => data.id === RD_FOLDER_ID
+  );
+
+  const FoldersList = foldersData
+    .filter(data => ![NOTES_FOLDER_ID, RD_FOLDER_ID].includes(data.id))
     .sort((a, b) => a.name.localeCompare(b.name))
     .map(({ id: folderId, name: folderName }) =>
       folders.editingName === folderId ? (
@@ -124,17 +145,23 @@ export function FoldersList(props) {
           defaultValue={folderName}
         />
       ) : (
-        <Folder
-          name={folderName}
-          folderId={folderId}
-          key={folderId}
-          handleFolderClick={() => handleFolderClick(folderId)}
-          selected={activeFolder === folderId}
-          highlighted={activeFolder === folderId && isFolderFocused}
-          moveNoteToFolder={moveNoteToFolder}
-        />
+        buildFolder(folderName, folderId)
       )
+    )
+    .concat(
+      recentlyDeletedFolderData.notes.length > 0
+        ? buildFolder(
+            recentlyDeletedFolderData.name,
+            recentlyDeletedFolderData.id
+          )
+        : []
     );
+
+  FoldersList.unshift(buildFolder(notesFolderData.name, notesFolderData.id));
+
+  const isSpecialFolder = [NOTES_FOLDER_ID, RD_FOLDER_ID].includes(
+    activeFolder
+  );
 
   return (
     <FolderListContainer>
@@ -145,7 +172,8 @@ export function FoldersList(props) {
         <ContextMenuItem
           {...bindMenuItem}
           role="button"
-          onClick={hideAndFire(handleRenameFolder)}
+          onClick={!isSpecialFolder && hideAndFire(handleRenameFolder)}
+          isDisabled={isSpecialFolder}
         >
           Rename Folder...
         </ContextMenuItem>
@@ -153,7 +181,8 @@ export function FoldersList(props) {
         <ContextMenuItem
           {...bindMenuItem}
           role="button"
-          onClick={hideAndFire(handleDeleteFolder)}
+          onClick={!isSpecialFolder && hideAndFire(handleDeleteFolder)}
+          isDisabled={isSpecialFolder}
         >
           Delete Folder...
         </ContextMenuItem>

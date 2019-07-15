@@ -2,7 +2,12 @@ import omit from 'lodash/omit';
 import findIndex from 'lodash/findIndex';
 import pick from 'lodash/pick';
 import uuidv4 from 'uuid/v4';
-import { DELETE_FOLDER, MOVE_NOTE_TO_FOLDER } from 'Folders/modules/folders';
+import {
+  DELETE_FOLDER,
+  MOVE_NOTE_TO_FOLDER,
+  moveNoteToFolder,
+  RD_FOLDER_ID
+} from 'Folders/modules/folders';
 import { electNewElement } from '../../helpers';
 
 export const CREATE_NEW_NOTE = 'CREATE_NEW_NOTE';
@@ -56,7 +61,10 @@ export function deleteNote(noteId) {
   };
 }
 
-export function deleteNoteAndElectNewActive(noteId) {
+export function deleteNoteAndElectNewActive(noteId, activeFolderId) {
+  if (activeFolderId !== RD_FOLDER_ID) {
+    return moveNoteToFolder(noteId, RD_FOLDER_ID);
+  }
   return {
     type: DELETE_NOTE_AND_ELECT_NEW_ACTIVE,
     payload: {
@@ -92,7 +100,7 @@ export const initialState = {
           'Titolo 0\nlorem ipsum foo bar sit dolor amen lorepsum foo bar sit dolor amen\n'
       },
       lastModified: STUB_DATE - 1000 * 60 * 60 * 24,
-      parentFolderId: '0'
+      parentFolderId: '2'
     },
     '1': {
       editorState: {
@@ -100,7 +108,7 @@ export const initialState = {
         text: 'Titolo 1\nlorem ipsum foo bar sit'
       },
       lastModified: STUB_DATE - 1000 * 60 * 60 * 24 * 3,
-      parentFolderId: '0'
+      parentFolderId: '2'
     },
     '2': {
       editorState: {
@@ -108,11 +116,11 @@ export const initialState = {
         text: 'Titolo 2\nlorem ipsum foo bar sit'
       },
       lastModified: STUB_DATE - 1000 * 60 * 60 * 24 * 7,
-      parentFolderId: '1'
+      parentFolderId: '3'
     }
   },
   allIds: ['0', '1', '2'],
-  activeNote: '0'
+  activeNote: null
 };
 
 export function notesReducer(state = initialState, { type, payload = {} }) {
