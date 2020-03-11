@@ -7,7 +7,7 @@ import {
   humanFriendlyDate
 } from '../helpers';
 import { DragPreviewImage, useDrag } from 'react-dnd-cjs';
-import noteImage from './noteImage';
+import noteImage from './noteIcon.png';
 import { animated } from 'react-spring';
 import { Flipped } from 'react-flip-toolkit';
 

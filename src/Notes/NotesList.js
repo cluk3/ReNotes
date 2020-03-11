@@ -51,7 +51,7 @@ export const NotesList = props => {
     handlerFn();
   };
 
-  const [bindTrigger] = useContextTrigger();
+  const [bindTrigger] = useContextTrigger({ holdToDisplay: -1 });
 
   const prevFolderId = usePrevious(activeFolderId);
   const handleNoteClick = useCallback(
@@ -159,7 +159,4 @@ const mapDispatchToProps = {
   createNewNote
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NotesList);
+export default connect(mapStateToProps, mapDispatchToProps)(NotesList);

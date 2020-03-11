@@ -57,7 +57,9 @@ export function FoldersList(props) {
     handlerFn();
   };
 
-  const [bindTrigger] = useContextTrigger();
+  const [bindTrigger] = useContextTrigger({
+    holdToDisplay: -1
+  });
 
   const handleFolderClick = useCallback(
     clickedFolderId => {
@@ -229,7 +231,4 @@ const mapDispatchToProps = {
   startEditingName
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FoldersList);
+export default connect(mapStateToProps, mapDispatchToProps)(FoldersList);
