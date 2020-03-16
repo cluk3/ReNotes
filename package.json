@@ -20,7 +20,6 @@
     "immer": "^3.3.0",
     "lodash": "^4.17.15",
     "react": "^16.13.0",
-    "react-contextmenu": "^2.13.0",
     "react-dnd-cjs": "^9.5.1",
     "react-dnd-html5-backend-cjs": "^9.5.1",
     "react-dom": "^16.13.0",
